@@ -193,30 +193,19 @@ const About = () => {
                     alt={member.name}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
+                    <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="text-lg font-semibold mb-1">
+                        {member.role}
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="p-6">
+                <div className="p-6 text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                     {member.name}
                   </h3>
-                  <div className="text-blue-600 font-semibold mb-4 group-hover:text-purple-600 transition-colors duration-300">
-                    {member.role}
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 group-hover:text-gray-700 transition-colors duration-300">
-                    {member.description}
-                  </p>
-                  
-                  <div className="border-t pt-4 space-y-2">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 group/contact hover:text-blue-600 transition-colors duration-300">
-                      <Phone className="w-4 h-4 group-hover/contact:scale-110 transition-transform duration-300" />
-                      <span>{member.phone}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 group/contact hover:text-blue-600 transition-colors duration-300">
-                      <Mail className="w-4 h-4 group-hover/contact:scale-110 transition-transform duration-300" />
-                      <span>{member.email}</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             ))}
