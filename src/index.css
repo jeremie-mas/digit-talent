@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f4;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #15803d, #4ade80);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #15803d;
+}
+
+/* Text selection */
+::selection {
+  background: rgba(21, 128, 61, 0.15);
+  color: #14532d;
+}
+
 /* Custom animations */
 @keyframes fadeInUp {
   from {
@@ -244,6 +271,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Page header entrance (fires on mount, no scroll needed) */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-enter   { animation: heroIn 0.55s ease-out both; }
+.hero-enter-1 { animation: heroIn 0.55s ease-out 0.12s both; }
+.hero-enter-2 { animation: heroIn 0.55s ease-out 0.24s both; }
+.hero-enter-3 { animation: heroIn 0.55s ease-out 0.38s both; }
+
 /* Enhanced hover effects */
 .hover-lift {
   transition: all 0.3s ease;
@@ -281,7 +318,7 @@ html {
 /* Scroll animations */
 .scroll-animate {
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .scroll-animate.animate-in {
@@ -290,7 +327,7 @@ html {
 
 /* Scroll animation types */
 .fadeInUp {
-  transform: translateY(50px);
+  transform: translateY(32px);
 }
 
 .fadeInUp.animate-in {
@@ -298,7 +335,7 @@ html {
 }
 
 .slideInLeft {
-  transform: translateX(-100px);
+  transform: translateX(-50px);
 }
 
 .slideInLeft.animate-in {
@@ -306,7 +343,7 @@ html {
 }
 
 .slideInRight {
-  transform: translateX(100px);
+  transform: translateX(50px);
 }
 
 .slideInRight.animate-in {
@@ -356,7 +393,7 @@ html {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, #15803d, #4ade80, #f59e0b);
   transform-origin: left;
   z-index: 9999;
   transition: transform 0.1s ease-out;

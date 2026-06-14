@@ -1,365 +1,282 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Users, Code, Shield, Wrench, Scale, Briefcase, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import {
+  Mail, Phone, MapPin, Clock, Send, CheckCircle,
+  Users, Code, Shield, Wrench, Scale, Briefcase, FileText, ArrowRight
+} from 'lucide-react';
+import ScrollAnimation from '../components/ScrollAnimations';
+
+const contactInfo = [
+  {
+    icon: <MapPin className="w-5 h-5" />,
+    title: 'Adresse',
+    content: 'BP: 601, Lomé Togo\nADIDOGOMÉ, SAGBADO\nNon loin de la station VAT & COO',
+    href: null,
+  },
+  {
+    icon: <Phone className="w-5 h-5" />,
+    title: 'Téléphone',
+    content: '+228 91 98 20 23',
+    href: 'tel:+22891982023',
+  },
+  {
+    icon: <Mail className="w-5 h-5" />,
+    title: 'Email',
+    content: 'contact@digit-talent.com',
+    href: 'mailto:contact@digit-talent.com',
+  },
+  {
+    icon: <Clock className="w-5 h-5" />,
+    title: 'Horaires',
+    content: 'Lun - Ven : 8h00 - 18h00\nSam : 9h00 - 13h00',
+    href: null,
+  },
+];
+
+const services = [
+  'Développement Informatique', 'Sécurité Informatique', 'Formation & Coaching',
+  'Réseaux & Maintenance', 'Vente de Matériel', 'Conseil Digital',
+  'Expertise Juridique RH', 'Organisation RH', 'Recrutement',
+  'Externalisation RH', 'Gestion de Paie', 'Formation RH',
+];
+
+const faqs = [
+  { q: 'Quel est le délai moyen pour un projet ?', a: 'La durée varie selon la complexité : audit (1-2 semaines), développement (4-12 semaines), transformation RH (2-6 mois). Nous établissons un calendrier précis ensemble.' },
+  { q: 'Proposez-vous des audits gratuits ?', a: 'Oui, nous proposons un diagnostic initial gratuit pour comprendre vos besoins et vous proposer une solution adaptée.' },
+  { q: 'Travaillez-vous avec des entreprises de toutes tailles ?', a: 'Absolument ! Nous accompagnons des startups, PME, grandes entreprises et institutions publiques en adaptant nos services.' },
+  { q: 'Êtes-vous disponibles pour des interventions urgentes ?', a: 'Oui, nous proposons un service d\'urgence pour les problèmes critiques (sécurité, panne système, crise RH).' },
+  { q: 'Proposez-vous un suivi post-projet ?', a: 'Tous nos projets incluent une période de garantie et un suivi post-livraison. Nous proposons également des contrats de maintenance et support.' },
+];
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    service: '',
-    message: ''
+    name: '', email: '', phone: '', company: '', service: '', message: '',
   });
-
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici vous pourriez traiter l'envoi du formulaire
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 5000);
   };
 
-  const contactInfo = [
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      title: "Adresse",
-      content: "BP: 601, Lomé Togo\nADIDOGOMÉ, SAGBADO\nNon loin de la station VAT & COO"
-    },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      title: "Téléphone",
-      content: "+228 91 98 20 23"
-    },
-    {
-      icon: <Mail className="w-6 h-6" />,
-      title: "Email",
-      content: "contact@digit-talent.com"
-    },
-    {
-      icon: <Clock className="w-6 h-6" />,
-      title: "Horaires",
-      content: "Lun - Ven: 8h00 - 18h00\nSam: 9h00 - 13h00"
-    }
-  ];
-
-  const services = [
-    "Développement Informatique",
-    "Sécurité Informatique",
-    "Formation & Coaching",
-    "Réseaux & Maintenance",
-    "Vente de Matériel",
-    "Conseil Digital",
-    "Expertise Juridique RH",
-    "Organisation RH",
-    "Recrutement",
-    "Externalisation RH",
-    "Gestion de Paie",
-    "Formation RH"
-  ];
-
-  const serviceIcons = {
-    "Développement Informatique": <Code className="w-4 h-4" />,
-    "Sécurité Informatique": <Shield className="w-4 h-4" />,
-    "Formation & Coaching": <FileText className="w-4 h-4" />,
-    "Réseaux & Maintenance": <Wrench className="w-4 h-4" />,
-    "Vente de Matériel": <Briefcase className="w-4 h-4" />,
-    "Conseil Digital": <Code className="w-4 h-4" />,
-    "Expertise Juridique RH": <Scale className="w-4 h-4" />,
-    "Organisation RH": <Users className="w-4 h-4" />,
-    "Recrutement": <Users className="w-4 h-4" />,
-    "Externalisation RH": <Briefcase className="w-4 h-4" />,
-    "Gestion de Paie": <FileText className="w-4 h-4" />,
-    "Formation RH": <FileText className="w-4 h-4" />,
-  };
+  const inputClass =
+    'w-full px-4 py-3 text-sm border border-gray-200 rounded-xl bg-stone-50 focus:bg-white focus:ring-2 focus:ring-green-600 focus:border-transparent hover:border-gray-300 transition-all duration-200 outline-none';
 
   return (
-    <div className="pt-16">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform hover:scale-105 transition-transform duration-[3000ms]"
-          style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1920)'
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-gray-900/70 to-green-900/60 animate-gradient-shift"></div>
-        
-        {/* Interactive particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-12 left-1/3 w-4 h-4 bg-white/20 rounded-full animate-twinkle"></div>
-          <div className="absolute top-2/3 right-1/3 w-6 h-6 bg-green-400/30 rounded-full animate-twinkle animation-delay-1500"></div>
-          <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-blue-400/30 rounded-full animate-twinkle animation-delay-3000"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center max-w-4xl mx-auto animate-fade-in-up">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6 animate-slide-in-down">
-              Contactez <span className="text-white animate-glow">Digit & Talent</span>
-            </h1>
-            <p className="text-xl text-blue-100 mb-8 animate-slide-in-up animation-delay-300">
-              Vous avez un projet de transformation digitale ou besoin d'expertise RH ? Notre équipe est là pour vous accompagner.
-            </p>
-            <p className="text-lg text-white font-medium animate-fade-in animation-delay-600">
-              Fueling Dreams, Forging Success
-            </p>
+    <div>
+      {/* ── Page Header ──────────────────────────────────── */}
+      <section className="pt-28 pb-12 bg-stone-900 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="hero-enter text-xs font-semibold text-green-400 uppercase tracking-widest mb-3">
+            Contact
           </div>
+          <h1 className="hero-enter-1 text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+            Parlons de votre<br />projet
+          </h1>
+          <p className="hero-enter-2 text-base text-stone-400 max-w-2xl leading-relaxed">
+            Vous avez un projet de transformation digitale ou besoin d'expertise RH ?
+            Notre équipe est là pour vous accompagner.
+          </p>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-32 right-20 w-40 h-40 bg-green-500/5 rounded-full animate-float"></div>
-          <div className="absolute bottom-32 left-20 w-32 h-32 bg-blue-500/5 rounded-full animate-float-delayed"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fade-in-up">
+      {/* ── Form + Info ──────────────────────────────────── */}
+      <section className="py-14 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Contact Form */}
-            <div className="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 animate-slide-in-down">
-                Démarrons votre projet
-              </h2>
+            <ScrollAnimation animation="slideInLeft">
+            <div className="bg-stone-50 rounded-3xl p-8 border border-gray-100">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Démarrons votre projet</h2>
 
               {isSubmitted ? (
-                <div className="text-center py-12 animate-fade-in-up">
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4 animate-pulse-slow" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Message envoyé !</h3>
-                  <p className="text-gray-600">Nous vous recontactons sous 24h pour discuter de votre projet.</p>
+                <div className="text-center py-16">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Message envoyé !</h3>
+                  <p className="text-gray-500 text-sm">Nous vous recontactons sous 24h.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in animation-delay-300">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                         Nom complet *
                       </label>
                       <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        type="text" name="name" required
+                        value={formData.name} onChange={handleInputChange}
+                        className={inputClass}
                         placeholder="Votre nom complet"
                       />
                     </div>
-
                     <div>
-                      <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                         Email *
                       </label>
                       <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        type="email" name="email" required
+                        value={formData.email} onChange={handleInputChange}
+                        className={inputClass}
                         placeholder="votre@email.com"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                         Téléphone *
                       </label>
                       <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        required
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        type="tel" name="phone" required
+                        value={formData.phone} onChange={handleInputChange}
+                        className={inputClass}
                         placeholder="+228 XX XX XX XX"
                       />
                     </div>
-
                     <div>
-                      <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
-                        Entreprise/Organisation
+                      <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                        Entreprise
                       </label>
                       <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        type="text" name="company"
+                        value={formData.company} onChange={handleInputChange}
+                        className={inputClass}
                         placeholder="Nom de votre entreprise"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
-                        Service souhaité *
-                      </label>
-                      <select
-                        id="service"
-                        name="service"
-                        required
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
-                      >
-                        <option value="">Sélectionnez un service</option>
-                        <optgroup label="Services Informatiques">
-                          {services.slice(0, 6).map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                        <optgroup label="Services Ressources Humaines">
-                          {services.slice(6).map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                      </select>
-                    </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                      Service souhaité *
+                    </label>
+                    <select
+                      name="service" required
+                      value={formData.service} onChange={handleInputChange}
+                      className={inputClass}
+                    >
+                      <option value="">Sélectionnez un service</option>
+                      <optgroup label="Services Informatiques">
+                        {services.slice(0, 6).map(s => <option key={s} value={s}>{s}</option>)}
+                      </optgroup>
+                      <optgroup label="Services Ressources Humaines">
+                        {services.slice(6).map(s => <option key={s} value={s}>{s}</option>)}
+                      </optgroup>
+                    </select>
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                       Description de votre besoin *
                     </label>
                     <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                      name="message" required rows={5}
+                      value={formData.message} onChange={handleInputChange}
+                      className={inputClass}
                       placeholder="Décrivez-nous votre projet, vos objectifs, vos contraintes..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center group"
+                    className="w-full flex items-center justify-center gap-2 bg-green-700 text-white py-3.5 px-8 rounded-full text-sm font-semibold hover:bg-green-800 transition-colors"
                   >
                     Envoyer le message
-                    <Send className="ml-2 w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-transform duration-500" />
+                    <Send className="w-4 h-4" />
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center">
-                    * Champs obligatoires
-                  </p>
+                  <p className="text-xs text-gray-400 text-center">* Champs obligatoires</p>
                 </form>
               )}
             </div>
+            </ScrollAnimation>
 
-            {/* Contact Information */}
-            <div className="space-y-8 animate-slide-in-right animation-delay-300">
+            {/* Contact Info */}
+            <ScrollAnimation animation="slideInRight">
+            <div className="space-y-8">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-8 animate-slide-in-down">
-                  Nos coordonnées
-                </h2>
-                <div className="space-y-6 animate-fade-in animation-delay-600">
-                  {contactInfo.map((info, index) => (
-                    <div key={index} className={`flex items-start space-x-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                      index === 0 ? 'animation-delay-300' :
-                      index === 1 ? 'animation-delay-600' :
-                      index === 2 ? 'animation-delay-1000' :
-                      'animation-delay-1500'
-                    }`}>
-                      <div className="text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h2>
+                <div className="space-y-4">
+                  {contactInfo.map((info, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-4 p-5 bg-stone-50 rounded-2xl border border-gray-100 hover:border-green-200 hover:shadow-sm transition-all duration-200 group"
+                    >
+                      <div className="w-10 h-10 bg-green-50 group-hover:bg-green-100 rounded-xl flex items-center justify-center text-green-700 flex-shrink-0 transition-colors">
                         {info.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                        <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                           {info.title}
-                        </h3>
-                        <p className="text-gray-600 whitespace-pre-line group-hover:text-gray-700 transition-colors duration-300">
-                          {info.content}
-                        </p>
+                        </div>
+                        {info.href ? (
+                          <a
+                            href={info.href}
+                            className="text-sm text-gray-700 hover:text-green-700 transition-colors whitespace-pre-line"
+                          >
+                            {info.content}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-gray-700 whitespace-pre-line">{info.content}</p>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 group animate-fade-in animation-delay-1000">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-2 group-hover:scale-110 group-hover:text-blue-500 transition-all duration-300" />
-                  <p className="text-gray-500">Carte interactive</p>
-                  <p className="text-sm text-gray-400">Adidogome, Sagbado</p>
-                </div>
+              {/* Map placeholder */}
+              <div className="bg-stone-100 rounded-2xl h-52 flex flex-col items-center justify-center border border-gray-100 hover:border-green-200 transition-colors group">
+                <MapPin className="w-10 h-10 text-gray-300 group-hover:text-green-500 mb-2 transition-colors" />
+                <p className="text-gray-500 text-sm font-medium">Carte interactive</p>
+                <p className="text-gray-400 text-xs">Adidogomé, Sagbado — Lomé, Togo</p>
               </div>
             </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-gray-50 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-28 h-28 bg-green-500/5 rounded-full animate-pulse-slow"></div>
-          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-blue-500/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6 animate-slide-in-down">
-              Questions <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">fréquentes</span>
-            </h2>
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <section className="py-14 bg-stone-50">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+          <div className="mb-7">
+            <div className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">
+              FAQ
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900">Questions fréquentes</h2>
           </div>
 
-          <div className="space-y-6 animate-fade-in animation-delay-300">
-            {[
-              {
-                question: "Quel est le délai moyen pour un projet ?",
-                answer: "La durée varie selon la complexité : audit (1-2 semaines), développement (4-12 semaines), transformation RH (2-6 mois). Nous établissons un calendrier précis ensemble."
-              },
-              {
-                question: "Proposez-vous des audits gratuits ?",
-                answer: "Oui, nous proposons un diagnostic initial gratuit pour comprendre vos besoins et vous proposer une solution adaptée."
-              },
-              {
-                question: "Travaillez-vous avec des entreprises de toutes tailles ?",
-                answer: "Absolument ! Nous accompagnons des startups, PME, grandes entreprises et institutions publiques en adaptant nos services."
-              },
-              {
-                question: "Êtes-vous disponibles pour des interventions urgentes ?",
-                answer: "Oui, nous proposons un service d'urgence pour les problèmes critiques (sécurité, panne système, crise RH)."
-              },
-              {
-                question: "Proposez-vous un suivi post-projet ?",
-                answer: "Tous nos projets incluent une période de garantie et un suivi post-livraison. Nous proposons également des contrats de maintenance et support."
-              }
-            ].map((faq, index) => (
-              <div key={index} className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                index === 0 ? 'animation-delay-300' :
-                index === 1 ? 'animation-delay-600' :
-                index === 2 ? 'animation-delay-1000' :
-                index === 3 ? 'animation-delay-1500' :
-                'animation-delay-2000'
-              }`}>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                  {faq.answer}
-                </p>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <ScrollAnimation key={i} animation="fadeInUp" delay={i * 80}>
+              <div
+                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-green-200 hover:shadow-sm transition-all duration-200"
+              >
+                <h3 className="text-base font-bold text-gray-900 mb-2">{faq.q}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{faq.a}</p>
               </div>
+              </ScrollAnimation>
             ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-gray-500 text-sm mb-4">Vous avez d'autres questions ?</p>
+            <a
+              href="mailto:contact@digit-talent.com"
+              className="inline-flex items-center gap-2 bg-green-700 text-white px-7 py-3 rounded-full text-sm font-medium hover:bg-green-800 transition-colors"
+            >
+              Contactez-nous par email
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>
