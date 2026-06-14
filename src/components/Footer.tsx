@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <div>
-                <img src="/images/logo_dt.png" alt="Digit & Talent" className="h-10 w-auto" />
+                <img src="/images/LOGO-VRAI.jpeg" alt="Digit & Talent" className="h-10 w-auto" />
               </div>
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
