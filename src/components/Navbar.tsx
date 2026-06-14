@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Palette, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div>
-              <img src="/images/LOGO-VRAI.jpeg" alt="Digit & Talent" className="h-16 w-auto" />
+              <img src="/images/logo_dt.png" alt="Digit & Talent" className="h-16 w-auto" />
             </div>
           </Link>
 
