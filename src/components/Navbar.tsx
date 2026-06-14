@@ -41,7 +41,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div>
-              <img src="/images/logo_dt.png" alt="Digit & Talent" className="h-16 w-auto" />
+              <img src="/images/LOGO-VRAI.jpeg" alt="Digit & Talent" className="h-16 w-auto" />
             </div>
           </Link>
 
