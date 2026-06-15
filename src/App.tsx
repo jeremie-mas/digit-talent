@@ -4,8 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import Home from './pages/Home';
-import ServicesIT from './pages/ServicesIT';
-import ConsultingRH from './pages/ConsultingRH';
+import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -19,10 +18,9 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/services-informatiques" element={<ServicesIT />} />
-            <Route path="/consulting-rh" element={<ConsultingRH />} />
-            <Route path="/realisations" element={<Portfolio />} />
-            <Route path="/a-propos" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>

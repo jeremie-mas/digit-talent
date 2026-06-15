@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle, Globe } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface FormData {
@@ -7,7 +7,7 @@ interface FormData {
   email: string;
   phone: string;
   company: string;
-  service: string;
+  subject: string;
   message: string;
 }
 
@@ -17,7 +17,7 @@ const Contact = () => {
     email: '',
     phone: '',
     company: '',
-    service: '',
+    subject: '',
     message: ''
   });
 
@@ -43,7 +43,7 @@ const Contact = () => {
         email: formData.email,
         phone: formData.phone,
         company: formData.company || null,
-        service: formData.service,
+        service: formData.subject,
         message: formData.message,
       });
 
@@ -55,19 +55,19 @@ const Contact = () => {
     }
 
     setIsSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
+    setFormData({ name: '', email: '', phone: '', company: '', subject: '', message: '' });
   };
 
   const contactInfo = [
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Adresse",
-      content: "BP: 601, Lomé Togo\nADIDOGOMÉ, SAGBADO\nNon loin de la station VAT & COO"
+      content: "96, Rue Gbotobare, Quartier Todman Casablanca, Lomé, Togo"
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Téléphone",
-      content: "+228 91 98 20 23"
+      content: "+228 91 98 20 23\n+228 99 90 08 21"
     },
     {
       icon: <Mail className="w-6 h-6" />,
@@ -75,28 +75,24 @@ const Contact = () => {
       content: "contact@digit-talent.com"
     },
     {
+      icon: <Globe className="w-6 h-6" />,
+      title: "Site web",
+      content: "www.digit-talent.com"
+    },
+    {
       icon: <Clock className="w-6 h-6" />,
       title: "Horaires",
-      content: "Lun - Ven: 8h00 - 18h00\nSam: 9h00 - 13h00"
+      content: "7h30 - 18h00 (GMT / UTC+00)"
     }
   ];
 
-  const itServices = [
-    "Développement Informatique",
-    "Sécurité Informatique",
-    "Formation & Coaching",
-    "Réseaux & Maintenance",
-    "Vente de Matériel",
-    "Conseil Digital",
-  ];
-
-  const rhServices = [
-    "Expertise Juridique RH",
-    "Organisation RH",
-    "Recrutement",
-    "Externalisation RH",
-    "Gestion de Paie",
-    "Formation RH",
+  const subjects = [
+    { value: "expertise-digitale", label: "Expertise Digitale" },
+    { value: "cybersecurite", label: "Cybersécurité" },
+    { value: "transformation-org", label: "Transformation Organisationnelle" },
+    { value: "change-management", label: "Change Management" },
+    { value: "formations-pm", label: "Formations Management de Projet" },
+    { value: "autre", label: "Autre" }
   ];
 
   const inputClass =
@@ -124,10 +120,10 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10 text-center max-w-4xl mx-auto animate-fade-in-up">
             <h1 className="text-5xl font-bold mb-6 animate-slide-in-down">
-              Contactez <span className="text-white animate-glow">Digit & Talent</span>
+              <span className="text-white animate-glow">Contactez-nous</span>
             </h1>
             <p className="text-xl text-primary-100 mb-8 animate-slide-in-up animation-delay-300">
-              Vous avez un projet de transformation digitale ou besoin d'expertise RH ? Notre équipe est là pour vous accompagner.
+              Vous avez un projet de digitalisation, de transformation organisationnelle ou de formation ? Notre équipe est à votre écoute pour échanger sur vos besoins et construire ensemble la solution la plus adaptée.
             </p>
             <p className="text-lg text-white font-medium animate-fade-in animation-delay-600">
               Fueling Dreams, Forging Success
@@ -146,17 +142,17 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fade-in-up">
             {/* Contact Form */}
-            <div className="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 animate-slide-in-down">
-                Démarrons votre projet
+            <div className="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+                Envoyez-nous un message
               </h2>
 
               {isSubmitted ? (
-                <div className="text-center py-12 animate-fade-in-up">
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4 animate-pulse-slow" />
+                <div className="text-center py-12">
+                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Message envoyé !</h3>
                   <p className="text-gray-600 mb-6">
-                    Nous vous recontactons sous 24h pour discuter de votre projet.
+                    Merci pour votre message. Notre équipe vous recontactera dans les meilleurs délais.
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
@@ -166,7 +162,7 @@ const Contact = () => {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in animation-delay-300">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {error && (
                     <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
                       <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -227,7 +223,7 @@ const Contact = () => {
 
                     <div>
                       <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
-                        Entreprise/Organisation
+                        Entreprise
                       </label>
                       <input
                         type="text"
@@ -242,34 +238,27 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Service souhaité *
+                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Sujet *
                     </label>
                     <select
-                      id="service"
-                      name="service"
+                      id="subject"
+                      name="subject"
                       required
-                      value={formData.service}
+                      value={formData.subject}
                       onChange={handleInputChange}
                       className={inputClass}
                     >
-                      <option value="">Sélectionnez un service</option>
-                      <optgroup label="Services Informatiques">
-                        {itServices.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </optgroup>
-                      <optgroup label="Services Ressources Humaines">
-                        {rhServices.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </optgroup>
+                      <option value="">Sélectionnez un sujet</option>
+                      {subjects.map((s) => (
+                        <option key={s.value} value={s.value}>{s.label}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Description de votre besoin *
+                      Message *
                     </label>
                     <textarea
                       id="message"
@@ -279,7 +268,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       className={inputClass}
-                      placeholder="Décrivez-nous votre projet, vos objectifs, vos contraintes..."
+                      placeholder="Décrivez-nous votre projet, vos objectifs..."
                     />
                   </div>
 
@@ -298,7 +287,7 @@ const Contact = () => {
                       </>
                     ) : (
                       <>
-                        Envoyer le message
+                        Envoyer
                         <Send className="ml-2 w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-transform duration-500" />
                       </>
                     )}
@@ -310,21 +299,16 @@ const Contact = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-8 animate-slide-in-right animation-delay-300">
+            <div className="space-y-6">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-8 animate-slide-in-down">
+                <h2 className="text-3xl font-bold text-gray-900 mb-8">
                   Nos coordonnées
                 </h2>
-                <div className="space-y-6 animate-fade-in animation-delay-600">
+                <div className="space-y-4">
                   {contactInfo.map((info, index) => (
                     <div
                       key={index}
-                      className={`flex items-start space-x-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                        index === 0 ? 'animation-delay-300' :
-                        index === 1 ? 'animation-delay-600' :
-                        index === 2 ? 'animation-delay-1000' :
-                        'animation-delay-1500'
-                      }`}
+                      className="flex items-start space-x-4 p-5 bg-gray-50 rounded-2xl hover:bg-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
                     >
                       <div className="text-primary-700 flex-shrink-0 group-hover:scale-110 group-hover:text-accent-600 transition-all duration-300">
                         {info.icon}
@@ -333,7 +317,7 @@ const Contact = () => {
                         <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-primary-700 transition-colors duration-300">
                           {info.title}
                         </h3>
-                        <p className="text-gray-600 whitespace-pre-line group-hover:text-gray-700 transition-colors duration-300">
+                        <p className="text-gray-600 whitespace-pre-line">
                           {info.content}
                         </p>
                       </div>
@@ -343,73 +327,14 @@ const Contact = () => {
               </div>
 
               {/* Map Placeholder */}
-              <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 group animate-fade-in animation-delay-1000">
+              <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 group">
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-2 group-hover:scale-110 group-hover:text-primary-600 transition-all duration-300" />
-                  <p className="text-gray-500">Carte interactive</p>
-                  <p className="text-sm text-gray-400">Adidogome, Sagbado</p>
+                  <p className="text-gray-500 font-medium">Lomé, Togo</p>
+                  <p className="text-sm text-gray-400">Quartier Todman Casablanca</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-gray-50 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-28 h-28 bg-primary-700/5 rounded-full animate-pulse-slow"></div>
-          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-accent-600/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6 animate-slide-in-down">
-              Questions <span className="bg-gradient-to-r from-primary-700 to-accent-600 bg-clip-text text-transparent">fréquentes</span>
-            </h2>
-          </div>
-
-          <div className="space-y-6 animate-fade-in animation-delay-300">
-            {[
-              {
-                question: "Quel est le délai moyen pour un projet ?",
-                answer: "La durée varie selon la complexité : audit (1-2 semaines), développement (4-12 semaines), transformation RH (2-6 mois). Nous établissons un calendrier précis ensemble."
-              },
-              {
-                question: "Proposez-vous des audits gratuits ?",
-                answer: "Oui, nous proposons un diagnostic initial gratuit pour comprendre vos besoins et vous proposer une solution adaptée."
-              },
-              {
-                question: "Travaillez-vous avec des entreprises de toutes tailles ?",
-                answer: "Absolument ! Nous accompagnons des startups, PME, grandes entreprises et institutions publiques en adaptant nos services."
-              },
-              {
-                question: "Êtes-vous disponibles pour des interventions urgentes ?",
-                answer: "Oui, nous proposons un service d'urgence pour les problèmes critiques (sécurité, panne système, crise RH)."
-              },
-              {
-                question: "Proposez-vous un suivi post-projet ?",
-                answer: "Tous nos projets incluent une période de garantie et un suivi post-livraison. Nous proposons également des contrats de maintenance et support."
-              }
-            ].map((faq, index) => (
-              <div
-                key={index}
-                className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                  index === 0 ? 'animation-delay-300' :
-                  index === 1 ? 'animation-delay-600' :
-                  index === 2 ? 'animation-delay-1000' :
-                  index === 3 ? 'animation-delay-1500' :
-                  'animation-delay-2000'
-                }`}
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors duration-300">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>

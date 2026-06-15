@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -17,14 +16,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const servicesItems = [
-    { path: '/services-informatiques', label: 'Services Informatiques' },
-    { path: '/consulting-rh', label: 'Consulting Ressources Humaines' },
+  const navLinks = [
+    { path: '/', label: 'Accueil' },
+    { path: '/services', label: 'Services' },
+    { path: '/portfolio', label: 'Portfolio' },
+    { path: '/about', label: 'À propos' },
   ];
-
-  const isServicesActive =
-    location.pathname === '/services-informatiques' ||
-    location.pathname === '/consulting-rh';
 
   const navLinkClass = (path: string) =>
     `text-base font-bold transition-all duration-300 relative group ${
@@ -54,80 +51,19 @@ const Navbar = () => {
           <Link to="/" className="flex items-center group">
             <img
               src="/images/digit_and_talent_fullcolor_300px.png"
-              alt="Digit and Talent"
+              alt="DIGIT & TALENT"
               className="h-10 w-auto"
             />
           </Link>
 
           {/* Desktop Menu - Centered */}
           <div className="hidden md:flex items-center justify-center flex-1 space-x-8">
-            <Link to="/" className={navLinkClass('/')}>
-              Accueil
-              <span className={underlineClass('/')} />
-            </Link>
-
-            {/* Services Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsServicesOpen(true)}
-              onMouseLeave={() => setIsServicesOpen(false)}
-            >
-              <button
-                className={`text-base font-bold transition-all duration-300 relative group flex items-center space-x-1 ${
-                  isServicesActive
-                    ? isScrolled || !isHomePage
-                      ? 'text-primary-700'
-                      : 'text-white'
-                    : isScrolled || !isHomePage
-                    ? 'text-gray-700 hover:text-primary-700'
-                    : 'text-white/90 hover:text-white'
-                }`}
-              >
-                <span>Nos services</span>
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    isServicesOpen ? 'rotate-180' : ''
-                  }`}
-                />
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-300 ${
-                    isScrolled || !isHomePage ? 'bg-primary-700' : 'bg-white'
-                  } ${isServicesActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
-                />
-              </button>
-
-              <div
-                className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${
-                  isServicesOpen
-                    ? 'opacity-100 visible translate-y-0'
-                    : 'opacity-0 invisible -translate-y-2'
-                }`}
-              >
-                {servicesItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-primary-50 hover:text-primary-700 ${
-                      location.pathname === item.path
-                        ? 'text-primary-700 bg-primary-50'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <Link to="/realisations" className={navLinkClass('/realisations')}>
-              Nos réalisations
-              <span className={underlineClass('/realisations')} />
-            </Link>
-
-            <Link to="/a-propos" className={navLinkClass('/a-propos')}>
-              À propos
-              <span className={underlineClass('/a-propos')} />
-            </Link>
+            {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} className={navLinkClass(link.path)}>
+                {link.label}
+                <span className={underlineClass(link.path)} />
+              </Link>
+            ))}
           </div>
 
           {/* Contact Button - Right */}
@@ -140,7 +76,7 @@ const Navbar = () => {
                   : 'bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white hover:text-primary-700'
               }`}
             >
-              Contactez-nous
+              Contact
             </Link>
           </div>
 
@@ -162,66 +98,27 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t shadow-lg">
           <div className="px-4 py-4 space-y-4">
-            <Link
-              to="/"
-              onClick={() => setIsMenuOpen(false)}
-              className={`block text-base font-bold transition-colors duration-200 ${
-                location.pathname === '/'
-                  ? 'text-primary-700'
-                  : 'text-gray-700 hover:text-primary-700'
-              }`}
-            >
-              Accueil
-            </Link>
-
-            <div className="space-y-2">
-              <div className="text-base font-bold text-gray-900 px-2">Nos services</div>
-              {servicesItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block text-base font-semibold transition-colors duration-200 pl-4 ${
-                    location.pathname === item.path
-                      ? 'text-primary-700'
-                      : 'text-gray-600 hover:text-primary-700'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <Link
-              to="/realisations"
-              onClick={() => setIsMenuOpen(false)}
-              className={`block text-base font-bold transition-colors duration-200 ${
-                location.pathname === '/realisations'
-                  ? 'text-primary-700'
-                  : 'text-gray-700 hover:text-primary-700'
-              }`}
-            >
-              Nos réalisations
-            </Link>
-
-            <Link
-              to="/a-propos"
-              onClick={() => setIsMenuOpen(false)}
-              className={`block text-base font-bold transition-colors duration-200 ${
-                location.pathname === '/a-propos'
-                  ? 'text-primary-700'
-                  : 'text-gray-700 hover:text-primary-700'
-              }`}
-            >
-              À propos
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsMenuOpen(false)}
+                className={`block text-base font-bold transition-colors duration-200 ${
+                  location.pathname === link.path
+                    ? 'text-primary-700'
+                    : 'text-gray-700 hover:text-primary-700'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
 
             <Link
               to="/contact"
               onClick={() => setIsMenuOpen(false)}
               className="block w-full text-center bg-gradient-to-r from-primary-700 to-accent-600 text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg transition-all duration-200"
             >
-              Contactez-nous
+              Contact
             </Link>
           </div>
         </div>
