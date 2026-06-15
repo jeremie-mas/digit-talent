@@ -1,10 +1,21 @@
 import { defineConfig } from 'vite';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
+  plugins: [
+    tanstackStart({
+      server: { entry: 'server' },
+    }),
+    react(),
+    tailwindcss(),
+  ],
+  resolve: {
+    tsconfigPaths: true,
+  },
+  server: {
+    port: 5173,
+    open: true,
   },
 });
