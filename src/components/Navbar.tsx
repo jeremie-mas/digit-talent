@@ -13,7 +13,6 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -31,16 +30,16 @@ const Navbar = () => {
     `text-base font-bold transition-all duration-300 relative group ${
       location.pathname === path
         ? isScrolled || !isHomePage
-          ? 'text-blue-600'
+          ? 'text-primary-700'
           : 'text-white'
         : isScrolled || !isHomePage
-        ? 'text-gray-700 hover:text-blue-600'
+        ? 'text-gray-700 hover:text-primary-700'
         : 'text-white/90 hover:text-white'
     }`;
 
   const underlineClass = (path: string) =>
     `absolute -bottom-1 left-0 h-0.5 transition-all duration-300 ${
-      isScrolled || !isHomePage ? 'bg-blue-600' : 'bg-white'
+      isScrolled || !isHomePage ? 'bg-primary-700' : 'bg-white'
     } ${location.pathname === path ? 'w-full' : 'w-0 group-hover:w-full'}`;
 
   return (
@@ -52,8 +51,12 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <img src="/images/logo_dt.png" alt="Digit & Talent" className="h-12 w-auto" />
+          <Link to="/" className="flex items-center group">
+            <img
+              src="/images/digit_and_talent_fullcolor_300px.png"
+              alt="Digit and Talent"
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Menu - Centered */}
@@ -73,10 +76,10 @@ const Navbar = () => {
                 className={`text-base font-bold transition-all duration-300 relative group flex items-center space-x-1 ${
                   isServicesActive
                     ? isScrolled || !isHomePage
-                      ? 'text-blue-600'
+                      ? 'text-primary-700'
                       : 'text-white'
                     : isScrolled || !isHomePage
-                    ? 'text-gray-700 hover:text-blue-600'
+                    ? 'text-gray-700 hover:text-primary-700'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
@@ -88,7 +91,7 @@ const Navbar = () => {
                 />
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-300 ${
-                    isScrolled || !isHomePage ? 'bg-blue-600' : 'bg-white'
+                    isScrolled || !isHomePage ? 'bg-primary-700' : 'bg-white'
                   } ${isServicesActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
                 />
               </button>
@@ -104,9 +107,9 @@ const Navbar = () => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-blue-50 hover:text-blue-600 ${
+                    className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-primary-50 hover:text-primary-700 ${
                       location.pathname === item.path
-                        ? 'text-blue-600 bg-blue-50'
+                        ? 'text-primary-700 bg-primary-50'
                         : 'text-gray-700'
                     }`}
                   >
@@ -133,8 +136,8 @@ const Navbar = () => {
               to="/contact"
               className={`px-8 py-3 rounded-full text-base font-bold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 ${
                 isScrolled || !isHomePage
-                  ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white'
-                  : 'bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white hover:text-blue-600'
+                  ? 'bg-gradient-to-r from-primary-700 to-accent-600 text-white'
+                  : 'bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white hover:text-primary-700'
               }`}
             >
               Contactez-nous
@@ -163,7 +166,9 @@ const Navbar = () => {
               to="/"
               onClick={() => setIsMenuOpen(false)}
               className={`block text-base font-bold transition-colors duration-200 ${
-                location.pathname === '/' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+                location.pathname === '/'
+                  ? 'text-primary-700'
+                  : 'text-gray-700 hover:text-primary-700'
               }`}
             >
               Accueil
@@ -178,8 +183,8 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block text-base font-semibold transition-colors duration-200 pl-4 ${
                     location.pathname === item.path
-                      ? 'text-blue-600'
-                      : 'text-gray-600 hover:text-blue-600'
+                      ? 'text-primary-700'
+                      : 'text-gray-600 hover:text-primary-700'
                   }`}
                 >
                   {item.label}
@@ -192,8 +197,8 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
               className={`block text-base font-bold transition-colors duration-200 ${
                 location.pathname === '/realisations'
-                  ? 'text-blue-600'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? 'text-primary-700'
+                  : 'text-gray-700 hover:text-primary-700'
               }`}
             >
               Nos réalisations
@@ -204,8 +209,8 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
               className={`block text-base font-bold transition-colors duration-200 ${
                 location.pathname === '/a-propos'
-                  ? 'text-blue-600'
-                  : 'text-gray-700 hover:text-blue-600'
+                  ? 'text-primary-700'
+                  : 'text-gray-700 hover:text-primary-700'
               }`}
             >
               À propos
@@ -214,7 +219,7 @@ const Navbar = () => {
             <Link
               to="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className="block w-full text-center bg-gradient-to-r from-blue-600 to-red-600 text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg transition-all duration-200"
+              className="block w-full text-center bg-gradient-to-r from-primary-700 to-accent-600 text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg transition-all duration-200"
             >
               Contactez-nous
             </Link>

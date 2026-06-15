@@ -100,7 +100,7 @@ const Contact = () => {
   ];
 
   const inputClass =
-    "w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300";
+    "w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent hover:border-gray-400 transition-all duration-300";
 
   return (
     <div className="pt-16">
@@ -113,12 +113,12 @@ const Contact = () => {
               'url(https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1920)'
           }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-gray-900/70 to-blue-800/60 animate-gradient-shift"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/85 via-primary-800/70 to-accent-700/60 animate-gradient-shift"></div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-12 left-1/3 w-4 h-4 bg-white/20 rounded-full animate-twinkle"></div>
-          <div className="absolute top-2/3 right-1/3 w-6 h-6 bg-blue-400/30 rounded-full animate-twinkle animation-delay-1500"></div>
-          <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-blue-400/30 rounded-full animate-twinkle animation-delay-3000"></div>
+          <div className="absolute top-2/3 right-1/3 w-6 h-6 bg-primary-300/30 rounded-full animate-twinkle animation-delay-1500"></div>
+          <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-accent-400/30 rounded-full animate-twinkle animation-delay-3000"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -126,7 +126,7 @@ const Contact = () => {
             <h1 className="text-5xl font-bold mb-6 animate-slide-in-down">
               Contactez <span className="text-white animate-glow">Digit & Talent</span>
             </h1>
-            <p className="text-xl text-blue-100 mb-8 animate-slide-in-up animation-delay-300">
+            <p className="text-xl text-primary-100 mb-8 animate-slide-in-up animation-delay-300">
               Vous avez un projet de transformation digitale ou besoin d'expertise RH ? Notre équipe est là pour vous accompagner.
             </p>
             <p className="text-lg text-white font-medium animate-fade-in animation-delay-600">
@@ -139,8 +139,8 @@ const Contact = () => {
       {/* Contact Section */}
       <section className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-32 right-20 w-40 h-40 bg-blue-500/5 rounded-full animate-float"></div>
-          <div className="absolute bottom-32 left-20 w-32 h-32 bg-red-500/5 rounded-full animate-float-delayed"></div>
+          <div className="absolute top-32 right-20 w-40 h-40 bg-primary-700/5 rounded-full animate-float"></div>
+          <div className="absolute bottom-32 left-20 w-32 h-32 bg-accent-600/5 rounded-full animate-float-delayed"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -160,7 +160,7 @@ const Contact = () => {
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="bg-gradient-to-r from-blue-600 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
+                    className="bg-gradient-to-r from-primary-700 to-accent-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
                   >
                     Envoyer un autre message
                   </button>
@@ -286,7 +286,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-600 to-red-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-gradient-to-r from-primary-700 to-accent-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-primary-700/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {isLoading ? (
                       <>
@@ -326,11 +326,11 @@ const Contact = () => {
                         'animation-delay-1500'
                       }`}
                     >
-                      <div className="text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <div className="text-primary-700 flex-shrink-0 group-hover:scale-110 group-hover:text-accent-600 transition-all duration-300">
                         {info.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                        <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-primary-700 transition-colors duration-300">
                           {info.title}
                         </h3>
                         <p className="text-gray-600 whitespace-pre-line group-hover:text-gray-700 transition-colors duration-300">
@@ -345,7 +345,7 @@ const Contact = () => {
               {/* Map Placeholder */}
               <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 group animate-fade-in animation-delay-1000">
                 <div className="text-center">
-                  <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-2 group-hover:scale-110 group-hover:text-blue-500 transition-all duration-300" />
+                  <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-2 group-hover:scale-110 group-hover:text-primary-600 transition-all duration-300" />
                   <p className="text-gray-500">Carte interactive</p>
                   <p className="text-sm text-gray-400">Adidogome, Sagbado</p>
                 </div>
@@ -358,14 +358,14 @@ const Contact = () => {
       {/* FAQ Section */}
       <section className="py-20 bg-gray-50 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-28 h-28 bg-blue-500/5 rounded-full animate-pulse-slow"></div>
-          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-red-500/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
+          <div className="absolute top-20 left-1/4 w-28 h-28 bg-primary-700/5 rounded-full animate-pulse-slow"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-accent-600/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-4xl font-bold text-gray-900 mb-6 animate-slide-in-down">
-              Questions <span className="bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">fréquentes</span>
+              Questions <span className="bg-gradient-to-r from-primary-700 to-accent-600 bg-clip-text text-transparent">fréquentes</span>
             </h2>
           </div>
 
@@ -402,7 +402,7 @@ const Contact = () => {
                   'animation-delay-2000'
                 }`}
               >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors duration-300">
                   {faq.question}
                 </h3>
                 <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
