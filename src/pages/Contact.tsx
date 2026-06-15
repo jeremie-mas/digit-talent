@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Users, Code, Shield, Wrench, Scale, Briefcase, FileText } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  service: string;
+  message: string;
+}
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -12,19 +22,40 @@ const Contact = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Ici vous pourriez traiter l'envoi du formulaire
+    setIsLoading(true);
+    setError(null);
+
+    const { error: insertError } = await supabase
+      .from('contact_submissions')
+      .insert({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company || null,
+        service: formData.service,
+        message: formData.message,
+      });
+
+    setIsLoading(false);
+
+    if (insertError) {
+      setError("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
+      return;
+    }
+
     setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
   };
 
   const contactInfo = [
@@ -50,58 +81,49 @@ const Contact = () => {
     }
   ];
 
-  const services = [
+  const itServices = [
     "Développement Informatique",
     "Sécurité Informatique",
     "Formation & Coaching",
     "Réseaux & Maintenance",
     "Vente de Matériel",
     "Conseil Digital",
+  ];
+
+  const rhServices = [
     "Expertise Juridique RH",
     "Organisation RH",
     "Recrutement",
     "Externalisation RH",
     "Gestion de Paie",
-    "Formation RH"
+    "Formation RH",
   ];
 
-  const serviceIcons = {
-    "Développement Informatique": <Code className="w-4 h-4" />,
-    "Sécurité Informatique": <Shield className="w-4 h-4" />,
-    "Formation & Coaching": <FileText className="w-4 h-4" />,
-    "Réseaux & Maintenance": <Wrench className="w-4 h-4" />,
-    "Vente de Matériel": <Briefcase className="w-4 h-4" />,
-    "Conseil Digital": <Code className="w-4 h-4" />,
-    "Expertise Juridique RH": <Scale className="w-4 h-4" />,
-    "Organisation RH": <Users className="w-4 h-4" />,
-    "Recrutement": <Users className="w-4 h-4" />,
-    "Externalisation RH": <Briefcase className="w-4 h-4" />,
-    "Gestion de Paie": <FileText className="w-4 h-4" />,
-    "Formation RH": <FileText className="w-4 h-4" />,
-  };
+  const inputClass =
+    "w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300";
 
   return (
     <div className="pt-16">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform hover:scale-105 transition-transform duration-[3000ms]"
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1920)'
+            backgroundImage:
+              'url(https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1920)'
           }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-gray-900/70 to-green-900/60 animate-gradient-shift"></div>
-        
-        {/* Interactive particles */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-gray-900/70 to-blue-800/60 animate-gradient-shift"></div>
+
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-12 left-1/3 w-4 h-4 bg-white/20 rounded-full animate-twinkle"></div>
-          <div className="absolute top-2/3 right-1/3 w-6 h-6 bg-green-400/30 rounded-full animate-twinkle animation-delay-1500"></div>
+          <div className="absolute top-2/3 right-1/3 w-6 h-6 bg-blue-400/30 rounded-full animate-twinkle animation-delay-1500"></div>
           <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-blue-400/30 rounded-full animate-twinkle animation-delay-3000"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10 text-center max-w-4xl mx-auto animate-fade-in-up">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6 animate-slide-in-down">
+            <h1 className="text-5xl font-bold mb-6 animate-slide-in-down">
               Contactez <span className="text-white animate-glow">Digit & Talent</span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 animate-slide-in-up animation-delay-300">
@@ -116,12 +138,11 @@ const Contact = () => {
 
       {/* Contact Section */}
       <section className="py-20 bg-white relative overflow-hidden">
-        {/* Background decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-32 right-20 w-40 h-40 bg-green-500/5 rounded-full animate-float"></div>
-          <div className="absolute bottom-32 left-20 w-32 h-32 bg-blue-500/5 rounded-full animate-float-delayed"></div>
+          <div className="absolute top-32 right-20 w-40 h-40 bg-blue-500/5 rounded-full animate-float"></div>
+          <div className="absolute bottom-32 left-20 w-32 h-32 bg-red-500/5 rounded-full animate-float-delayed"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fade-in-up">
             {/* Contact Form */}
@@ -134,10 +155,25 @@ const Contact = () => {
                 <div className="text-center py-12 animate-fade-in-up">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4 animate-pulse-slow" />
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Message envoyé !</h3>
-                  <p className="text-gray-600">Nous vous recontactons sous 24h pour discuter de votre projet.</p>
+                  <p className="text-gray-600 mb-6">
+                    Nous vous recontactons sous 24h pour discuter de votre projet.
+                  </p>
+                  <button
+                    onClick={() => setIsSubmitted(false)}
+                    className="bg-gradient-to-r from-blue-600 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  >
+                    Envoyer un autre message
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in animation-delay-300">
+                  {error && (
+                    <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -150,7 +186,7 @@ const Contact = () => {
                         required
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        className={inputClass}
                         placeholder="Votre nom complet"
                       />
                     </div>
@@ -166,7 +202,7 @@ const Contact = () => {
                         required
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        className={inputClass}
                         placeholder="votre@email.com"
                       />
                     </div>
@@ -184,7 +220,7 @@ const Contact = () => {
                         required
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        className={inputClass}
                         placeholder="+228 XX XX XX XX"
                       />
                     </div>
@@ -199,38 +235,36 @@ const Contact = () => {
                         name="company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                        className={inputClass}
                         placeholder="Nom de votre entreprise"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
-                        Service souhaité *
-                      </label>
-                      <select
-                        id="service"
-                        name="service"
-                        required
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
-                      >
-                        <option value="">Sélectionnez un service</option>
-                        <optgroup label="Services Informatiques">
-                          {services.slice(0, 6).map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                        <optgroup label="Services Ressources Humaines">
-                          {services.slice(6).map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </optgroup>
-                      </select>
-                    </div>
+                  <div>
+                    <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Service souhaité *
+                    </label>
+                    <select
+                      id="service"
+                      name="service"
+                      required
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      className={inputClass}
+                    >
+                      <option value="">Sélectionnez un service</option>
+                      <optgroup label="Services Informatiques">
+                        {itServices.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </optgroup>
+                      <optgroup label="Services Ressources Humaines">
+                        {rhServices.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </optgroup>
+                    </select>
                   </div>
 
                   <div>
@@ -244,22 +278,33 @@ const Contact = () => {
                       rows={6}
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-all duration-300"
+                      className={inputClass}
                       placeholder="Décrivez-nous votre projet, vos objectifs, vos contraintes..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center group"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-blue-600 to-red-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    Envoyer le message
-                    <Send className="ml-2 w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-transform duration-500" />
+                    {isLoading ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        Envoyer le message
+                        <Send className="ml-2 w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-transform duration-500" />
+                      </>
+                    )}
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center">
-                    * Champs obligatoires
-                  </p>
+                  <p className="text-sm text-gray-500 text-center">* Champs obligatoires</p>
                 </form>
               )}
             </div>
@@ -272,12 +317,15 @@ const Contact = () => {
                 </h2>
                 <div className="space-y-6 animate-fade-in animation-delay-600">
                   {contactInfo.map((info, index) => (
-                    <div key={index} className={`flex items-start space-x-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                      index === 0 ? 'animation-delay-300' :
-                      index === 1 ? 'animation-delay-600' :
-                      index === 2 ? 'animation-delay-1000' :
-                      'animation-delay-1500'
-                    }`}>
+                    <div
+                      key={index}
+                      className={`flex items-start space-x-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
+                        index === 0 ? 'animation-delay-300' :
+                        index === 1 ? 'animation-delay-600' :
+                        index === 2 ? 'animation-delay-1000' :
+                        'animation-delay-1500'
+                      }`}
+                    >
                       <div className="text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         {info.icon}
                       </div>
@@ -309,16 +357,15 @@ const Contact = () => {
 
       {/* FAQ Section */}
       <section className="py-20 bg-gray-50 relative overflow-hidden">
-        {/* Background decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-28 h-28 bg-green-500/5 rounded-full animate-pulse-slow"></div>
-          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-blue-500/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
+          <div className="absolute top-20 left-1/4 w-28 h-28 bg-blue-500/5 rounded-full animate-pulse-slow"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-red-500/5 rounded-full animate-pulse-slow animation-delay-1000"></div>
         </div>
-        
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-4xl font-bold text-gray-900 mb-6 animate-slide-in-down">
-              Questions <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">fréquentes</span>
+              Questions <span className="bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">fréquentes</span>
             </h2>
           </div>
 
@@ -345,13 +392,16 @@ const Contact = () => {
                 answer: "Tous nos projets incluent une période de garantie et un suivi post-livraison. Nous proposons également des contrats de maintenance et support."
               }
             ].map((faq, index) => (
-              <div key={index} className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
-                index === 0 ? 'animation-delay-300' :
-                index === 1 ? 'animation-delay-600' :
-                index === 2 ? 'animation-delay-1000' :
-                index === 3 ? 'animation-delay-1500' :
-                'animation-delay-2000'
-              }`}>
+              <div
+                key={index}
+                className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group animate-slide-in-up ${
+                  index === 0 ? 'animation-delay-300' :
+                  index === 1 ? 'animation-delay-600' :
+                  index === 2 ? 'animation-delay-1000' :
+                  index === 3 ? 'animation-delay-1500' :
+                  'animation-delay-2000'
+                }`}
+              >
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                   {faq.question}
                 </h3>

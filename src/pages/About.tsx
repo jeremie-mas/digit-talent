@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  Users, Award, Heart, Target, Lightbulb, Zap, 
-  Star, ArrowRight, Briefcase, BookOpen, MapPin, Phone, Mail 
+import {
+  Users, Heart, Target, Lightbulb, Zap,
+  Star, ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -45,27 +45,6 @@ const About = () => {
       icon: <Users className="w-12 h-12" />,
       title: "Collaboration",
       description: "Nous croyons en la force du travail d'équipe et en une relation de confiance avec nos clients."
-    }
-  ];
-
-  const certifications = [
-    {
-      icon: <Award className="w-8 h-8" />,
-      title: "PMP Certified",
-      year: "2021",
-      number: "3154913"
-    },
-    {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "RGPD & Protection des données",
-      year: "2021",
-      number: "Conformité Togo"
-    },
-    {
-      icon: <Briefcase className="w-8 h-8" />,
-      title: "Fulbright Hubert Humphrey Fellowship",
-      year: "2015-2016",
-      number: "Syracuse University, NY"
     }
   ];
 
