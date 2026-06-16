@@ -1,5 +1,13 @@
 {
   "buildCommand": "npm run build",
+  "outputDirectory": "dist/client",
   "framework": null,
-  "installCommand": "npm install"
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/render" }
+  ],
+  "functions": {
+    "api/render.js": {
+      "includeFiles": "dist/server/**"
+    }
+  }
 }
