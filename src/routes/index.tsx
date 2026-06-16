@@ -53,11 +53,13 @@ function Home() {
           alt="IT specialist supervising a data center infrastructure"
           width={1920}
           height={1280}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-deep/92 to-navy/55" />
-        <div className="animate-float-slow pointer-events-none absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-accent/10 blur-[100px]" />
-        <div className="animate-float-slow pointer-events-none absolute -left-20 bottom-0 h-[300px] w-[300px] rounded-full bg-accent/5 blur-[80px]" style={{ animationDelay: "2s" }} />
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-deep/95 via-navy-deep/70 to-navy/30" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-orange/10" />
+        <div className="animate-float-slow pointer-events-none absolute -right-20 top-0 h-[600px] w-[600px] rounded-full bg-accent/25 blur-[120px]" />
+        <div className="animate-float-slow pointer-events-none absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-accent/15 blur-[100px]" style={{ animationDelay: "2s" }} />
+        <div className="animate-float-slow pointer-events-none absolute left-1/2 top-1/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-orange-soft/10 blur-[80px]" style={{ animationDelay: "1s" }} />
 
         <div className="relative mx-auto max-w-7xl px-5 py-28 lg:px-8 lg:py-40">
           <div className="max-w-3xl">
@@ -75,7 +77,7 @@ function Home() {
               <span className="gradient-text">{t("home.hero.titleD")}</span>.
             </h1>
             <p
-              className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/70"
+              className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/80"
               style={{ animationDelay: "260ms" }}
             >
               <strong className="font-semibold text-white/95">{t("home.hero.tagline")}</strong>{" "}<br/><br/>
@@ -90,7 +92,7 @@ function Home() {
               </Link>
             </div>
             <dl
-              className="animate-fade-up mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-10"
+              className="animate-fade-up mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/20 pt-10"
               style={{ animationDelay: "500ms" }}
             >
               <StatItem target={12} suffix="+" label={t("home.hero.stat1v")} />
