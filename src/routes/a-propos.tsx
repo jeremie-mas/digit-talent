@@ -4,6 +4,7 @@ import { Award, Sparkles, Shield, Network, Heart, Lightbulb, Target, Eye } from 
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
@@ -32,7 +33,7 @@ function About() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-24 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white">
         <img
           src={imagery.specialistMl}
           alt="Specialist analyzing machine learning data in a data center"
@@ -45,6 +46,7 @@ function About() {
           <p className="animate-fade-up mt-6 max-w-3xl text-lg leading-relaxed text-white/80" style={{ animationDelay: "240ms" }}>{t("about.hero.desc1")}</p>
           <p className="animate-fade-up mt-4 max-w-3xl leading-relaxed text-white/70" style={{ animationDelay: "340ms" }}>{t("about.hero.desc2")}</p>
         </div>
+        <Breadcrumb crumbs={[{ label: t("nav.about") }]} />
       </section>
 
       {/* Team imagery */}

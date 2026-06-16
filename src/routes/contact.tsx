@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { MapPin, Mail, Phone, Clock, Send } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ChangeEvent } from "react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -21,16 +22,41 @@ export const Route = createFileRoute("/contact")({
 function Contact() {
   const { t, tList } = useT();
   const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const subjects = tList("contact.subjects");
+
+  function validate(form: HTMLFormElement): Record<string, string> {
+    const errs: Record<string, string> = {};
+    const name = (form.elements.namedItem("name") as HTMLInputElement)?.value.trim();
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value.trim();
+    const subject = (form.elements.namedItem("subject") as HTMLSelectElement)?.value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value.trim();
+    if (!name) errs.name = t("contact.form.errorRequired");
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = t("contact.form.errorEmail");
+    if (!subject) errs.subject = t("contact.form.errorRequired");
+    if (!message || message.length < 10) errs.message = t("contact.form.errorMessage");
+    return errs;
+  }
+
+  function onBlur(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    setTouched((p) => ({ ...p, [e.target.name]: true }));
+  }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const errs = validate(e.currentTarget);
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      setTouched({ name: true, email: true, subject: true, message: true });
+      return;
+    }
     setSent(true);
   }
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-24 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white">
         <img
           src={imagery.futuristicBusiness}
           alt="Professional exchange in a digital environment"
@@ -42,6 +68,7 @@ function Contact() {
           <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>{t("contact.hero.title")}</h1>
           <p className="animate-fade-up mt-6 max-w-3xl text-lg leading-relaxed text-white/80" style={{ animationDelay: "240ms" }}>{t("contact.hero.desc")}</p>
         </div>
+        <Breadcrumb crumbs={[{ label: t("nav.contact") }]} />
       </section>
 
 
@@ -92,20 +119,35 @@ function Contact() {
               <h2 className="mt-4 text-2xl font-bold tracking-tight">{t("contact.form.title")}</h2>
               <p className="mt-1.5 text-sm text-muted-foreground">{t("contact.form.hint")}</p>
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
-                <Field label={t("contact.form.name")} optionalLabel={t("contact.form.optional")} name="name" required />
-                <Field label={t("contact.form.company")} optionalLabel={t("contact.form.optional")} name="company" />
-                <Field label={t("contact.form.email")} optionalLabel={t("contact.form.optional")} name="email" type="email" required />
-                <Field label={t("contact.form.phone")} optionalLabel={t("contact.form.optional")} name="phone" type="tel" />
+                <Field label={t("contact.form.name")} optionalLabel={t("contact.form.optional")} name="name" required error={touched.name ? errors.name : undefined} onBlur={onBlur} />
+                <Field label={t("contact.form.company")} optionalLabel={t("contact.form.optional")} name="company" onBlur={onBlur} />
+                <Field label={t("contact.form.email")} optionalLabel={t("contact.form.optional")} name="email" type="email" required error={touched.email ? errors.email : undefined} onBlur={onBlur} />
+                <Field label={t("contact.form.phone")} optionalLabel={t("contact.form.optional")} name="phone" type="tel" onBlur={onBlur} />
                 <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-sm font-medium">{t("contact.form.subject")}</label>
-                  <select required className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20">
+                  <select
+                    name="subject"
+                    onBlur={onBlur}
+                    className={`w-full rounded-lg border px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 bg-background ${touched.subject && errors.subject ? "border-destructive ring-2 ring-destructive/20" : "border-border"}`}
+                  >
                     <option value="">{t("contact.form.subjectPh")}</option>
                     {subjects.map((s) => <option key={s}>{s}</option>)}
                   </select>
+                  {touched.subject && errors.subject && (
+                    <p className="mt-1 text-xs text-destructive">{errors.subject}</p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-sm font-medium">{t("contact.form.message")}</label>
-                  <textarea required rows={5} className="w-full resize-y rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" />
+                  <textarea
+                    name="message"
+                    rows={5}
+                    onBlur={onBlur}
+                    className={`w-full resize-y rounded-lg border px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 bg-background ${touched.message && errors.message ? "border-destructive ring-2 ring-destructive/20" : "border-border"}`}
+                  />
+                  {touched.message && errors.message && (
+                    <p className="mt-1 text-xs text-destructive">{errors.message}</p>
+                  )}
                 </div>
               </div>
               <button type="submit" className="btn btn-primary mt-7">
@@ -116,11 +158,32 @@ function Contact() {
         </form>
         </Reveal>
       </section>
+
+      {/* Google Maps */}
+      <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-border shadow-[var(--shadow-soft)]">
+          <iframe
+            title="DIGIT & TALENT — Lomé"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d1.2255!3d6.1375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDgnMTUuMCJOIDHCsDEzJzMxLjgiRQ!5e0!3m2!1sfr!2stg!4v1"
+            width="100%"
+            height="380"
+            style={{ border: 0, display: "block" }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </Reveal>
     </SiteLayout>
   );
 }
 
-function Field({ label, name, type = "text", required = false, optionalLabel = "(optional)" }: { label: string; name: string; type?: string; required?: boolean; optionalLabel?: string }) {
+function Field({
+  label, name, type = "text", required = false, optionalLabel = "(optional)", error, onBlur,
+}: {
+  label: string; name: string; type?: string; required?: boolean; optionalLabel?: string;
+  error?: string; onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
     <div>
       <label htmlFor={name} className="mb-1.5 block text-sm font-medium">
@@ -131,8 +194,10 @@ function Field({ label, name, type = "text", required = false, optionalLabel = "
         name={name}
         type={type}
         required={required}
-        className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+        onBlur={onBlur}
+        className={`w-full rounded-lg border px-4 py-2.5 text-sm transition outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 bg-background ${error ? "border-destructive ring-2 ring-destructive/20" : "border-border"}`}
       />
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
     </div>
   );
 }

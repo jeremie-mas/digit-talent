@@ -4,6 +4,7 @@ import { Cpu, ShieldCheck, Workflow, Users, GraduationCap, Check, ArrowRight } f
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -29,7 +30,7 @@ function Services() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-24 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white">
         <img
           src={imagery.aiNeural}
           alt="Consultant analyzing AI systems"
@@ -41,6 +42,7 @@ function Services() {
           <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>{t("services.hero.title")}</h1>
           <p className="animate-fade-up mt-6 max-w-3xl text-lg leading-relaxed text-white/75" style={{ animationDelay: "240ms" }}>{t("services.hero.desc")}</p>
         </div>
+        <Breadcrumb crumbs={[{ label: t("nav.services") }]} />
       </section>
 
       <section className="mx-auto max-w-7xl space-y-14 px-5 py-24 lg:px-8">

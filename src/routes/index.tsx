@@ -4,6 +4,8 @@ import { ArrowRight, Cpu, ShieldCheck, Workflow, Users, GraduationCap, CheckCirc
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
+import { useCountUp } from "@/hooks/useCountUp";
+import type { RefObject } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,6 +18,20 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
+
+function StatItem({ target, suffix = "", label }: { target: number; suffix?: string; label: string }) {
+  const { value, ref } = useCountUp(target);
+  return (
+    <div ref={ref as RefObject<HTMLDivElement>}>
+      <dt className="text-4xl font-bold text-accent sm:text-5xl tabular-nums">
+        {value}{suffix}
+      </dt>
+      <dd className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/45">
+        {label}
+      </dd>
+    </div>
+  );
+}
 
 function Home() {
   const { t } = useT();
@@ -77,18 +93,9 @@ function Home() {
               className="animate-fade-up mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-10"
               style={{ animationDelay: "500ms" }}
             >
-              {[
-                { k: t("home.hero.stat1k"), v: t("home.hero.stat1v") },
-                { k: t("home.hero.stat2k"), v: t("home.hero.stat2v") },
-                { k: t("home.hero.stat3k"), v: t("home.hero.stat3v") },
-              ].map((s) => (
-                <div key={s.v}>
-                  <dt className="text-4xl font-bold text-accent sm:text-5xl">{s.k}</dt>
-                  <dd className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/45">
-                    {s.v}
-                  </dd>
-                </div>
-              ))}
+              <StatItem target={12} suffix="+" label={t("home.hero.stat1v")} />
+              <StatItem target={10} label={t("home.hero.stat2v")} />
+              <StatItem target={5} label={t("home.hero.stat3v")} />
             </dl>
           </div>
         </div>
