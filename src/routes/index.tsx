@@ -77,6 +77,8 @@ function Home() {
               {t("home.hero.titleC")}{" "}
               <span className="gradient-text">{t("home.hero.titleD")}</span>.
             </h1>
+
+            
             <p
               className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/80"
               style={{ animationDelay: "260ms" }}

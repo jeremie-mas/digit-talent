@@ -35,7 +35,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logoAsset} alt="DIGIT & TALENT"   className={`h-28 w-auto transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
+            <img src={logoAsset} alt="DIGIT & TALENT"   className={`h-25 w-auto transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
           </Link>
           <nav className="hidden items-center gap-9 lg:flex">
             {nav.map((n) => {
