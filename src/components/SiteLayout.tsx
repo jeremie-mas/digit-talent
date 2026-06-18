@@ -27,25 +27,27 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header
-        className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
           scrolled
             ? "border-border/80 bg-background/95 shadow-[0_2px_20px_-4px_rgb(15_23_42/0.12)] backdrop-blur-xl"
-            : "border-border/40 bg-background/80 backdrop-blur-lg"
+            : "border-transparent bg-transparent backdrop-blur-none"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logoAsset} alt="DIGIT & TALENT" className="h-10 w-auto" />
+            <img src={logoAsset} alt="DIGIT & TALENT"   className={`h-28 w-auto transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
           </Link>
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-9 lg:flex">
             {nav.map((n) => {
               const active = location.pathname === n.to;
               return (
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`relative text-sm font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:text-foreground hover:after:scale-x-100 ${
-                    active ? "text-accent after:scale-x-100" : "text-foreground/65"
+                  className={`relative text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                    active
+                      ? "text-accent after:scale-x-100"
+                      : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
                   }`}
                 >
                   {n.label}
@@ -60,7 +62,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2 lg:hidden">
             <LanguageSwitcher />
             <button
-              className="rounded-md p-2 text-foreground/70 hover:text-foreground"
+              className={`rounded-md p-2 transition-colors ${scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"}`}
               onClick={() => setOpen((v) => !v)}
               aria-label="Menu"
             >
@@ -97,7 +99,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         )}
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        {children}
+      </main>
 
       {/* WhatsApp floating button */}
       <a

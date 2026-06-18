@@ -37,10 +37,11 @@ function Home() {
   const { t } = useT();
   const expertises = [
     { icon: Cpu, title: t("home.exp.digital.title"), desc: t("home.exp.digital.desc") },
-    { icon: ShieldCheck, title: t("home.exp.cyber.title"), desc: t("home.exp.cyber.desc") },
+    { icon: GraduationCap, title: t("home.exp.training.title"), desc: t("home.exp.training.desc") },
     { icon: Workflow, title: t("home.exp.transfo.title"), desc: t("home.exp.transfo.desc") },
     { icon: Users, title: t("home.exp.change.title"), desc: t("home.exp.change.desc") },
-    { icon: GraduationCap, title: t("home.exp.training.title"), desc: t("home.exp.training.desc") },
+    { icon: ShieldCheck, title: t("home.exp.cyber.title"), desc: t("home.exp.cyber.desc") },
+
   ];
   const reasons = [t("home.why.r1"), t("home.why.r2"), t("home.why.r3"), t("home.why.r4")];
 

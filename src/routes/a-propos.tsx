@@ -33,7 +33,7 @@ function About() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white pt-[150px]">
         <img
           src={imagery.specialistMl}
           alt="Specialist analyzing machine learning data in a data center"

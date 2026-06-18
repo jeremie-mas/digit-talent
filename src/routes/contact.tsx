@@ -56,7 +56,7 @@ function Contact() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white pt-[150px]">
         <img
           src={imagery.futuristicBusiness}
           alt="Professional exchange in a digital environment"
