@@ -196,10 +196,10 @@ export const en: Dict = {
   "contact.form.again": "Send another message",
   "contact.subjects": [
     "Digital Expertise",
-    "Cybersecurity",
+    "PM Training",
     "Organizational Transformation",
     "Change Management",
-    "PM Training",
+    "Cybersecurity",
     "Other",
   ],
 };
