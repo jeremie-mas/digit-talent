@@ -65,8 +65,8 @@ function Services() {
                     </div>
                     {s.key === "training" && (
                       <div className="flex items-center gap-6">
-                        <img src={imagery.capmBadge} alt="CAPM" className="h-20 w-12 object-contain" />
-                        <img src={imagery.pmpBadge} alt="PMP" className="h-20 w-12 object-contain" />
+                        <img src={imagery.capmBadge} alt="CAPM" className="h-20 w-15 object-contain" />
+                        <img src={imagery.pmpBadge} alt="PMP" className="h-20 w-15 object-contain" />
                       </div>
                     )}
                   </div>

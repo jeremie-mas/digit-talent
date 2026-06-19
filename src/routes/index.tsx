@@ -48,7 +48,7 @@ function Home() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-deep text-primary-foreground">
+      <section className="relative overflow-hidden bg-navy-deep text-primary-foreground pt-[80px]">
         <img
           src={imagery.technicianServer}
           alt="IT specialist supervising a data center infrastructure"
@@ -162,8 +162,8 @@ function Home() {
                     </div>
                     {e.icon === GraduationCap && (
                       <div className="flex items-center gap-6">
-                        <img src={imagery.capmBadge} alt="CAPM" className="h-10 w-12 object-contain" />
-                        <img src={imagery.pmpBadge} alt="PMP" className="h-10 w-12 object-contain" />
+                        <img src={imagery.capmBadge} alt="CAPM" className="h-15 w-12 object-contain" />
+                        <img src={imagery.pmpBadge} alt="PMP" className="h-15 w-12 object-contain" />
                       </div>
                     )}
                   </div>
