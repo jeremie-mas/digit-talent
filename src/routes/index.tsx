@@ -156,8 +156,16 @@ function Home() {
             {expertises.map((e, idx) => (
               <Reveal key={e.title} delay={idx * 70}>
                 <div className="group card-surface card-interactive h-full p-7">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy/90 text-accent shadow-sm transition duration-300 group-hover:scale-105 group-hover:bg-accent group-hover:text-white">
-                    <e.icon className="h-6 w-6" />
+                  <div className="flex items-center gap-12">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy/90 text-accent shadow-sm transition duration-300 group-hover:scale-105 group-hover:bg-accent group-hover:text-white">
+                      <e.icon className="h-6 w-6" />
+                    </div>
+                    {e.icon === GraduationCap && (
+                      <div className="flex items-center gap-6">
+                        <img src={imagery.capmBadge} alt="CAPM" className="h-12 w-12 object-contain" />
+                        <img src={imagery.pmpBadge} alt="PMP" className="h-12 w-12 object-contain" />
+                      </div>
+                    )}
                   </div>
                   <h3 className="mt-6 text-base font-semibold tracking-tight">{e.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.desc}</p>

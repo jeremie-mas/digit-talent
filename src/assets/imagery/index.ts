@@ -8,6 +8,8 @@ import surrealPortrait from "./surreal-portrait.jpg";
 import teamLaughing from "./team-laughing.jpg";
 import technicianServer from "./technician-server.jpg";
 import vrHeadset from "./vr-headset.jpg";
+import pmpBadge from "./pmp-badge.png";
+import capmBadge from "./capm-badge.png";
 
 export const imagery = {
   aiNeural,
@@ -20,4 +22,6 @@ export const imagery = {
   teamLaughing,
   technicianServer,
   vrHeadset,
+  pmpBadge,
+  capmBadge,
 };

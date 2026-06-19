@@ -10,7 +10,7 @@ export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services — DIGIT & TALENT" },
-      { name: "description", content: "Digital, cybersecurity, organizational transformation, PROSCI ADKAR change management and CAPM/PMP training." },
+      { name: "description", content: "Digital, PROSCI ADKAR change management and CAPM/PMP training, organizational transformation, cybersecurity." },
       { property: "og:title", content: "Our services — DIGIT & TALENT" },
       { property: "og:description", content: "A full range of services for your digital and organizational transformation." },
     ],
@@ -59,8 +59,16 @@ function Services() {
                   <span className="absolute left-6 top-6 rounded-full bg-white/95 px-3.5 py-1 font-mono text-xs font-semibold text-navy shadow-sm">0{i + 1}</span>
                 </div>
                 <div className="p-8 lg:p-12">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-accent transition duration-300 group-hover:bg-accent group-hover:text-white">
-                    <s.icon className="h-6 w-6" />
+                  <div className="flex items-center gap-50">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-accent transition duration-300 group-hover:bg-accent group-hover:text-white">
+                      <s.icon className="h-6 w-6" />
+                    </div>
+                    {s.key === "training" && (
+                      <div className="flex items-center gap-6">
+                        <img src={imagery.capmBadge} alt="CAPM" className="h-20 w-12 object-contain" />
+                        <img src={imagery.pmpBadge} alt="PMP" className="h-20 w-12 object-contain" />
+                      </div>
+                    )}
                   </div>
                   <h2 className="mt-6 text-2xl font-bold tracking-tight">{title}</h2>
                   <p className="mt-1.5 text-sm font-medium text-muted-foreground">{t(`svc.${s.key}.subtitle`)}</p>

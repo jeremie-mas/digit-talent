@@ -134,7 +134,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <img
               src={logoAsset}
               alt="DIGIT & TALENT"
-              className="h-12 w-auto brightness-0 invert"
+              className="h-16 w-auto brightness-0 invert"
             />
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60">
               {t("footer.tagline")}
