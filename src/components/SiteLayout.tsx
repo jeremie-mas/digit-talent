@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, useEffect, type ReactNode } from "react";
-import { Menu, X, Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { Menu, X, Mail, Phone, MapPin, ArrowUp, Linkedin, Facebook, Twitter, Instagram } from "lucide-react";
 import logoAsset from "@/assets/digit-talent-logo.png";
 import { useT } from "@/i18n/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -142,6 +142,20 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60">
               {t("footer.tagline")}
             </p>
+            <div className="mt-5 flex gap-4">
+              <a href="https://www.linkedin.com/company/digit-talent" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/45 transition hover:text-accent">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="https://www.facebook.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/45 transition hover:text-accent">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="https://twitter.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" className="text-white/45 transition hover:text-accent">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="https://www.instagram.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/45 transition hover:text-accent">
+                <Instagram className="h-5 w-5" />
+              </a>
+            </div>
           </div>
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">

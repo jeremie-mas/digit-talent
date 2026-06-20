@@ -32,6 +32,8 @@
   --color-navy-deep: var(--navy-deep);
   --color-orange: var(--orange);
   --color-orange-soft: var(--orange-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
   --color-blue-light: var(--blue-light);
   --color-anthracite: var(--anthracite);
   --font-display: "Poppins", sans-serif;
@@ -41,11 +43,13 @@
 :root {
   --radius: 0.75rem;
 
-  /* Brand colors — exact values from brand guide */
+  /* Brand colors */
   --navy: #0A2540;
   --navy-deep: #061829;
   --orange: #F26A21;
   --orange-soft: #FF9A66;
+  --blue: #2563EB;
+  --blue-soft: #60A5FA;
   --blue-light: #76B0EA;
   --anthracite: #2F2F2F;
 

@@ -35,8 +35,8 @@ function About() {
     <SiteLayout>
       <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white pt-[150px]">
         <img
-          src={imagery.specialistMl}
-          alt="Specialist analyzing machine learning data in a data center"
+          src={imagery.technicianServer}
+          alt="IT technician supervising server infrastructure"
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/30" />
