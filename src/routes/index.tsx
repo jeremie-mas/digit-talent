@@ -56,7 +56,7 @@ function Home() {
           height={1280}
           className="absolute inset-0 h-full w-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/10 to-transparent" />
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 72% 42%, rgba(219,234,254,0.35) 0%, transparent 52%)" }} />
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-blue-light/15" />
         <div className="animate-float-slow pointer-events-none absolute -right-20 top-0 h-[600px] w-[600px] rounded-full bg-blue-light/25 blur-[120px]" />
