@@ -10,8 +10,8 @@ import type { RefObject } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DIGIT & TALENT — Digital & talent consulting in Africa" },
-      { name: "description", content: "Consulting firm based in Lomé. Digital transformation, cybersecurity, change management and PMP training since 2012." },
+      { title: "Digit & Talent | Digital Transformation & Talent Consulting in Africa" },
+      { name: "description", content: "Consulting firm based in Lomé. Digital transformation,Project Management training, change management and cybersecurity since 2012." },
       { property: "og:title", content: "DIGIT & TALENT — Fueling Dreams, Forging Success" },
       { property: "og:description", content: "The convergence of digital and talent at the service of your growth." },
     ],
@@ -68,22 +68,20 @@ function Home() {
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
               {t("home.hero.badge")}
             </span>
+            
             <h1
               className="animate-fade-up mt-7 text-5xl font-bold leading-[1.04] text-white sm:text-6xl lg:text-7xl"
               style={{ animationDelay: "120ms" }}
             >
               {t("home.hero.titleA")}{" "}
               <span className="gradient-text">{t("home.hero.titleB")}</span>{" "}
-              {t("home.hero.titleC")}{" "}
-              <span className="gradient-text">{t("home.hero.titleD")}</span>.
+              {t("home.hero.titleC")}{t("home.hero.titleD") && <>{" "}<span className="gradient-text">{t("home.hero.titleD")}</span></>}.
             </h1>
 
-            
             <p
               className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/80"
               style={{ animationDelay: "260ms" }}
             >
-              <strong className="font-semibold text-white/95">{t("home.hero.tagline")}</strong>{" "}<br/><br/>
               {t("home.hero.desc")}
             </p>
             <div className="animate-fade-up mt-10 flex flex-wrap gap-4" style={{ animationDelay: "380ms" }}>
@@ -205,6 +203,78 @@ function Home() {
           </ul>
         </div>
       </section>
+
+      {/* Clients */}
+      <section className="border-y border-border/60 bg-secondary/30 py-16 overflow-hidden">
+        <div className="mb-10 text-center">
+          <p className="eyebrow justify-center">{t("home.clients.eyebrow")}</p>
+          <h2 className="mt-3 text-2xl font-bold">{t("home.clients.title")}</h2>
+        </div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-secondary/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-secondary/30 to-transparent" />
+          <div className="flex animate-marquee gap-16 w-max">
+            {[
+              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
+              { img: imagery.sitelso, alt: "SITELSO" },
+              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
+              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
+              { img: imagery.planInternational, alt: "Plan International" },
+              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
+              { img: imagery.sitelso, alt: "SITELSO" },
+              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
+              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
+              { img: imagery.planInternational, alt: "Plan International" },
+            ].map((c, i) => (
+              <div key={i} className="flex h-20 w-40 shrink-0 items-center justify-center">
+                <img src={c.img} alt={c.alt} className="max-h-16 w-auto max-w-[140px] object-contain grayscale opacity-60 transition duration-300 hover:grayscale-0 hover:opacity-100" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Témoignages */}
+      <Reveal as="section" className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+        <div className="mb-10 text-center">
+          <p className="eyebrow justify-center">{t("home.testimonials.eyebrow")}</p>
+          <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{t("home.testimonials.title")}</h2>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {[
+            {
+              quote: t("home.testimonials.q1"),
+              name: "Kofi Mensah",
+              role: t("home.testimonials.r1"),
+              org: "Plan International Togo",
+              initials: "KM",
+            },
+            {
+              quote: t("home.testimonials.q2"),
+              name: "Aminata Diallo",
+              role: t("home.testimonials.r2"),
+              org: "Banque Mondiale – Projet FSRP",
+              initials: "AD",
+            },
+          ].map((t2) => (
+            <div key={t2.name} className="card-surface flex flex-col gap-5 p-8">
+              <svg className="h-8 w-8 shrink-0 text-accent opacity-60" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                <path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7c0-1.657 1.343-3 3-3V8zm18 0c-3.314 0-6 2.686-6 6v10h10V14h-7c0-1.657 1.343-3 3-3V8z" />
+              </svg>
+              <p className="flex-1 text-sm leading-relaxed text-muted-foreground italic">{t2.quote}</p>
+              <div className="flex items-center gap-3 border-t border-border/60 pt-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-bold text-white">
+                  {t2.initials}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold">{t2.name}</p>
+                  <p className="text-xs text-muted-foreground">{t2.role} · {t2.org}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Reveal>
 
       {/* CTA */}
       <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">

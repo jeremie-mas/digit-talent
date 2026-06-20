@@ -224,3 +224,14 @@
   .reveal { opacity: 1 !important; transform: none !important; }
   .animate-float-slow { animation: none !important; }
 }
+
+@keyframes slide-up {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0%);   opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@utility animate-marquee { animation: marquee 28s linear infinite; }

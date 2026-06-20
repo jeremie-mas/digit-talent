@@ -93,6 +93,36 @@ function Services() {
       </section>
 
 
+      {/* Clients */}
+      <section className="border-y border-border/60 bg-secondary/30 py-16 overflow-hidden">
+        <div className="mb-10 text-center">
+          <p className="eyebrow justify-center">{t("home.clients.eyebrow")}</p>
+          <h2 className="mt-3 text-2xl font-bold">{t("home.clients.title")}</h2>
+        </div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-secondary/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-secondary/30 to-transparent" />
+          <div className="flex animate-marquee gap-16 w-max">
+            {[
+              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
+              { img: imagery.sitelso, alt: "SITELSO" },
+              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
+              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
+              { img: imagery.planInternational, alt: "Plan International" },
+              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
+              { img: imagery.sitelso, alt: "SITELSO" },
+              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
+              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
+              { img: imagery.planInternational, alt: "Plan International" },
+            ].map((c, i) => (
+              <div key={i} className="flex h-20 w-40 shrink-0 items-center justify-center">
+                <img src={c.img} alt={c.alt} className="max-h-16 w-auto max-w-[140px] object-contain grayscale opacity-60 transition duration-300 hover:grayscale-0 hover:opacity-100" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
         <div className="rounded-3xl bg-secondary p-10 lg:p-14">
           <div className="grid gap-8 lg:grid-cols-2 lg:items-center">

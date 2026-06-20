@@ -25,7 +25,7 @@ export const en: Dict = {
   "home.hero.titleC": "Converge",
   "home.hero.titleD": "",
   "home.hero.tagline": "Fueling Dreams, Forging Success.",
-  "home.hero.desc": "Based in Lomé, Togo, DIGIT & TALENT is a consulting firm that supports African businesses in their digital transformation, training and human capital development. Since 2012, we have combined technological expertise, PM expertise with HR excellence to help organizations become more efficient, agile, and resilient.",
+  "home.hero.desc": "Based in Lomé, Togo, DIGIT & TALENT is a consulting firm that supports African businesses in their digital transformation, training and human capital development. Since 2012, we combine technology, project management, and HR expertise to help organizations become more efficient, agile, and resilient.",
   "home.hero.ctaServices": "Discover our services",
   "home.hero.ctaContact": "Contact us",
   "home.hero.stat1k": "12+",
@@ -69,6 +69,18 @@ export const en: Dict = {
   "home.why.r2": "A team of certified consultants (PMP, PMI-PMOCP)",
   "home.why.r3": "A unique integrated IT + HR approach",
   "home.why.r4": "Local presence based in Lomé, attuned to local realities",
+
+  // Home — Clients
+  "home.clients.eyebrow": "They trusted us",
+  "home.clients.title": "Organizations that have placed their trust in us",
+
+  // Home — Testimonials
+  "home.testimonials.eyebrow": "Client testimonials",
+  "home.testimonials.title": "What our clients say",
+  "home.testimonials.q1": "DIGIT & TALENT transformed our approach to project management. Thanks to their CAPM/PMP training, our team gained in rigor and efficiency. A serious and reliable partner, deeply rooted in African realities.",
+  "home.testimonials.r1": "Director of Operations",
+  "home.testimonials.q2": "As part of the FSRP Project, DIGIT & TALENT supported us with professionalism in the digital transformation of our processes. Their local expertise makes all the difference.",
+  "home.testimonials.r2": "Project Coordinator",
 
   // Home — CTA
   "home.cta.title": "Ready to transform your organization?",
@@ -272,6 +284,18 @@ export const fr: Dict = {
   "home.why.r2": "Une équipe de consultants certifiés (PMP, PMI-PMOCP)",
   "home.why.r3": "Une approche intégrée IT + RH, unique sur le marché",
   "home.why.r4": "Une présence de proximité, basée à Lomé, à l'écoute des réalités locales",
+
+  // Home — Clients
+  "home.clients.eyebrow": "Ils nous ont fait confiance",
+  "home.clients.title": "Les organisations qui nous ont accordé leur confiance",
+
+  // Home — Testimonials
+  "home.testimonials.eyebrow": "Témoignages clients",
+  "home.testimonials.title": "Ce que disent nos clients",
+  "home.testimonials.q1": "DIGIT & TALENT a transformé notre approche de la gestion de projets. Grâce à leurs formations CAPM/PMP, notre équipe a gagné en rigueur et en efficacité. Un partenaire sérieux, ancré dans les réalités africaines.",
+  "home.testimonials.r1": "Directeur des Opérations",
+  "home.testimonials.q2": "Dans le cadre du Projet FSRP, DIGIT & TALENT nous a accompagnés avec professionnalisme dans la transformation digitale de nos processus. Leur expertise locale fait toute la différence.",
+  "home.testimonials.r2": "Coordinatrice de Projet",
 
   // Home — CTA
   "home.cta.title": "Prêt à transformer votre organisation ?",

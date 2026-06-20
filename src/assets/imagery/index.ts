@@ -10,6 +10,11 @@ import technicianServer from "./technician-server.jpg";
 import vrHeadset from "./vr-headset.jpg";
 import pmpBadge from "./pmp-badge.png";
 import capmBadge from "./capm-badge.png";
+import worldBank from "./world-bank.png";
+import sitelso from "./sitelso.png";
+import ministereAgriculture from "./ministere-agriculture.png";
+import ueWbPage from "./ue-wb-page.png";
+import planInternational from "./plan-international.png";
 
 export const imagery = {
   aiNeural,
@@ -24,4 +29,9 @@ export const imagery = {
   vrHeadset,
   pmpBadge,
   capmBadge,
+  worldBank,
+  sitelso,
+  ministereAgriculture,
+  ueWbPage,
+  planInternational,
 };
