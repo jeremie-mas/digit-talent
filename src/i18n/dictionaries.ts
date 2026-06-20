@@ -38,7 +38,7 @@ export const en: Dict = {
   // Home — Value
   "home.value.eyebrow": "Our value proposition",
   "home.value.title": "An integrated approach, designed for Africa",
-  "home.value.desc": "At the crossroads of digital transformation, cybersecurity, organizational change, and project management training, DIGIT & TALENT offers an integrated, tailor-made approach designed to meet the realities of African businesses and institutions.",
+  "home.value.desc": "At the crossroads of digital transformation, project management training, organizational change, and cybersecurity, DIGIT & TALENT offers an integrated, tailor-made approach designed to meet the realities of African businesses and institutions.",
 
   // Home — Imagery labels
   "home.img.ai": "Artificial Intelligence",
@@ -239,7 +239,7 @@ export const fr: Dict = {
   "home.hero.titleC": "et des",
   "home.hero.titleD": "talents",
   "home.hero.tagline": "Fueling Dreams, Forging Success.",
-  "home.hero.desc": "Cabinet de conseil basé à Lomé, Togo, DIGIT & TALENT accompagne les entreprises africaines dans leur transformation digitale et le développement de leur capital humain. Depuis 2012, nous conjuguons expertise technologique, expertise en gestion de projet et excellence en gestion des ressources humaines pour faire de chaque organisation une entreprise performante, agile et résiliente.",
+  "home.hero.desc": "Cabinet de conseil basé à Lomé, Togo, DIGIT & TALENT accompagne les entreprises africaines dans leur transformation digitale et le développement de leur capital humain. Depuis 2012, nous conjuguons expertise technologique, expertise en gestion de projet (PM) et excellence en gestion des ressources humaines pour faire de chaque organisation une entreprise performante, agile et résiliente.",
   "home.hero.ctaServices": "Découvrir nos services",
   "home.hero.ctaContact": "Nous contacter",
   "home.hero.stat1k": "12+",
@@ -252,7 +252,7 @@ export const fr: Dict = {
   // Home — Value
   "home.value.eyebrow": "Notre proposition de valeur",
   "home.value.title": "Une approche intégrée, pensée pour l'Afrique",
-  "home.value.desc": "À la croisée du digital, de la cybersécurité, de la transformation organisationnelle et de la formation en management de projet, DIGIT & TALENT propose une approche intégrée et sur-mesure, pensée pour répondre aux réalités des entreprises et institutions africaines.",
+  "home.value.desc": "À la croisée du digital, de la formation en management de projet, de la transformation organisationnelle et de la cybersécurité, DIGIT & TALENT propose une approche intégrée et sur-mesure, pensée pour répondre aux réalités des entreprises et institutions africaines.",
 
   // Home — Imagery labels
   "home.img.ai": "Intelligence Artificielle",
