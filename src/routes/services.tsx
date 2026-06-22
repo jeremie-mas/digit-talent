@@ -21,7 +21,7 @@ export const Route = createFileRoute("/services")({
 function Services() {
   const { t } = useT();
   const services = [
-    { icon: Cpu, image: imagery.coworkersAi, key: "digital", points: ["p1","p2","p3","p4","p5"] },
+    { icon: Cpu, image: imagery.specialistMl, key: "digital", points: ["p1","p2","p3","p4","p5"] },
     { icon: GraduationCap, image: imagery.leaderPitch, key: "training", points: ["p1","p2","p3","p4"] },
     { icon: Workflow, image: imagery.futuristicBusiness, key: "transfo", points: ["p1","p2","p3","p4"] },
     { icon: Users, image: imagery.teamLaughing, key: "change", points: ["p1","p2","p3","p4"] },

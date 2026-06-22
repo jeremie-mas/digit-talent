@@ -63,7 +63,7 @@ function Home() {
         <div className="animate-float-slow pointer-events-none absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-accent/15 blur-[100px]" style={{ animationDelay: "2s" }} />
         <div className="animate-float-slow pointer-events-none absolute left-1/2 top-1/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-blue-light/8 blur-[80px]" style={{ animationDelay: "1s" }} />
 
-        <div className="relative mx-auto max-w-7xl px-5 py-28 lg:px-8 lg:py-40">
+        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
           <div className="max-w-3xl">
             <span className="animate-fade-in-soft inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent backdrop-blur-sm">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />

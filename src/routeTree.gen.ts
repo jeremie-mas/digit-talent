@@ -13,6 +13,11 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TalentRecrutementRouteImport } from './routes/talent/recrutement'
+import { Route as TalentPlacementsRouteImport } from './routes/talent/placements'
+import { Route as TalentGestionPaieRouteImport } from './routes/talent/gestion-paie'
+import { Route as TalentExternalisationRhRouteImport } from './routes/talent/externalisation-rh'
+import { Route as TalentDigitalisationRhRouteImport } from './routes/talent/digitalisation-rh'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -34,18 +39,53 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TalentRecrutementRoute = TalentRecrutementRouteImport.update({
+  id: '/talent/recrutement',
+  path: '/talent/recrutement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentPlacementsRoute = TalentPlacementsRouteImport.update({
+  id: '/talent/placements',
+  path: '/talent/placements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentGestionPaieRoute = TalentGestionPaieRouteImport.update({
+  id: '/talent/gestion-paie',
+  path: '/talent/gestion-paie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentExternalisationRhRoute = TalentExternalisationRhRouteImport.update({
+  id: '/talent/externalisation-rh',
+  path: '/talent/externalisation-rh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentDigitalisationRhRoute = TalentDigitalisationRhRouteImport.update({
+  id: '/talent/digitalisation-rh',
+  path: '/talent/digitalisation-rh',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
+  '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
+  '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
+  '/talent/gestion-paie': typeof TalentGestionPaieRoute
+  '/talent/placements': typeof TalentPlacementsRoute
+  '/talent/recrutement': typeof TalentRecrutementRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
+  '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
+  '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
+  '/talent/gestion-paie': typeof TalentGestionPaieRoute
+  '/talent/placements': typeof TalentPlacementsRoute
+  '/talent/recrutement': typeof TalentRecrutementRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +93,46 @@ export interface FileRoutesById {
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
+  '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
+  '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
+  '/talent/gestion-paie': typeof TalentGestionPaieRoute
+  '/talent/placements': typeof TalentPlacementsRoute
+  '/talent/recrutement': typeof TalentRecrutementRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a-propos' | '/contact' | '/services'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/services'
+    | '/talent/digitalisation-rh'
+    | '/talent/externalisation-rh'
+    | '/talent/gestion-paie'
+    | '/talent/placements'
+    | '/talent/recrutement'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a-propos' | '/contact' | '/services'
-  id: '__root__' | '/' | '/a-propos' | '/contact' | '/services'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/services'
+    | '/talent/digitalisation-rh'
+    | '/talent/externalisation-rh'
+    | '/talent/gestion-paie'
+    | '/talent/placements'
+    | '/talent/recrutement'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/services'
+    | '/talent/digitalisation-rh'
+    | '/talent/externalisation-rh'
+    | '/talent/gestion-paie'
+    | '/talent/placements'
+    | '/talent/recrutement'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +140,11 @@ export interface RootRouteChildren {
   AProposRoute: typeof AProposRoute
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
+  TalentDigitalisationRhRoute: typeof TalentDigitalisationRhRoute
+  TalentExternalisationRhRoute: typeof TalentExternalisationRhRoute
+  TalentGestionPaieRoute: typeof TalentGestionPaieRoute
+  TalentPlacementsRoute: typeof TalentPlacementsRoute
+  TalentRecrutementRoute: typeof TalentRecrutementRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +177,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/talent/recrutement': {
+      id: '/talent/recrutement'
+      path: '/talent/recrutement'
+      fullPath: '/talent/recrutement'
+      preLoaderRoute: typeof TalentRecrutementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/placements': {
+      id: '/talent/placements'
+      path: '/talent/placements'
+      fullPath: '/talent/placements'
+      preLoaderRoute: typeof TalentPlacementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/gestion-paie': {
+      id: '/talent/gestion-paie'
+      path: '/talent/gestion-paie'
+      fullPath: '/talent/gestion-paie'
+      preLoaderRoute: typeof TalentGestionPaieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/externalisation-rh': {
+      id: '/talent/externalisation-rh'
+      path: '/talent/externalisation-rh'
+      fullPath: '/talent/externalisation-rh'
+      preLoaderRoute: typeof TalentExternalisationRhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/digitalisation-rh': {
+      id: '/talent/digitalisation-rh'
+      path: '/talent/digitalisation-rh'
+      fullPath: '/talent/digitalisation-rh'
+      preLoaderRoute: typeof TalentDigitalisationRhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AProposRoute: AProposRoute,
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
+  TalentDigitalisationRhRoute: TalentDigitalisationRhRoute,
+  TalentExternalisationRhRoute: TalentExternalisationRhRoute,
+  TalentGestionPaieRoute: TalentGestionPaieRoute,
+  TalentPlacementsRoute: TalentPlacementsRoute,
+  TalentRecrutementRoute: TalentRecrutementRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
