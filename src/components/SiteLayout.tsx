@@ -20,15 +20,15 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     talentTimer.current = setTimeout(() => setTalentOpen(false), 180);
   };
 
-  const talentItems = [
-    { to: "/talent/recrutement", label: "Recrutement" },
-    { to: "/talent/externalisation-rh", label: "Externalisation RH" },
-    { to: "/talent/placements", label: "Placements" },
-    { to: "/talent/gestion-paie", label: "Gestion de la Paie" },
-    { to: "/talent/digitalisation-rh", label: "Digitalisation RH" },
-  ] as const;
   const { location } = useRouterState();
   const { t } = useT();
+  const talentItems = [
+    { to: "/talent/recrutement", label: t("nav.talent.recrutement") },
+    { to: "/talent/externalisation-rh", label: t("nav.talent.externalisation") },
+    { to: "/talent/placements", label: t("nav.talent.placements") },
+    { to: "/talent/gestion-paie", label: t("nav.talent.paie") },
+    { to: "/talent/digitalisation-rh", label: t("nav.talent.digitalisation") },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);

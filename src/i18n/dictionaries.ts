@@ -217,6 +217,11 @@ export const en: Dict = {
 
   // Nav — Talent
   "nav.talent": "Talent",
+  "nav.talent.recrutement": "Recruitment",
+  "nav.talent.externalisation": "HR Outsourcing",
+  "nav.talent.placements": "Placements",
+  "nav.talent.paie": "Payroll Management",
+  "nav.talent.digitalisation": "HR Digitalization",
 
   // Talent — Recrutement
   "talent.recrutement.eyebrow": "Talent · Recruitment",
@@ -526,6 +531,11 @@ export const fr: Dict = {
 
   // Nav — Talent
   "nav.talent": "Talent",
+  "nav.talent.recrutement": "Recrutement",
+  "nav.talent.externalisation": "Externalisation RH",
+  "nav.talent.placements": "Placements",
+  "nav.talent.paie": "Gestion de la Paie",
+  "nav.talent.digitalisation": "Digitalisation RH",
 
   // Talent — Recrutement
   "talent.recrutement.eyebrow": "Talent · Recrutement",
