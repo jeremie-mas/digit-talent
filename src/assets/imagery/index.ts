@@ -1,4 +1,5 @@
 import aiNeural from "./ai-neural.jpg";
+import professionalMan from "./professional-man.png";
 import coworkersAi from "./coworkers-ai.jpg";
 import facialRecognition from "./facial-recognition.jpg";
 import futuristicBusiness from "./futuristic-business.jpg";
@@ -34,4 +35,5 @@ export const imagery = {
   ministereAgriculture,
   ueWbPage,
   planInternational,
+  professionalMan,
 };

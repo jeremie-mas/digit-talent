@@ -50,8 +50,8 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-deep text-primary-foreground pt-[80px]">
         <img
-          src={imagery.specialistMl}
-          alt="Machine learning specialist working with data systems"
+          src={imagery.professionalMan}
+          alt="Professional consultant in a tech office environment"
           width={1920}
           height={1280}
           className="absolute inset-0 h-full w-full object-cover opacity-60"
