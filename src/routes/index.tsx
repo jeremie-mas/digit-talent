@@ -228,7 +228,7 @@ function Home() {
               { img: imagery.planInternational, alt: "Plan International" },
             ].map((c, i) => (
               <div key={i} className="flex h-20 w-40 shrink-0 items-center justify-center">
-                <img src={c.img} alt={c.alt} className="max-h-16 w-auto max-w-[140px] object-contain grayscale opacity-60 transition duration-300 hover:grayscale-0 hover:opacity-100" />
+                <img src={c.img} alt={c.alt} className="max-h-16 w-auto max-w-[140px] object-contain opacity-90" />
               </div>
             ))}
           </div>
