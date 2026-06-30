@@ -9,6 +9,8 @@ import surrealPortrait from "./surreal-portrait.jpg";
 import teamLaughing from "./team-laughing.jpg";
 import technicianServer from "./technician-server.jpg";
 import vrHeadset from "./vr-headset.jpg";
+import authorizedTrainingPartner from "./authorized-training-partner.png";
+import management from "./management.png";
 import pmpBadge from "./pmp-badge.png";
 import capmBadge from "./capm-badge.png";
 import worldBank from "./world-bank.png";
@@ -22,7 +24,9 @@ export const imagery = {
   coworkersAi,
   facialRecognition,
   futuristicBusiness,
+  authorizedTrainingPartner,
   leaderPitch,
+  management,
   specialistMl,
   surrealPortrait,
   teamLaughing,

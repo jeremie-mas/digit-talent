@@ -60,6 +60,14 @@ function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/50 to-transparent" />
           {/* Fondu bas */}
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
+          {/* Badge — bas droite, comme sur woloyem */}
+          <div className="animate-float-slow absolute bottom-90 right-80 z-10" style={{ animationDelay: "300ms" }}>
+            <img
+              src={imagery.authorizedTrainingPartner}
+              alt="Authorized Training Partner"
+              className="h-52 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+            />
+          </div>
         </div>
 
         {/* Décorations lumineuses */}
@@ -99,7 +107,7 @@ function Home() {
               </Link>
             </div>
             <dl
-              className="animate-fade-up mt-16 grid grid-cols-3 gap-6 border-t border-white/20 pt-10"
+              className="animate-fade-up mt-10 grid grid-cols-3 gap-6 border-t border-white/20 pt-10"
               style={{ animationDelay: "500ms" }}
             >
               <StatItem target={12} suffix="+" label={t("home.hero.stat1v")} />
@@ -123,10 +131,10 @@ function Home() {
       <section className="mx-auto max-w-7xl px-5 pb-4 lg:px-8">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {([
-            { src: imagery.aiNeural, label: t("home.img.ai"), alt: "Consultant analyzing a neural network" },
-            { src: imagery.leaderPitch, label: t("home.img.perf"), alt: "Leader presenting performance metrics" },
-            { src: imagery.specialistMl, label: t("home.img.data"), alt: "Data center specialist" },
-            { src: imagery.teamLaughing, label: t("home.img.talents"), alt: "Team collaborating in open space" },
+            { src: imagery.leaderPitch, label: t("home.img.ai"), alt: "Trainer leading a professional certification session" },
+            { src: imagery.management, label: t("home.img.data"), alt: "Team managing a complex project" },
+            { src: imagery.futuristicBusiness, label: t("home.img.perf"), alt: "Digital transformation strategy" },
+            { src: imagery.teamLaughing, label: t("home.img.talents"), alt: "Talent development and collaboration" },
           ]).map((i, idx) => (
             <Reveal key={i.label} delay={idx * 80}>
               <figure className="group relative overflow-hidden rounded-2xl">

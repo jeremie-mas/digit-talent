@@ -41,10 +41,10 @@ export const en: Dict = {
   "home.value.desc": "At the crossroads of digital transformation, project management training, organizational change, and cybersecurity, DIGIT & TALENT offers an integrated, tailor-made approach designed to meet the realities of African businesses and institutions.",
 
   // Home — Imagery labels
-  "home.img.ai": "Artificial Intelligence",
-  "home.img.perf": "Steering & Performance",
-  "home.img.data": "Data & Machine Learning",
-  "home.img.talents": "Talent & Collaboration",
+  "home.img.ai": "Professional Training & Certifications",
+  "home.img.perf": "Digital Transformation",
+  "home.img.data": "Project Management",
+  "home.img.talents": "Talent Development",
 
   // Home — Expertises
   "home.expertises.eyebrow": "Our areas of expertise",
@@ -353,10 +353,10 @@ export const fr: Dict = {
   "home.value.desc": "À la croisée du digital, de la formation en management de projet, de la transformation organisationnelle et de la cybersécurité, DIGIT & TALENT propose une approche intégrée et sur-mesure, pensée pour répondre aux réalités des entreprises et institutions africaines.",
 
   // Home — Imagery labels
-  "home.img.ai": "Intelligence Artificielle",
-  "home.img.perf": "Pilotage & Performance",
-  "home.img.data": "Data & Machine Learning",
-  "home.img.talents": "Talents & Collaboration",
+  "home.img.ai": "Formations & Certifications",
+  "home.img.perf": "Transformation Digitale",
+  "home.img.data": "Gestion de Projets",
+  "home.img.talents": "Développement des Talents",
 
   // Home — Expertises
   "home.expertises.eyebrow": "Nos domaines d'expertise",
