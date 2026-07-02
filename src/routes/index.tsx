@@ -61,11 +61,11 @@ function Home() {
           {/* Fondu bas */}
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
           {/* Badge — bas droite, comme sur woloyem */}
-          <div className="animate-float-slow absolute bottom-90 right-80 z-10" style={{ animationDelay: "300ms" }}>
+          <div className="animate-float-slow absolute bottom-50 right-80 z-10" style={{ animationDelay: "300ms" }}>
             <img
               src={imagery.authorizedTrainingPartner}
               alt="Authorized Training Partner"
-              className="h-52 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+              className="h-70 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
             />
           </div>
         </div>
