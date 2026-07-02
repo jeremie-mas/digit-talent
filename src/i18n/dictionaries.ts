@@ -333,7 +333,7 @@ export const fr: Dict = {
   // Home — Hero
   "home.hero.badge": "Lomé · Togo · Depuis 2012",
   "home.hero.titleA": "Votre transformation",
-  "home.hero.titleB": "commence ici !",
+  "home.hero.titleB": "commence ici!",
   "home.hero.titleC": "",
   "home.hero.titleD": "",
   "home.hero.tagline": "Fueling Dreams, Forging Success.",
