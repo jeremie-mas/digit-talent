@@ -50,7 +50,7 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-deep text-primary-foreground pt-[80px] min-h-[680px]">
         {/* Image fond droite */}
-        <div className="absolute right-0 top-0 h-full w-[52%] hidden lg:block">
+        <div className="absolute right-0 top-0 h-full w-[52%] hidden sm:block">
           <img
             src={imagery.professionalMan}
             alt="Professional consultant in a tech office environment"
