@@ -50,7 +50,7 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-deep text-primary-foreground pt-[80px] min-h-[680px]">
         {/* Image fond droite */}
-        <div className="absolute right-0 top-0 h-full w-[52%] block">
+        <div className="absolute inset-x-0 top-0 h-[390px] sm:inset-y-0 sm:left-auto sm:h-auto sm:w-[52%]">
           <img
             src={imagery.professionalMan}
             alt="Professional consultant in a tech office environment"
@@ -61,11 +61,14 @@ function Home() {
           {/* Fondu bas */}
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
           {/* Badge — bas droite, comme sur woloyem */}
-          <div className="animate-float-slow absolute bottom-50 right-80 z-10" style={{ animationDelay: "300ms" }}>
+          <div
+            className="animate-float-slow absolute bottom-8 right-5 z-10 sm:bottom-50 sm:right-80"
+            style={{ animationDelay: "300ms" }}
+          >
             <img
               src={imagery.authorizedTrainingPartner}
               alt="Authorized Training Partner"
-              className="h-70 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+              className="h-28 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)] sm:h-70"
             />
           </div>
         </div>
@@ -75,7 +78,7 @@ function Home() {
         <div className="animate-float-slow pointer-events-none absolute left-1/3 top-0 h-[500px] w-[500px] rounded-full bg-blue-light/10 blur-[120px]" />
 
         {/* Contenu texte — gauche */}
-        <div className="relative mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-32">
+        <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-[350px] sm:py-24 lg:px-8 lg:py-32">
           <div className="max-w-xl">
             <span className="animate-fade-in-soft inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent backdrop-blur-sm">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />

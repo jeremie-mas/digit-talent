@@ -6,6 +6,7 @@ import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { submitContact } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -24,6 +25,8 @@ function Contact() {
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const subjects = tList("contact.subjects");
 
   function validate(form: HTMLFormElement): Record<string, string> {
@@ -43,7 +46,7 @@ function Contact() {
     setTouched((p) => ({ ...p, [e.target.name]: true }));
   }
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs = validate(e.currentTarget);
     if (Object.keys(errs).length > 0) {
@@ -51,7 +54,37 @@ function Contact() {
       setTouched({ name: true, email: true, subject: true, message: true });
       return;
     }
-    setSent(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const result = await submitContact({
+        data: {
+          name: String(formData.get("name") ?? ""),
+          company: String(formData.get("company") ?? ""),
+          email: String(formData.get("email") ?? ""),
+          phone: String(formData.get("phone") ?? ""),
+          subject: String(formData.get("subject") ?? ""),
+          message: String(formData.get("message") ?? ""),
+          website: String(formData.get("website") ?? ""),
+        },
+      });
+
+      if (!result.success) {
+        setSubmitError("Impossible d'envoyer votre message pour le moment. Réessayez plus tard.");
+        return;
+      }
+
+      form.reset();
+      setSent(true);
+    } catch {
+      setSubmitError("Impossible d'envoyer votre message pour le moment. Réessayez plus tard.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -118,6 +151,14 @@ function Contact() {
               <p className="eyebrow">{t("contact.form.eyebrow")}</p>
               <h2 className="mt-4 text-2xl font-bold tracking-tight">{t("contact.form.title")}</h2>
               <p className="mt-1.5 text-sm text-muted-foreground">{t("contact.form.hint")}</p>
+              <input
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
                 <Field label={t("contact.form.name")} optionalLabel={t("contact.form.optional")} name="name" required error={touched.name ? errors.name : undefined} onBlur={onBlur} />
                 <Field label={t("contact.form.company")} optionalLabel={t("contact.form.optional")} name="company" onBlur={onBlur} />
@@ -150,8 +191,9 @@ function Contact() {
                   )}
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary mt-7">
-                {t("contact.form.submit")} <Send className="h-4 w-4" />
+              {submitError && <p className="mt-5 text-sm text-destructive" role="alert">{submitError}</p>}
+              <button type="submit" className="btn btn-primary mt-7" disabled={submitting}>
+                {submitting ? `${t("contact.form.submit")}…` : t("contact.form.submit")} <Send className="h-4 w-4" />
               </button>
             </>
           )}
