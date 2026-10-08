@@ -9,41 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as FormationRouteImport } from './routes/formation'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FormationRouteImport } from './routes/formation'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as TalentRecrutementRouteImport } from './routes/talent/recrutement'
-import { Route as TalentPlacementsRouteImport } from './routes/talent/placements'
-import { Route as TalentGestionPaieRouteImport } from './routes/talent/gestion-paie'
-import { Route as TalentExternalisationRhRouteImport } from './routes/talent/externalisation-rh'
-import { Route as TalentDigitalisationRhRouteImport } from './routes/talent/digitalisation-rh'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as AdminTeamRouteImport } from './routes/admin/team'
-import { Route as AdminServicesRouteImport } from './routes/admin/services'
-import { Route as AdminPromotionsRouteImport } from './routes/admin/promotions'
-import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as AdminFormationsRouteImport } from './routes/admin/formations'
-import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminArticlesRouteImport } from './routes/admin/articles'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminFormationsRouteImport } from './routes/admin/formations'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
+import { Route as AdminPromotionsRouteImport } from './routes/admin/promotions'
+import { Route as AdminServicesRouteImport } from './routes/admin/services'
+import { Route as AdminTeamRouteImport } from './routes/admin/team'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as TalentDigitalisationRhRouteImport } from './routes/talent/digitalisation-rh'
+import { Route as TalentExternalisationRhRouteImport } from './routes/talent/externalisation-rh'
+import { Route as TalentGestionPaieRouteImport } from './routes/talent/gestion-paie'
+import { Route as TalentPlacementsRouteImport } from './routes/talent/placements'
+import { Route as TalentRecrutementRouteImport } from './routes/talent/recrutement'
 
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FormationRoute = FormationRouteImport.update({
-  id: '/formation',
-  path: '/formation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AProposRoute = AProposRouteImport.update({
@@ -51,14 +41,19 @@ const AProposRoute = AProposRouteImport.update({
   path: '/a-propos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+const FormationRoute = FormationRouteImport.update({
+  id: '/formation',
+  path: '/formation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -66,64 +61,9 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TalentRecrutementRoute = TalentRecrutementRouteImport.update({
-  id: '/talent/recrutement',
-  path: '/talent/recrutement',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TalentPlacementsRoute = TalentPlacementsRouteImport.update({
-  id: '/talent/placements',
-  path: '/talent/placements',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TalentGestionPaieRoute = TalentGestionPaieRouteImport.update({
-  id: '/talent/gestion-paie',
-  path: '/talent/gestion-paie',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TalentExternalisationRhRoute = TalentExternalisationRhRouteImport.update({
-  id: '/talent/externalisation-rh',
-  path: '/talent/externalisation-rh',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TalentDigitalisationRhRoute = TalentDigitalisationRhRouteImport.update({
-  id: '/talent/digitalisation-rh',
-  path: '/talent/digitalisation-rh',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminTeamRoute = AdminTeamRouteImport.update({
-  id: '/admin/team',
-  path: '/admin/team',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminServicesRoute = AdminServicesRouteImport.update({
-  id: '/admin/services',
-  path: '/admin/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminPromotionsRoute = AdminPromotionsRouteImport.update({
-  id: '/admin/promotions',
-  path: '/admin/promotions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminProjectsRoute = AdminProjectsRouteImport.update({
-  id: '/admin/projects',
-  path: '/admin/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin/login',
-  path: '/admin/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminFormationsRoute = AdminFormationsRouteImport.update({
-  id: '/admin/formations',
-  path: '/admin/formations',
+const AdminArticlesRoute = AdminArticlesRouteImport.update({
+  id: '/admin/articles',
+  path: '/admin/articles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
@@ -131,9 +71,69 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/admin/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminArticlesRoute = AdminArticlesRouteImport.update({
-  id: '/admin/articles',
-  path: '/admin/articles',
+const AdminFormationsRoute = AdminFormationsRouteImport.update({
+  id: '/admin/formations',
+  path: '/admin/formations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProjectsRoute = AdminProjectsRouteImport.update({
+  id: '/admin/projects',
+  path: '/admin/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPromotionsRoute = AdminPromotionsRouteImport.update({
+  id: '/admin/promotions',
+  path: '/admin/promotions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/admin/services',
+  path: '/admin/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/admin/team',
+  path: '/admin/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentDigitalisationRhRoute = TalentDigitalisationRhRouteImport.update({
+  id: '/talent/digitalisation-rh',
+  path: '/talent/digitalisation-rh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentExternalisationRhRoute = TalentExternalisationRhRouteImport.update({
+  id: '/talent/externalisation-rh',
+  path: '/talent/externalisation-rh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentGestionPaieRoute = TalentGestionPaieRouteImport.update({
+  id: '/talent/gestion-paie',
+  path: '/talent/gestion-paie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentPlacementsRoute = TalentPlacementsRouteImport.update({
+  id: '/talent/placements',
+  path: '/talent/placements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalentRecrutementRoute = TalentRecrutementRouteImport.update({
+  id: '/talent/recrutement',
+  path: '/talent/recrutement',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -305,25 +305,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/formation': {
-      id: '/formation'
-      path: '/formation'
-      fullPath: '/formation'
-      preLoaderRoute: typeof FormationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/a-propos': {
@@ -333,18 +319,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AProposRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/formation': {
+      id: '/formation'
+      path: '/formation'
+      fullPath: '/formation'
+      preLoaderRoute: typeof FormationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -354,88 +347,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/talent/recrutement': {
-      id: '/talent/recrutement'
-      path: '/talent/recrutement'
-      fullPath: '/talent/recrutement'
-      preLoaderRoute: typeof TalentRecrutementRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/talent/placements': {
-      id: '/talent/placements'
-      path: '/talent/placements'
-      fullPath: '/talent/placements'
-      preLoaderRoute: typeof TalentPlacementsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/talent/gestion-paie': {
-      id: '/talent/gestion-paie'
-      path: '/talent/gestion-paie'
-      fullPath: '/talent/gestion-paie'
-      preLoaderRoute: typeof TalentGestionPaieRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/talent/externalisation-rh': {
-      id: '/talent/externalisation-rh'
-      path: '/talent/externalisation-rh'
-      fullPath: '/talent/externalisation-rh'
-      preLoaderRoute: typeof TalentExternalisationRhRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/talent/digitalisation-rh': {
-      id: '/talent/digitalisation-rh'
-      path: '/talent/digitalisation-rh'
-      fullPath: '/talent/digitalisation-rh'
-      preLoaderRoute: typeof TalentDigitalisationRhRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/team': {
-      id: '/admin/team'
-      path: '/admin/team'
-      fullPath: '/admin/team'
-      preLoaderRoute: typeof AdminTeamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/services': {
-      id: '/admin/services'
-      path: '/admin/services'
-      fullPath: '/admin/services'
-      preLoaderRoute: typeof AdminServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/promotions': {
-      id: '/admin/promotions'
-      path: '/admin/promotions'
-      fullPath: '/admin/promotions'
-      preLoaderRoute: typeof AdminPromotionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/projects': {
-      id: '/admin/projects'
-      path: '/admin/projects'
-      fullPath: '/admin/projects'
-      preLoaderRoute: typeof AdminProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/admin/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/formations': {
-      id: '/admin/formations'
-      path: '/admin/formations'
-      fullPath: '/admin/formations'
-      preLoaderRoute: typeof AdminFormationsRouteImport
+    '/admin/articles': {
+      id: '/admin/articles'
+      path: '/admin/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminArticlesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/dashboard': {
@@ -445,11 +361,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/articles': {
-      id: '/admin/articles'
-      path: '/admin/articles'
-      fullPath: '/admin/articles'
-      preLoaderRoute: typeof AdminArticlesRouteImport
+    '/admin/formations': {
+      id: '/admin/formations'
+      path: '/admin/formations'
+      fullPath: '/admin/formations'
+      preLoaderRoute: typeof AdminFormationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/projects': {
+      id: '/admin/projects'
+      path: '/admin/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/promotions': {
+      id: '/admin/promotions'
+      path: '/admin/promotions'
+      fullPath: '/admin/promotions'
+      preLoaderRoute: typeof AdminPromotionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/admin/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/digitalisation-rh': {
+      id: '/talent/digitalisation-rh'
+      path: '/talent/digitalisation-rh'
+      fullPath: '/talent/digitalisation-rh'
+      preLoaderRoute: typeof TalentDigitalisationRhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/externalisation-rh': {
+      id: '/talent/externalisation-rh'
+      path: '/talent/externalisation-rh'
+      fullPath: '/talent/externalisation-rh'
+      preLoaderRoute: typeof TalentExternalisationRhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/gestion-paie': {
+      id: '/talent/gestion-paie'
+      path: '/talent/gestion-paie'
+      fullPath: '/talent/gestion-paie'
+      preLoaderRoute: typeof TalentGestionPaieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/placements': {
+      id: '/talent/placements'
+      path: '/talent/placements'
+      fullPath: '/talent/placements'
+      preLoaderRoute: typeof TalentPlacementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talent/recrutement': {
+      id: '/talent/recrutement'
+      path: '/talent/recrutement'
+      fullPath: '/talent/recrutement'
+      preLoaderRoute: typeof TalentRecrutementRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
