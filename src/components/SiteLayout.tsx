@@ -39,6 +39,8 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const nav = [
     { to: "/", label: t("nav.home") },
     { to: "/services", label: t("nav.services") },
+    { to: "/formation", label: t("nav.training") },
+    { to: "/blog", label: t("nav.blog") },
     { to: "/a-propos", label: t("nav.about") },
     { to: "/contact", label: t("nav.contact") },
   ] as const;
@@ -60,7 +62,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             </span>
           </Link>
           <nav className="hidden items-center gap-9 lg:flex">
-            {nav.slice(0, 2).map((n) => {
+            {nav.slice(0, 3).map((n) => {
               const active = location.pathname === n.to;
               return (
                 <Link
@@ -111,7 +113,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               )}
             </div>
 
-            {nav.slice(2).map((n) => {
+            {nav.slice(3).map((n) => {
               const active = location.pathname === n.to;
               return (
                 <Link
@@ -146,7 +148,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         {open && (
           <div className="border-t border-border/60 bg-background/98">
             <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4">
-              {nav.slice(0, 2).map((n) => (
+              {nav.slice(0, 3).map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
@@ -194,7 +196,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 )}
               </div>
 
-              {nav.slice(2).map((n) => (
+              {nav.slice(3).map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}

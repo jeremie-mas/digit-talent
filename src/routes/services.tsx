@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Cpu, ShieldCheck, Workflow, Users, GraduationCap, Check, ArrowRight } from "lucide-react";
+import { Cpu, ShieldCheck, Workflow, Users, GraduationCap, Check, ArrowRight, Quote } from "lucide-react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { useState, useEffect } from "react";
+import { getPublicProjects, type PublicProject } from "@/lib/api/public.data.functions";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -20,14 +22,46 @@ export const Route = createFileRoute("/services")({
 
 function Services() {
   const { t } = useT();
+  const [customProjects, setCustomProjects] = useState<PublicProject[]>([]);
+
+  useEffect(() => {
+    getPublicProjects()
+      .then((res) => {
+        if (res?.items) {
+          setCustomProjects(res.items);
+        }
+      })
+      .catch((err) => {
+        console.error("Erreur chargement projets:", err);
+      });
+  }, []);
+
   const services = [
     { icon: Cpu, image: imagery.specialistMl, key: "digital", points: ["p1","p2","p3","p4","p5"] },
     { icon: GraduationCap, image: imagery.leaderPitch, key: "training", points: ["p1","p2","p3","p4"] },
     { icon: Workflow, image: imagery.futuristicBusiness, key: "transfo", points: ["p1","p2","p3","p4"] },
     { icon: Users, image: imagery.teamLaughing, key: "change", points: ["p1","p2","p3","p4"] },
     { icon: ShieldCheck, image: imagery.facialRecognition, key: "cyber", points: ["p1","p2","p3","p4"] },
-
   ] as const;
+
+  const defaultClients = [
+    { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
+    { img: imagery.sitelso, alt: "SITELSO" },
+    { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
+    { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
+    { img: imagery.planInternational, alt: "Plan International" },
+  ];
+
+  // Merge dynamic logos from Supabase if available
+  const dynamicLogos = customProjects
+    .filter((p) => p.logo_url)
+    .map((p) => ({ img: p.logo_url!, alt: p.client_name }));
+
+  const allClients = dynamicLogos.length > 0 ? [...dynamicLogos, ...defaultClients] : defaultClients;
+  // Repeat to ensure marquee continuity
+  const marqueeClients = [...allClients, ...allClients];
+
+  const testimonials = customProjects.filter((p) => p.testimonial);
 
   return (
     <SiteLayout>
@@ -59,14 +93,14 @@ function Services() {
                   <span className="absolute left-6 top-6 rounded-full bg-white/95 px-3.5 py-1 font-mono text-xs font-semibold text-navy shadow-sm">0{i + 1}</span>
                 </div>
                 <div className="p-8 lg:p-12">
-                  <div className="flex items-center gap-50">
+                  <div className="flex items-center gap-5">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-accent transition duration-300 group-hover:bg-accent group-hover:text-white">
                       <s.icon className="h-6 w-6" />
                     </div>
                     {s.key === "training" && (
                       <div className="flex items-center gap-6">
-                        <img src={imagery.capmBadge} alt="CAPM" className="h-20 w-15 object-contain" />
-                        <img src={imagery.pmpBadge} alt="PMP" className="h-20 w-15 object-contain" />
+                        <img src={imagery.capmBadge} alt="CAPM" className="h-16 w-14 object-contain" />
+                        <img src={imagery.pmpBadge} alt="PMP" className="h-16 w-14 object-contain" />
                       </div>
                     )}
                   </div>
@@ -85,6 +119,17 @@ function Services() {
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">{t("services.audience")}</p>
                     <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">{t(`svc.${s.key}.audience`)}</p>
                   </div>
+                  {s.key === "training" && (
+                    <div className="mt-6">
+                      <Link
+                        to="/formation"
+                        className="btn btn-primary inline-flex items-center gap-2"
+                      >
+                        <span>{t("services.registerSessions")}</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </article>
             </Reveal>
@@ -92,8 +137,7 @@ function Services() {
         })}
       </section>
 
-
-      {/* Clients */}
+      {/* Clients Marquee */}
       <section className="border-y border-border/60 bg-secondary/30 py-16 overflow-hidden">
         <div className="mb-10 text-center">
           <p className="eyebrow justify-center">{t("home.clients.eyebrow")}</p>
@@ -103,18 +147,7 @@ function Services() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-secondary/30 to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-secondary/30 to-transparent" />
           <div className="flex animate-marquee gap-16 w-max">
-            {[
-              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
-              { img: imagery.sitelso, alt: "SITELSO" },
-              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
-              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
-              { img: imagery.planInternational, alt: "Plan International" },
-              { img: imagery.worldBank, alt: "The World Bank – Projet FSRP" },
-              { img: imagery.sitelso, alt: "SITELSO" },
-              { img: imagery.ministereAgriculture, alt: "Ministère de l'Agriculture" },
-              { img: imagery.ueWbPage, alt: "UE-WB – Projet PAGE" },
-              { img: imagery.planInternational, alt: "Plan International" },
-            ].map((c, i) => (
+            {marqueeClients.map((c, i) => (
               <div key={i} className="flex h-20 w-40 shrink-0 items-center justify-center">
                 <img src={c.img} alt={c.alt} className="max-h-16 w-auto max-w-[140px] object-contain opacity-90" />
               </div>
@@ -122,6 +155,43 @@ function Services() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic Testimonials / Client Cases from Supabase */}
+      {testimonials.length > 0 && (
+        <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+          <div className="mb-12 text-center">
+            <p className="eyebrow justify-center">{t("services.testimonials.eyebrow")}</p>
+            <h2 className="mt-3 text-3xl font-bold">{t("services.testimonials.title")}</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((testi) => (
+              <Reveal key={testi.id}>
+                <div className="card-surface p-7 rounded-2xl flex flex-col justify-between h-full border border-border">
+                  <div>
+                    <Quote className="h-8 w-8 text-accent/40 mb-3" />
+                    <p className="text-sm italic text-foreground/80 leading-relaxed mb-4">
+                      "{testi.testimonial}"
+                    </p>
+                  </div>
+                  <div className="pt-4 border-t border-border flex items-center justify-between">
+                    <div>
+                      <p className="font-bold text-sm text-foreground">{testi.client_name}</p>
+                      {testi.title && (
+                        <p className="text-xs text-muted-foreground">{testi.title}</p>
+                      )}
+                    </div>
+                    {testi.project_type && (
+                      <span className="rounded-full bg-accent/10 text-accent text-[10px] font-semibold px-2.5 py-0.5">
+                        {testi.project_type}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
 
       <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
         <div className="rounded-3xl bg-secondary p-10 lg:p-14">

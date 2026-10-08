@@ -32,6 +32,27 @@ export const submitContact = createServerFn({ method: "POST" })
       return { success: true as const };
     }
 
+    // Sauvegarde dans Supabase si configuré
+    try {
+      const { getSupabaseServerClient } = await import("../supabase.server");
+      const supabase = getSupabaseServerClient();
+      if (supabase) {
+        await supabase.from("contact_submissions").insert([
+          {
+            name: data.name,
+            company: data.company || null,
+            email: data.email,
+            phone: data.phone || null,
+            subject: data.subject,
+            message: data.message,
+            read: false,
+          },
+        ]);
+      }
+    } catch (dbErr) {
+      console.warn("Échec de la sauvegarde du formulaire dans Supabase (non bloquant) :", dbErr);
+    }
+
     const subjectLine = `[Contact Site Web] ${data.subject}`;
     const textBody = [
       `Nouveau message reçu depuis le formulaire de contact DIGIT & TALENT :`,

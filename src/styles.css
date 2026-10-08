@@ -152,10 +152,19 @@
   border: 1px solid color-mix(in oklab, white 60%, transparent);
 }
 @utility gradient-text {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 100%);
+  background: linear-gradient(
+    115deg,
+    var(--orange) 0%,
+    #FFA875 25%,
+    var(--orange-soft) 50%,
+    #FFA875 75%,
+    var(--orange) 100%
+  );
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: text-gradient-flow 5s ease-in-out infinite;
 }
 @utility tag {
   display: inline-flex;
@@ -209,6 +218,55 @@
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-8px); }
 }
+@keyframes text-gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes blob-orbit-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(50px, -35px) scale(1.18) rotate(120deg);
+  }
+  66% {
+    transform: translate(-30px, 45px) scale(0.92) rotate(240deg);
+  }
+}
+@keyframes blob-orbit-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(-45px, 35px) scale(1.22) rotate(-120deg);
+  }
+  66% {
+    transform: translate(35px, -30px) scale(0.88) rotate(-240deg);
+  }
+}
+@keyframes blob-orbit-3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.22;
+  }
+  50% {
+    transform: translate(35px, 25px) scale(1.28);
+    opacity: 0.38;
+  }
+}
+@keyframes beam-sweep {
+  0% {
+    transform: translateX(-150%) rotate(25deg);
+    opacity: 0;
+  }
+  20%, 80% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(250%) rotate(25deg);
+    opacity: 0;
+  }
+}
 @keyframes shimmer-line {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
@@ -223,10 +281,18 @@
 @utility animate-fade-up { animation: fade-up 0.7s var(--ease-out-expo) both; }
 @utility animate-fade-in-soft { animation: fade-in-soft 0.9s var(--ease-out-expo) both; }
 @utility animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+@utility animate-blob-1 { animation: blob-orbit-1 14s ease-in-out infinite; }
+@utility animate-blob-2 { animation: blob-orbit-2 18s ease-in-out infinite; }
+@utility animate-blob-3 { animation: blob-orbit-3 11s ease-in-out infinite; }
+@utility animate-beam-sweep { animation: beam-sweep 8s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; }
-  .animate-float-slow { animation: none !important; }
+  .animate-float-slow,
+  .animate-blob-1,
+  .animate-blob-2,
+  .animate-blob-3,
+  .animate-beam-sweep { animation: none !important; }
 }
 
 @keyframes slide-up {
@@ -239,3 +305,42 @@
   to   { transform: translateX(-50%); }
 }
 @utility animate-marquee { animation: marquee 28s linear infinite; }
+
+/* ---------- Thèmes Admin (Sombre & Clair) ---------- */
+.admin-dark {
+  --admin-bg: #070e1f;
+  --admin-sidebar-bg: #0A2540;
+  --admin-header-bg: rgba(10, 37, 64, 0.75);
+  --admin-card-bg: #0A2540;
+  --admin-card-subtle: rgba(255, 255, 255, 0.04);
+  --admin-border: rgba(255, 255, 255, 0.08);
+  --admin-text: #ffffff;
+  --admin-text-muted: rgba(255, 255, 255, 0.65);
+  --admin-text-subtle: rgba(255, 255, 255, 0.4);
+  --admin-input-bg: rgba(255, 255, 255, 0.05);
+  --admin-input-border: rgba(255, 255, 255, 0.12);
+  --admin-table-head-bg: rgba(255, 255, 255, 0.03);
+  --admin-table-head-text: rgba(255, 255, 255, 0.45);
+  --admin-row-border: rgba(255, 255, 255, 0.05);
+  --admin-row-hover: rgba(255, 255, 255, 0.03);
+  --admin-modal-overlay: rgba(0, 0, 0, 0.75);
+}
+
+.admin-light {
+  --admin-bg: #f8fafc;
+  --admin-sidebar-bg: #ffffff;
+  --admin-header-bg: rgba(255, 255, 255, 0.85);
+  --admin-card-bg: #ffffff;
+  --admin-card-subtle: #f1f5f9;
+  --admin-border: #e2e8f0;
+  --admin-text: #0A2540;
+  --admin-text-muted: #475569;
+  --admin-text-subtle: #64748b;
+  --admin-input-bg: #ffffff;
+  --admin-input-border: #cbd5e1;
+  --admin-table-head-bg: #f8fafc;
+  --admin-table-head-text: #64748b;
+  --admin-row-border: #f1f5f9;
+  --admin-row-hover: #f8fafc;
+  --admin-modal-overlay: rgba(15, 23, 42, 0.45);
+}

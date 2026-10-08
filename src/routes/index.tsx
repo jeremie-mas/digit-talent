@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowRight, Cpu, ShieldCheck, Workflow, Users, GraduationCap, CheckCircle2 } from "lucide-react";
 import { imagery } from "@/assets/imagery";
@@ -6,6 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
 import { useCountUp } from "@/hooks/useCountUp";
 import type { RefObject } from "react";
+import { HeroPromoStrip } from "@/components/HeroPromoStrip";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -73,9 +74,48 @@ function Home() {
           </div>
         </div>
 
-        {/* Décorations lumineuses */}
-        <div className="animate-float-slow pointer-events-none absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-accent/15 blur-[100px]" style={{ animationDelay: "2s" }} />
-        <div className="animate-float-slow pointer-events-none absolute left-1/3 top-0 h-[500px] w-[500px] rounded-full bg-blue-light/10 blur-[120px]" />
+                {/* Dégradés dynamiques et animés de la charte (Orange #F26A21, Bleu #2563EB, Bleu Nuit #0A2540) */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {/* 1. Halo Orange vif animé (Énergie & Marque) */}
+          <div
+            className="animate-blob-1 absolute -left-28 -top-16 h-[560px] w-[560px] rounded-full blur-[110px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(242,106,33,0.40) 0%, rgba(242,106,33,0.15) 50%, transparent 75%)",
+            }}
+          />
+
+          {/* 2. Halo Bleu Technologique en contre-orbite */}
+          <div
+            className="animate-blob-2 absolute left-1/4 top-1/4 h-[640px] w-[640px] rounded-full blur-[130px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(37,99,235,0.32) 0%, rgba(118,176,234,0.14) 55%, transparent 80%)",
+            }}
+          />
+
+          {/* 3. Halo Ambre / Orange doux respirant */}
+          <div
+            className="animate-blob-3 absolute -bottom-24 left-1/3 h-[490px] w-[490px] rounded-full blur-[100px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(255,154,102,0.32) 0%, rgba(242,106,33,0.10) 60%, transparent 80%)",
+            }}
+          />
+
+          {/* 4. Balayage lumineux diagonal fluide */}
+          <div className="animate-beam-sweep absolute -inset-full h-[200%] w-[35%] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent blur-3xl pointer-events-none" />
+
+          {/* 5. Subtile matrice géométrique en filigrane */}
+          <div
+            className="absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage:
+                "radial-gradient(rgba(255,255,255,0.7) 1px, transparent 1px)",
+              backgroundSize: "36px 36px",
+            }}
+          />
+        </div>
 
         {/* Contenu texte — gauche */}
         <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-[350px] sm:py-24 lg:px-8 lg:py-32">
@@ -120,6 +160,8 @@ function Home() {
           </div>
         </div>
       </section>
+      <HeroPromoStrip />
+
 
       {/* Value prop */}
       <Reveal as="section" className="mx-auto max-w-4xl px-5 py-24 text-center lg:px-8">
@@ -310,3 +352,6 @@ function Home() {
     </SiteLayout>
   );
 }
+
+
+

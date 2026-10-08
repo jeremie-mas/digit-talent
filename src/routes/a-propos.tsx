@@ -1,18 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Award, Sparkles, Shield, Network, Heart, Lightbulb, Target, Eye } from "lucide-react";
+import {
+  Award,
+  Sparkles,
+  Shield,
+  Network,
+  Heart,
+  Lightbulb,
+  Target,
+  Eye,
+  Linkedin,
+  Users,
+} from "lucide-react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { useState, useEffect } from "react";
+import {
+  getPublicTeam,
+  type PublicTeamMember,
+  FALLBACK_TEAM,
+} from "@/lib/api/public.data.functions";
 
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
       { title: "À propos — DIGIT & TALENT" },
-      { name: "description", content: "Founded in 2012 in Lomé, DIGIT & TALENT brings together 10 certified consultants serving the convergence of digital and talent in Africa." },
-      { property: "og:title", content: "About DIGIT & TALENT" },
-      { property: "og:description", content: "Our vision, mission, values and team." },
+      {
+        name: "description",
+        content:
+          "Fondé en 2012 à Lomé, DIGIT & TALENT réunit des consultants certifiés au service de la convergence du digital et des talents en Afrique.",
+      },
+      { property: "og:title", content: "À propos de DIGIT & TALENT" },
+      { property: "og:description", content: "Notre vision, notre mission, nos valeurs et notre équipe." },
     ],
   }),
   component: About,
@@ -22,6 +43,20 @@ const certs = ["CAPM", "PMP", "PMI-ACP", "PMI-PMOCP", "PROSCI ADKAR"];
 
 function About() {
   const { t } = useT();
+  const [team, setTeam] = useState<PublicTeamMember[]>(FALLBACK_TEAM);
+
+  useEffect(() => {
+    getPublicTeam()
+      .then((res) => {
+        if (res?.items && res.items.length > 0) {
+          setTeam(res.items);
+        }
+      })
+      .catch((err) => {
+        console.error("Erreur chargement équipe:", err);
+      });
+  }, []);
+
   const values = [
     { icon: Award, key: "excellence" },
     { icon: Lightbulb, key: "innovation" },
@@ -36,15 +71,30 @@ function About() {
       <section className="relative overflow-hidden bg-navy-deep py-24 pb-16 text-white pt-[150px]">
         <img
           src={imagery.technicianServer}
-          alt="IT technician supervising server infrastructure"
+          alt="Supervision de serveurs et d'infrastructures informatiques"
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/30" />
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
           <p className="eyebrow animate-fade-in-soft">{t("about.hero.eyebrow")}</p>
-          <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>{t("about.hero.title")}</h1>
-          <p className="animate-fade-up mt-6 max-w-3xl text-lg leading-relaxed text-white/80" style={{ animationDelay: "240ms" }}>{t("about.hero.desc1")}</p>
-          <p className="animate-fade-up mt-4 max-w-3xl leading-relaxed text-white/70" style={{ animationDelay: "340ms" }}>{t("about.hero.desc2")}</p>
+          <h1
+            className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl"
+            style={{ animationDelay: "120ms" }}
+          >
+            {t("about.hero.title")}
+          </h1>
+          <p
+            className="animate-fade-up mt-6 max-w-3xl text-lg leading-relaxed text-white/80"
+            style={{ animationDelay: "240ms" }}
+          >
+            {t("about.hero.desc1")}
+          </p>
+          <p
+            className="animate-fade-up mt-4 max-w-3xl leading-relaxed text-white/70"
+            style={{ animationDelay: "340ms" }}
+          >
+            {t("about.hero.desc2")}
+          </p>
         </div>
         <Breadcrumb crumbs={[{ label: t("nav.about") }]} />
       </section>
@@ -53,19 +103,23 @@ function About() {
       <section className="mx-auto max-w-7xl px-5 pt-16 lg:px-8">
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            { src: imagery.teamLaughing, alt: "Team collaborating" },
-            { src: imagery.coworkersAi, alt: "Consultants working on AI systems" },
-            { src: imagery.leaderPitch, alt: "Performance presentation" },
+            { src: imagery.teamLaughing, alt: "Collaboration d'équipe" },
+            { src: imagery.coworkersAi, alt: "Consultants travaillant sur des projets d'innovation" },
+            { src: imagery.leaderPitch, alt: "Présentation de performance" },
           ].map((img, idx) => (
             <Reveal key={img.alt} delay={idx * 120}>
               <div className="group overflow-hidden rounded-2xl shadow-[var(--shadow-soft)]">
-                <img src={img.src} alt={img.alt} className="aspect-[4/3] w-full object-cover transition duration-700 ease-out group-hover:scale-105" loading="lazy" />
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="aspect-[4/3] w-full object-cover transition duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
               </div>
             </Reveal>
           ))}
         </div>
       </section>
-
 
       {/* Vision & Mission */}
       <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8">
@@ -129,7 +183,10 @@ function About() {
             <p className="mt-5 leading-relaxed text-white/70">{t("about.founder.desc")}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["PMP", "PMI-PMOCP"].map((cert) => (
-                <span key={cert} className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-semibold text-white/80 backdrop-blur-sm">
+                <span
+                  key={cert}
+                  className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-semibold text-white/80 backdrop-blur-sm"
+                >
                   {cert}
                 </span>
               ))}
@@ -138,6 +195,75 @@ function About() {
         </div>
       </Reveal>
 
+      {/* Dynamic Team Section (from Supabase or Fallback) */}
+      {team.length > 0 && (
+        <section className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
+          <Reveal>
+            <div className="mb-12">
+              <p className="eyebrow">{t("about.team.eyebrow")}</p>
+              <h2 className="mt-4 text-3xl font-bold sm:text-4xl text-foreground">
+                {t("about.team.title")}
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
+                {t("about.team.desc")}
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {team.map((member, idx) => (
+              <Reveal key={member.id} delay={idx * 100}>
+                <div className="card-surface card-interactive group h-full p-6 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-4 mb-4">
+                      {member.photo_url ? (
+                        <img
+                          src={member.photo_url}
+                          alt={member.name}
+                          className="h-16 w-16 rounded-full object-cover border-2 border-accent/30 shadow-md"
+                        />
+                      ) : (
+                        <div className="h-16 w-16 rounded-full bg-navy text-accent flex items-center justify-center font-bold text-xl border-2 border-accent/20">
+                          {member.name.charAt(0)}
+                        </div>
+                      )}
+                      <div>
+                        <h3 className="font-bold text-lg text-foreground group-hover:text-accent transition-colors">
+                          {member.name}
+                        </h3>
+                        <p className="text-xs font-semibold text-accent mt-0.5">
+                          {member.role}
+                        </p>
+                      </div>
+                    </div>
+
+                    {member.bio && (
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-4">
+                        {member.bio}
+                      </p>
+                    )}
+                  </div>
+
+                  {member.linkedin_url && (
+                    <div className="mt-5 pt-3 border-t border-border">
+                      <a
+                        href={member.linkedin_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition"
+                      >
+                        <Linkedin className="h-3.5 w-3.5" />
+                        <span>Profil LinkedIn</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Certifications */}
       <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
         <div className="card-surface p-10 lg:p-14">
@@ -145,7 +271,9 @@ function About() {
           <h2 className="mt-4 text-3xl font-bold tracking-tight">{t("about.certs.title")}</h2>
           <div className="mt-8 flex flex-wrap gap-3">
             {certs.map((c) => (
-              <span key={c} className="tag">{c}</span>
+              <span key={c} className="tag">
+                {c}
+              </span>
             ))}
           </div>
         </div>

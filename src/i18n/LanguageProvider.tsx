@@ -12,8 +12,8 @@ const LanguageContext = createContext<Ctx | null>(null);
 const STORAGE_KEY = "lang";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // SSR-safe default: English
-  const [lang, setLangState] = useState<Lang>("en");
+  // Default de base : Français (Togo / Afrique de l'Ouest)
+  const [lang, setLangState] = useState<Lang>("fr");
 
   // Hydrate from localStorage on the client
   useEffect(() => {
@@ -38,15 +38,21 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   const value = useMemo<Ctx>(() => {
-    const dict = dictionaries[lang];
-    const fallback = dictionaries.en;
+    const dict = dictionaries[lang] || dictionaries.fr;
     const t = (key: string) => {
-      const v = dict[key] ?? fallback[key];
-      return typeof v === "string" ? v : key;
+      const v = dict[key];
+      if (typeof v === "string") return v;
+      // Repli strict dans la même langue si possible
+      const fallbackDict = lang === "en" ? dictionaries.en : dictionaries.fr;
+      const fv = fallbackDict[key];
+      return typeof fv === "string" ? fv : key;
     };
     const tList = (key: string) => {
-      const v = dict[key] ?? fallback[key];
-      return Array.isArray(v) ? v : [];
+      const v = dict[key];
+      if (Array.isArray(v)) return v;
+      const fallbackDict = lang === "en" ? dictionaries.en : dictionaries.fr;
+      const fv = fallbackDict[key];
+      return Array.isArray(fv) ? fv : [];
     };
     return { lang, setLang: setLangState, t, tList };
   }, [lang]);

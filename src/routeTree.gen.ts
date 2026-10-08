@@ -10,18 +10,35 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as FormationRouteImport } from './routes/formation'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as TalentRecrutementRouteImport } from './routes/talent/recrutement'
 import { Route as TalentPlacementsRouteImport } from './routes/talent/placements'
 import { Route as TalentGestionPaieRouteImport } from './routes/talent/gestion-paie'
 import { Route as TalentExternalisationRhRouteImport } from './routes/talent/externalisation-rh'
 import { Route as TalentDigitalisationRhRouteImport } from './routes/talent/digitalisation-rh'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as AdminTeamRouteImport } from './routes/admin/team'
+import { Route as AdminServicesRouteImport } from './routes/admin/services'
+import { Route as AdminPromotionsRouteImport } from './routes/admin/promotions'
+import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminFormationsRouteImport } from './routes/admin/formations'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminArticlesRouteImport } from './routes/admin/articles'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationRoute = FormationRouteImport.update({
+  id: '/formation',
+  path: '/formation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -37,6 +54,16 @@ const AProposRoute = AProposRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TalentRecrutementRoute = TalentRecrutementRouteImport.update({
@@ -64,40 +91,121 @@ const TalentDigitalisationRhRoute = TalentDigitalisationRhRouteImport.update({
   path: '/talent/digitalisation-rh',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/admin/team',
+  path: '/admin/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/admin/services',
+  path: '/admin/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPromotionsRoute = AdminPromotionsRouteImport.update({
+  id: '/admin/promotions',
+  path: '/admin/promotions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProjectsRoute = AdminProjectsRouteImport.update({
+  id: '/admin/projects',
+  path: '/admin/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminFormationsRoute = AdminFormationsRouteImport.update({
+  id: '/admin/formations',
+  path: '/admin/formations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminArticlesRoute = AdminArticlesRouteImport.update({
+  id: '/admin/articles',
+  path: '/admin/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/promotions': typeof AdminPromotionsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
   '/talent/placements': typeof TalentPlacementsRoute
   '/talent/recrutement': typeof TalentRecrutementRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/promotions': typeof AdminPromotionsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
   '/talent/placements': typeof TalentPlacementsRoute
   '/talent/recrutement': typeof TalentRecrutementRoute
+  '/admin': typeof AdminIndexRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/projects': typeof AdminProjectsRoute
+  '/admin/promotions': typeof AdminPromotionsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
   '/talent/placements': typeof TalentPlacementsRoute
   '/talent/recrutement': typeof TalentRecrutementRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,46 +213,94 @@ export interface FileRouteTypes {
     | '/'
     | '/a-propos'
     | '/contact'
+    | '/formation'
     | '/services'
+    | '/admin/articles'
+    | '/admin/dashboard'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/projects'
+    | '/admin/promotions'
+    | '/admin/services'
+    | '/admin/team'
+    | '/blog/$slug'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
     | '/talent/placements'
     | '/talent/recrutement'
+    | '/admin/'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/a-propos'
     | '/contact'
+    | '/formation'
     | '/services'
+    | '/admin/articles'
+    | '/admin/dashboard'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/projects'
+    | '/admin/promotions'
+    | '/admin/services'
+    | '/admin/team'
+    | '/blog/$slug'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
     | '/talent/placements'
     | '/talent/recrutement'
+    | '/admin'
+    | '/blog'
   id:
     | '__root__'
     | '/'
     | '/a-propos'
     | '/contact'
+    | '/formation'
     | '/services'
+    | '/admin/articles'
+    | '/admin/dashboard'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/projects'
+    | '/admin/promotions'
+    | '/admin/services'
+    | '/admin/team'
+    | '/blog/$slug'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
     | '/talent/placements'
     | '/talent/recrutement'
+    | '/admin/'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
   ContactRoute: typeof ContactRoute
+  FormationRoute: typeof FormationRoute
   ServicesRoute: typeof ServicesRoute
+  AdminArticlesRoute: typeof AdminArticlesRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminFormationsRoute: typeof AdminFormationsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminPromotionsRoute: typeof AdminPromotionsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminTeamRoute: typeof AdminTeamRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   TalentDigitalisationRhRoute: typeof TalentDigitalisationRhRoute
   TalentExternalisationRhRoute: typeof TalentExternalisationRhRoute
   TalentGestionPaieRoute: typeof TalentGestionPaieRoute
   TalentPlacementsRoute: typeof TalentPlacementsRoute
   TalentRecrutementRoute: typeof TalentRecrutementRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,6 +310,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formation': {
+      id: '/formation'
+      path: '/formation'
+      fullPath: '/formation'
+      preLoaderRoute: typeof FormationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -175,6 +338,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/talent/recrutement': {
@@ -212,6 +389,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TalentDigitalisationRhRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/admin/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/promotions': {
+      id: '/admin/promotions'
+      path: '/admin/promotions'
+      fullPath: '/admin/promotions'
+      preLoaderRoute: typeof AdminPromotionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/projects': {
+      id: '/admin/projects'
+      path: '/admin/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/formations': {
+      id: '/admin/formations'
+      path: '/admin/formations'
+      fullPath: '/admin/formations'
+      preLoaderRoute: typeof AdminFormationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/articles': {
+      id: '/admin/articles'
+      path: '/admin/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -219,12 +459,24 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
   ContactRoute: ContactRoute,
+  FormationRoute: FormationRoute,
   ServicesRoute: ServicesRoute,
+  AdminArticlesRoute: AdminArticlesRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminFormationsRoute: AdminFormationsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminProjectsRoute: AdminProjectsRoute,
+  AdminPromotionsRoute: AdminPromotionsRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminTeamRoute: AdminTeamRoute,
+  BlogSlugRoute: BlogSlugRoute,
   TalentDigitalisationRhRoute: TalentDigitalisationRhRoute,
   TalentExternalisationRhRoute: TalentExternalisationRhRoute,
   TalentGestionPaieRoute: TalentGestionPaieRoute,
   TalentPlacementsRoute: TalentPlacementsRoute,
   TalentRecrutementRoute: TalentRecrutementRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
