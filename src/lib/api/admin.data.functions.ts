@@ -719,7 +719,7 @@ export const saveAdminPushSubscription = createServerFn({ method: "POST" })
     const admin = verifySignedToken(data.token);
     if (!admin.valid) throw new Error("Non autorisé. Session expirée ou invalide.");
     const supabase = getSupabaseServiceRoleClient();
-    if (!supabase) return { success: false, error: "SUPABASE_PUBLISHABLE_KEY n'est pas configurée sur le serveur." };
+    if (!supabase) return { success: false, error: "SUPABASE_SERVICE_ROLE_KEY n'est pas configurée sur le serveur." };
     const { error } = await supabase.from("admin_push_subscriptions").upsert({
       endpoint: data.subscription.endpoint,
       subscription: data.subscription,
@@ -729,7 +729,7 @@ export const saveAdminPushSubscription = createServerFn({ method: "POST" })
     if (error?.code === "42501") {
       return {
         success: false,
-        error: "Supabase refuse l'accès RLS. Dans Vercel, configurez SUPABASE_PUBLISHABLE_KEY avec la clé service_role de CE projet Supabase (pas la clé anon/publishable), puis redéployez.",
+        error: "Supabase refuse l'accès RLS. Dans Vercel, configurez SUPABASE_SERVICE_ROLE_KEY avec la clé service_role de CE projet Supabase (pas la clé anon/publishable), puis redéployez.",
       };
     }
     if (error) return { success: false, error: error.message };

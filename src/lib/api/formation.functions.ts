@@ -50,7 +50,7 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
           console.log(`[Supabase] Inscription formation enregistrée avec succès pour ${data.fullName}`);
         }
       } else {
-        console.warn("[Supabase] Client non initialisé (vérifiez SUPABASE_URL et SUPABASE_PUBLISHABLE_KEY dans .env)");
+        console.warn("[Supabase] Client non initialisé (vérifiez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY dans .env)");
       }
     } catch (err) {
       console.error("Erreur connexion Supabase pour inscription formation :", err);
