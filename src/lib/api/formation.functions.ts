@@ -7,6 +7,8 @@ const trainingSchema = z.object({
   phone: z.string().trim().min(6, "Le numéro de téléphone est obligatoire").max(50),
   company: z.string().trim().max(160).optional().default(""),
   role: z.string().trim().max(120).optional().default(""),
+  projectManagementExperience: z.string().trim().max(80).optional().default(""),
+  customFields: z.record(z.string(), z.string()).optional().default({}),
   trainingCourse: z.string().trim().min(1, "Veuillez choisir une formation"),
   sessionPreference: z.string().trim().optional().default("Prochaine session (Présentiel)"),
   message: z.string().trim().max(3000).optional().default(""),
@@ -34,6 +36,8 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
             phone: data.phone,
             company: data.company || null,
             role: data.role || null,
+            project_management_experience: data.projectManagementExperience || null,
+            custom_answers: data.customFields,
             training_course: data.trainingCourse,
             session_preference: data.sessionPreference || null,
             message: data.message || null,
@@ -69,6 +73,7 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
       `Téléphone / WhatsApp : ${data.phone}`,
       `Entreprise : ${data.company || "Non renseignée"}`,
       `Poste / Fonction : ${data.role || "Non renseigné"}`,
+      `Années d'expérience en gestion de projet : ${data.projectManagementExperience || "Non renseigné"}`,
       `----------------------------------------------------`,
       `Message / Attentes :`,
       data.message || "Aucun message complémentaire.",
@@ -106,6 +111,10 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
             <tr>
               <td style="padding: 8px 0; font-weight: bold; color: #64748b;">Poste / Titre :</td>
               <td style="padding: 8px 0; color: #0f172a;">${escapeHtml(data.role || "Non renseigné")}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #64748b;">Années d'expérience en gestion de projet :</td>
+              <td style="padding: 8px 0; color: #0f172a;">${escapeHtml(data.projectManagementExperience || "Non renseigné")}</td>
             </tr>
           </table>
           ${

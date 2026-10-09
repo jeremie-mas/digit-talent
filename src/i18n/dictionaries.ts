@@ -423,6 +423,10 @@ export const en: Dict = {
   "formation.form.submitting": "Sending your registration...",
   "formation.form.privacy": "Your data is strictly confidential and used solely for your training.",
 
+  "formation.form.pmpTitle": "PMP Training and Certification",
+  "formation.form.pmpSessionText": "Register for the November 21 session",
+  "formation.form.projectExperience": "Years of project management experience",
+  "formation.form.projectExperiencePlaceholder": "e.g. 3 years",
   "formation.form.fullPageLink": "Open the full-page registration form",
 
   // Blog (EN)
@@ -868,6 +872,10 @@ export const fr: Dict = {
   "formation.form.submitting": "Envoi de votre inscription en cours...",
   "formation.form.privacy": "Vos données restent strictement confidentielles et utilisées uniquement dans le cadre de votre formation.",
 
+  "formation.form.pmpTitle": "Formation et Certification PMP",
+  "formation.form.pmpSessionText": "Inscrivez-vous pour la session du 21 Novembre",
+  "formation.form.projectExperience": "Années d'expérience en gestion de projet",
+  "formation.form.projectExperiencePlaceholder": "Ex. 3 ans",
   "formation.form.fullPageLink": "Ouvrir le formulaire sur une page dédiée",
 
   // Blog additions

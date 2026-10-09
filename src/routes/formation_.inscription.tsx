@@ -4,17 +4,8 @@ import { ArrowLeft, CheckCircle2, GraduationCap, Send, ShieldCheck } from "lucid
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useT } from "@/i18n/LanguageProvider";
-import { getPublicServices } from "@/lib/api/public.data.functions";
 import { submitTrainingRegistration } from "@/lib/api/formation.functions";
-
-const DEFAULT_COURSES = [
-  { id: "pmp", title: "Certification PMP® (Project Management Professional)" },
-  { id: "capm", title: "Certification CAPM® (Certified Associate in Project Management)" },
-  { id: "change", title: "Conduite du Changement Organisationnel (Prosci & ADKAR)" },
-  { id: "digital", title: "Transformation Digitale & IA Générative pour Managers" },
-];
-
-const CUSTOM_COURSE = "Formation Sur Mesure / Intra-Entreprise";
+import { DEFAULT_TRAINING_FORM_CONFIG, getPublicTrainingFormConfig, type TrainingFormConfig } from "@/lib/api/training-form.functions";
 
 export const Route = createFileRoute("/formation_/inscription")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -36,39 +27,27 @@ export const Route = createFileRoute("/formation_/inscription")({
 function TrainingRegistrationPage() {
   const { t } = useT();
   const { course: requestedCourse } = Route.useSearch();
-  const [courses, setCourses] = useState(DEFAULT_COURSES);
-  const [selectedCourse, setSelectedCourse] = useState(DEFAULT_COURSES[0].title);
+  const [selectedCourse, setSelectedCourse] = useState(DEFAULT_TRAINING_FORM_CONFIG.courses[0]);
   const [sessionPreference, setSessionPreference] = useState("Prochaine session (Présentiel à Lomé)");
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [formConfig, setFormConfig] = useState<TrainingFormConfig>(DEFAULT_TRAINING_FORM_CONFIG);
 
   useEffect(() => {
-    getPublicServices()
-      .then((res) => {
-        const trainingServices = (res?.items || []).filter(
-          (service) =>
-            service.icon === "GraduationCap" ||
-            service.title.toLowerCase().includes("formation") ||
-            service.title.toLowerCase().includes("certif"),
-        );
-        const existingTitles = new Set(DEFAULT_COURSES.map((course) => course.title.toLowerCase()));
-        const additionalCourses = trainingServices
-          .filter((service) => !existingTitles.has(service.title.toLowerCase()))
-          .map((service) => ({ id: service.slug, title: service.title }));
-        if (additionalCourses.length) setCourses([...DEFAULT_COURSES, ...additionalCourses]);
-      })
-      .catch((error) => console.error("Erreur chargement formations:", error));
+    getPublicTrainingFormConfig().then(setFormConfig).catch((error) => console.error("Erreur chargement formulaire:", error));
   }, []);
 
   useEffect(() => {
+    setSelectedCourse((current) => formConfig.courses.includes(current) ? current : formConfig.courses[0] || "");
+    setSessionPreference(formConfig.formats[0] || "");
+  }, [formConfig]);
+
+  useEffect(() => {
     if (!requestedCourse) return;
-    const matchingCourse = courses.find(
-      (course) => course.id === requestedCourse || course.title === requestedCourse,
-    );
-    if (matchingCourse) setSelectedCourse(matchingCourse.title);
-    else if (requestedCourse === CUSTOM_COURSE) setSelectedCourse(CUSTOM_COURSE);
-  }, [requestedCourse, courses]);
+    const matchingCourse = formConfig.courses.find((course) => course === requestedCourse);
+    if (matchingCourse) setSelectedCourse(matchingCourse);
+  }, [requestedCourse, formConfig]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,20 +60,22 @@ function TrainingRegistrationPage() {
     try {
       const result = await submitTrainingRegistration({
         data: {
-          fullName: String(formData.get("fullName") || "").trim(),
-          email: String(formData.get("email") || "").trim(),
-          phone: String(formData.get("phone") || "").trim(),
-          company: String(formData.get("company") || "").trim(),
-          role: String(formData.get("role") || "").trim(),
+          fullName: String(formData.get("field_fullName") || "").trim(),
+          email: String(formData.get("field_email") || "").trim(),
+          phone: String(formData.get("field_phone") || "").trim(),
+          company: String(formData.get("field_company") || "").trim(),
+          role: String(formData.get("field_role") || "").trim(),
+          projectManagementExperience: String(formData.get("field_project_management_experience") || "").trim(),
+          customFields: Object.fromEntries(formConfig.fields.filter((field) => field.enabled).map((field) => [field.id, String(formData.get(`field_${field.id}`) || "").trim()])),
           trainingCourse: selectedCourse,
           sessionPreference,
-          message: String(formData.get("message") || "").trim(),
+          message: String(formData.get("field_message") || "").trim(),
           website: String(formData.get("website") || "").trim(),
         },
       });
 
       if (!result.success) {
-        setErrorMessage("Une erreur est survenue lors de l'enregistrement. Veuillez réessayer.");
+        setErrorMessage(formConfig.validationError);
         return;
       }
 
@@ -104,41 +85,31 @@ function TrainingRegistrationPage() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Impossible d'envoyer votre inscription pour le moment. Réessayez plus tard.",
+          : formConfig.submitError,
       );
     } finally {
       setSubmitting(false);
     }
   };
 
-  const formatOptions = [
-    t("formation.form.format1"),
-    t("formation.form.format2"),
-    t("formation.form.format3"),
-    t("formation.form.format4"),
-  ];
-
-  useEffect(() => {
-    setSessionPreference(t("formation.form.format1"));
-  }, [t]);
+  const formatOptions = formConfig.formats;
 
   return (
     <SiteLayout>
       <section className="relative overflow-hidden bg-navy-deep py-20 pt-[145px] text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-deep to-blue/30" />
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-          <p className="eyebrow">{t("formation.hero.eyebrow")}</p>
+          <p className="eyebrow">{formConfig.badge}</p>
           <h1 className="mt-4 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl">
-            {t("formation.modal.title")}
+            {formConfig.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
-            {t("formation.modal.subtitle")}
-          </p>
+          <p className="mt-3 max-w-2xl text-sm font-semibold text-accent sm:text-base">{formConfig.sessionText}</p>
+          {formConfig.description && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">{formConfig.description}</p>}
         </div>
         <Breadcrumb
           crumbs={[
             { label: t("nav.training"), to: "/formation" },
-            { label: t("formation.modal.title") },
+            { label: formConfig.title },
           ]}
         />
       </section>
@@ -149,20 +120,20 @@ function TrainingRegistrationPage() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10 text-accent">
               <CheckCircle2 className="h-9 w-9" />
             </div>
-            <h2 className="mt-5 text-2xl font-bold text-foreground">{t("formation.modal.successTitle")}</h2>
+            <h2 className="mt-5 text-2xl font-bold text-foreground">{formConfig.successTitle}</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              {t("formation.modal.successDesc1")} <strong className="text-foreground">{selectedCourse}</strong>. {t("formation.modal.successDesc2")}
+              {formConfig.successText} <strong className="text-foreground">{selectedCourse}</strong>.
             </p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <a href="/formation" className="btn btn-primary inline-flex items-center justify-center gap-2">
-                <ArrowLeft className="h-4 w-4" /> {t("nav.training")}
+                <ArrowLeft className="h-4 w-4" /> {formConfig.returnLabel}
               </a>
               <button
                 type="button"
                 onClick={() => setSent(false)}
                 className="btn btn-outline-dark cursor-pointer"
               >
-                {t("formation.modal.anotherRegistration")}
+                {formConfig.anotherRegistrationLabel}
               </button>
             </div>
           </section>
@@ -173,8 +144,8 @@ function TrainingRegistrationPage() {
                 <GraduationCap className="h-6 w-6" />
               </div>
               <div>
-                <h2 className="font-semibold text-foreground">{t("formation.modal.title")}</h2>
-                <p className="mt-0.5 text-xs text-muted-foreground">{t("formation.modal.subtitle")}</p>
+                <h2 className="font-semibold text-foreground">{formConfig.title}</h2>
+                <p className="mt-0.5 text-xs font-medium text-accent">{formConfig.sessionText}</p>
               </div>
             </div>
 
@@ -189,7 +160,7 @@ function TrainingRegistrationPage() {
 
               <div>
                 <label htmlFor="registration-course" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground">
-                  {t("formation.form.course")} *
+                  {formConfig.courseLabel} *
                 </label>
                 <select
                   id="registration-course"
@@ -198,17 +169,16 @@ function TrainingRegistrationPage() {
                   required
                   className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
                 >
-                  {courses.map((course) => <option key={course.id} value={course.title}>{course.title}</option>)}
-                  <option value={CUSTOM_COURSE}>{t("formation.form.customOption")}</option>
+                  {formConfig.courses.map((course) => <option key={course} value={course}>{course}</option>)}
                 </select>
               </div>
 
               <fieldset>
                 <legend className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">
-                  {t("formation.form.format")} *
+                  {formConfig.formatLabel} *
                 </legend>
                 <div className="grid gap-2 sm:grid-cols-2">
-                  {formatOptions.map((format, index) => (
+                {formatOptions.map((format, index) => (
                     <label key={format} className={`flex cursor-pointer items-start gap-2.5 rounded-xl border p-3 text-sm transition ${sessionPreference === format ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:bg-secondary/60"}`}>
                       <input
                         type="radio"
@@ -226,25 +196,7 @@ function TrainingRegistrationPage() {
               </fieldset>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <FormField id="registration-name" name="fullName" label={t("formation.form.fullName")} placeholder={t("formation.form.fullNamePlaceholder")} required />
-                <FormField id="registration-email" name="email" label={t("formation.form.email")} type="email" placeholder="amina.kodjo@entreprise.com" required />
-                <FormField id="registration-phone" name="phone" label={t("formation.form.phone")} type="tel" placeholder="+228 90 00 00 00" required />
-                <FormField id="registration-company" name="company" label={t("formation.form.company")} placeholder={t("formation.form.companyPlaceholder")} />
-              </div>
-
-              <FormField id="registration-role" name="role" label={t("formation.form.role")} placeholder={t("formation.form.rolePlaceholder")} />
-
-              <div>
-                <label htmlFor="registration-message" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground">
-                  {t("formation.form.message")}
-                </label>
-                <textarea
-                  id="registration-message"
-                  name="message"
-                  rows={4}
-                  placeholder={t("formation.form.messagePlaceholder")}
-                  className="w-full resize-y rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
-                />
+                {formConfig.fields.filter((field) => field.enabled).map((field) => <FormField key={field.id} id={`registration-${field.id}`} name={`field_${field.id}`} label={field.label} placeholder={field.placeholder} type={field.type} required={field.required} optionalLabel={formConfig.optionalLabel} />)}
               </div>
 
               <button
@@ -252,11 +204,11 @@ function TrainingRegistrationPage() {
                 disabled={submitting}
                 className="btn btn-primary flex w-full cursor-pointer items-center justify-center gap-2 !py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {submitting ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{t("formation.form.submitting")}</> : <>{t("formation.form.submit")}<Send className="h-4 w-4" /></>}
+                {submitting ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{formConfig.submittingLabel}</> : <>{formConfig.submitLabel}<Send className="h-4 w-4" /></>}
               </button>
 
               <p className="flex items-center justify-center gap-1.5 pb-1 text-center text-xs text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0" /> {t("formation.form.privacy")}
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0" /> {formConfig.privacyText}
               </p>
             </form>
           </section>
@@ -273,27 +225,26 @@ function FormField({
   placeholder,
   type = "text",
   required = false,
+  optionalLabel = "",
 }: {
   id: string;
   name: string;
   label: string;
   placeholder: string;
-  type?: string;
+  type?: "text" | "email" | "tel" | "number" | "textarea";
   required?: boolean;
+  optionalLabel?: string;
 }) {
   return (
     <div>
       <label htmlFor={id} className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground">
-        {label}{required ? " *" : ""}
+        {label}{required ? " *" : optionalLabel ? ` (${optionalLabel})` : ""}
       </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        required={required}
-        className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
-      />
+      {type === "textarea" ? (
+        <textarea id={id} name={name} placeholder={placeholder} required={required} rows={3} className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20" />
+      ) : (
+        <input id={id} name={name} type={type} placeholder={placeholder} required={required} className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20" />
+      )}
     </div>
   );
 }

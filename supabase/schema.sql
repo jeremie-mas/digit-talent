@@ -75,12 +75,29 @@ CREATE TABLE IF NOT EXISTS public.training_registrations (
   phone TEXT NOT NULL,
   company TEXT,
   role TEXT,
+  project_management_experience TEXT,
+  custom_answers JSONB NOT NULL DEFAULT '{}'::jsonb,
   training_course TEXT NOT NULL,
   session_preference TEXT,
   message TEXT,
   status TEXT DEFAULT 'nouveau',
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE public.training_registrations
+  ADD COLUMN IF NOT EXISTS project_management_experience TEXT;
+ALTER TABLE public.training_registrations
+  ADD COLUMN IF NOT EXISTS custom_answers JSONB NOT NULL DEFAULT '{}'::jsonb;
+
+CREATE TABLE IF NOT EXISTS public.training_form_config (
+  id TEXT PRIMARY KEY CHECK (id = 'default'),
+  config JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+ALTER TABLE public.training_form_config ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Gestion configuration formulaire formation" ON public.training_form_config;
+CREATE POLICY "Gestion configuration formulaire formation" ON public.training_form_config
+  FOR ALL USING (true) WITH CHECK (true);
 
 -- Activation de Row Level Security (RLS)
 ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;

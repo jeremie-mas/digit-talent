@@ -16,6 +16,7 @@ import {
   updateTrainingRegistrationStatus,
   deleteTrainingRegistration,
 } from "@/lib/api/admin.data.functions";
+import { DEFAULT_TRAINING_FORM_CONFIG, getAdminTrainingFormConfig, saveAdminTrainingFormConfig, type TrainingFormConfig } from "@/lib/api/training-form.functions";
 
 export const Route = createFileRoute("/admin/formations")({
   head: () => ({
@@ -34,6 +35,8 @@ interface Registration {
   phone: string;
   company?: string;
   role?: string;
+  project_management_experience?: string;
+  custom_answers?: Record<string, string>;
   training_course: string;
   session_preference?: string;
   message?: string;
@@ -68,12 +71,17 @@ const STATUS_CONFIG: Record<string, { bg: string; color: string; border: string;
   },
 };
 
+const REQUIRED_FORM_FIELDS = new Set(["fullName", "email", "phone"]);
+
 function AdminFormations() {
   const [items, setItems] = React.useState<Registration[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [selectedItem, setSelectedItem] = React.useState<Registration | null>(null);
+  const [formConfig, setFormConfig] = React.useState<TrainingFormConfig>(DEFAULT_TRAINING_FORM_CONFIG);
+  const [savingFormConfig, setSavingFormConfig] = React.useState(false);
+  const [formConfigMessage, setFormConfigMessage] = React.useState("");
 
   const loadData = React.useCallback(async () => {
     const token = localStorage.getItem("dt_admin_token");
@@ -81,12 +89,35 @@ function AdminFormations() {
     try {
       const res = await getAdminTrainingRegistrations({ data: { token } });
       setItems((res.items as Registration[]) || []);
+      const configRes = await getAdminTrainingFormConfig({ data: { token } });
+      setFormConfig(configRes.config);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   }, []);
+
+  const saveFormConfig = async () => {
+    const token = localStorage.getItem("dt_admin_token");
+    if (!token) return;
+    setSavingFormConfig(true);
+    setFormConfigMessage("");
+    try {
+      const res = await saveAdminTrainingFormConfig({ data: { token, config: formConfig } });
+      if (!res.success) throw new Error(res.error || "Enregistrement impossible.");
+      setFormConfigMessage("Configuration enregistrée. Le formulaire public utilise maintenant ces paramètres.");
+    } catch (error) {
+      setFormConfigMessage(error instanceof Error ? error.message : "Erreur lors de l'enregistrement.");
+    } finally {
+      setSavingFormConfig(false);
+    }
+  };
+
+  const addCustomField = () => setFormConfig((current) => ({
+    ...current,
+    fields: [...current.fields, { id: `champ_${Date.now()}`, label: "Nouveau champ", placeholder: "", type: "text", required: false, enabled: true }],
+  }));
 
   React.useEffect(() => {
     loadData();
@@ -180,6 +211,8 @@ function AdminFormations() {
       }
     >
       <div className="space-y-6">
+
+
         {/* Status Filter Tabs & Search */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
@@ -408,6 +441,50 @@ function AdminFormations() {
             </div>
           )}
         </div>
+        <section className="rounded-2xl p-5 sm:p-6 space-y-4" style={panelStyle}>
+          <div>
+            <h2 className="text-base font-bold" style={{ color: "var(--admin-text)" }}>Configuration du formulaire public</h2>
+            <p className="mt-1 text-xs" style={{ color: "var(--admin-text-muted)" }}>Modifiez le titre, le texte de session et les champs affichés sur la page et dans le pop-up.</p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Titre du formulaire<input value={formConfig.title} onChange={(e) => setFormConfig({ ...formConfig, title: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Texte de session<input value={formConfig.sessionText} onChange={(e) => setFormConfig({ ...formConfig, sessionText: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold sm:col-span-2" style={{ color: "var(--admin-text-muted)" }}>Texte d'introduction<textarea value={formConfig.description} onChange={(e) => setFormConfig({ ...formConfig, description: e.target.value })} rows={2} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Badge / surtitre<input value={formConfig.badge} onChange={(e) => setFormConfig({ ...formConfig, badge: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Libellé du choix de formation<input value={formConfig.courseLabel} onChange={(e) => setFormConfig({ ...formConfig, courseLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Libellé du choix de session<input value={formConfig.formatLabel} onChange={(e) => setFormConfig({ ...formConfig, formatLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Formations (une par ligne)<textarea value={formConfig.courses.join("\n")} onChange={(e) => setFormConfig({ ...formConfig, courses: e.target.value.split("\n").map((x) => x.trim()).filter(Boolean) })} rows={5} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Formats / sessions (une par ligne)<textarea value={formConfig.formats.join("\n")} onChange={(e) => setFormConfig({ ...formConfig, formats: e.target.value.split("\n").map((x) => x.trim()).filter(Boolean) })} rows={5} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Texte du bouton<input value={formConfig.submitLabel} onChange={(e) => setFormConfig({ ...formConfig, submitLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Indication champ facultatif<input value={formConfig.optionalLabel} onChange={(e) => setFormConfig({ ...formConfig, optionalLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Texte pendant l'envoi<input value={formConfig.submittingLabel} onChange={(e) => setFormConfig({ ...formConfig, submittingLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold sm:col-span-2" style={{ color: "var(--admin-text-muted)" }}>Mention de confidentialité<textarea value={formConfig.privacyText} onChange={(e) => setFormConfig({ ...formConfig, privacyText: e.target.value })} rows={2} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Titre de confirmation<input value={formConfig.successTitle} onChange={(e) => setFormConfig({ ...formConfig, successTitle: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Message de confirmation<textarea value={formConfig.successText} onChange={(e) => setFormConfig({ ...formConfig, successText: e.target.value })} rows={2} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Sous-titre de confirmation<input value={formConfig.confirmSubtitle} onChange={(e) => setFormConfig({ ...formConfig, confirmSubtitle: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Message en cas d'erreur<textarea value={formConfig.validationError} onChange={(e) => setFormConfig({ ...formConfig, validationError: e.target.value })} rows={2} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Message si envoi impossible<textarea value={formConfig.submitError} onChange={(e) => setFormConfig({ ...formConfig, submitError: e.target.value })} rows={2} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Titre des prochaines étapes<input value={formConfig.nextStepsTitle} onChange={(e) => setFormConfig({ ...formConfig, nextStepsTitle: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Prochaines étapes (une par ligne)<textarea value={formConfig.nextSteps.join("\n")} onChange={(e) => setFormConfig({ ...formConfig, nextSteps: e.target.value.split("\n").map((x) => x.trim()).filter(Boolean) })} rows={3} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Bouton fermer<input value={formConfig.closeLabel} onChange={(e) => setFormConfig({ ...formConfig, closeLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Bouton nouvelle inscription<input value={formConfig.anotherRegistrationLabel} onChange={(e) => setFormConfig({ ...formConfig, anotherRegistrationLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Lien vers la page complète<input value={formConfig.fullPageLinkText} onChange={(e) => setFormConfig({ ...formConfig, fullPageLinkText: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+            <label className="space-y-1 text-xs font-semibold" style={{ color: "var(--admin-text-muted)" }}>Bouton retour aux formations<input value={formConfig.returnLabel} onChange={(e) => setFormConfig({ ...formConfig, returnLabel: e.target.value })} className="w-full rounded-lg px-3 py-2 text-sm font-normal" style={{ background: "var(--admin-input-bg)", border: "1px solid var(--admin-input-border)", color: "var(--admin-text)" }} /></label>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3"><h3 className="text-sm font-semibold" style={{ color: "var(--admin-text)" }}>Tous les champs du formulaire</h3><button type="button" onClick={addCustomField} className="rounded-lg px-3 py-2 text-xs font-semibold" style={{ color: "var(--orange)", border: "1px solid var(--admin-border)" }}>+ Ajouter un champ</button></div>
+            {formConfig.fields.map((field, index) => <div key={field.id} className="grid gap-2 rounded-xl p-3 sm:grid-cols-[1fr_1fr_130px_auto_auto_auto]" style={{ background: "var(--admin-card-subtle)" }}>
+              <input aria-label="Nom interne" disabled={REQUIRED_FORM_FIELDS.has(field.id)} value={field.id} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, id: e.target.value.replace(/[^a-zA-Z0-9_]/g, "_") } : item) })} className="rounded-lg px-2 py-2 text-xs disabled:opacity-50" placeholder="identifiant" style={{ background: "var(--admin-input-bg)", color: "var(--admin-text)" }} />
+              <input aria-label="Libellé" value={field.label} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, label: e.target.value } : item) })} className="rounded-lg px-2 py-2 text-xs" placeholder="Libellé du champ" style={{ background: "var(--admin-input-bg)", color: "var(--admin-text)" }} />
+              <select aria-label="Type de champ" disabled={REQUIRED_FORM_FIELDS.has(field.id)} value={field.type} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, type: e.target.value as typeof item.type } : item) })} className="rounded-lg px-2 py-2 text-xs disabled:opacity-50" style={{ background: "var(--admin-input-bg)", color: "var(--admin-text)" }}><option value="text">Texte</option><option value="email">Email</option><option value="tel">Téléphone</option><option value="number">Nombre</option><option value="textarea">Texte long</option></select>
+              <label className="flex items-center gap-1 text-[11px]" style={{ color: "var(--admin-text-muted)" }}><input type="checkbox" disabled={REQUIRED_FORM_FIELDS.has(field.id)} checked={field.required} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, required: e.target.checked } : item) })} />Obligatoire</label>
+              <label className="flex items-center gap-1 text-[11px]" style={{ color: "var(--admin-text-muted)" }}><input type="checkbox" disabled={REQUIRED_FORM_FIELDS.has(field.id)} checked={field.enabled} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, enabled: e.target.checked } : item) })} />Actif</label>
+              <div className="flex items-center gap-2"><button type="button" disabled={index === 0} onClick={() => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i, all) => i === index ? all[index - 1] : i === index - 1 ? all[index] : item) })} className="text-xs disabled:opacity-30" aria-label="Monter le champ">↑</button><button type="button" disabled={index === formConfig.fields.length - 1} onClick={() => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i, all) => i === index ? all[index + 1] : i === index + 1 ? all[index] : item) })} className="text-xs disabled:opacity-30" aria-label="Descendre le champ">↓</button><button type="button" disabled={REQUIRED_FORM_FIELDS.has(field.id)} onClick={() => setFormConfig({ ...formConfig, fields: formConfig.fields.filter((_, i) => i !== index) })} className="text-xs text-red-500 disabled:opacity-30">Supprimer</button></div>
+              <input aria-label="Texte indicatif" value={field.placeholder} onChange={(e) => setFormConfig({ ...formConfig, fields: formConfig.fields.map((item, i) => i === index ? { ...item, placeholder: e.target.value } : item) })} className="rounded-lg px-2 py-2 text-xs sm:col-span-2" placeholder="Texte indicatif" style={{ background: "var(--admin-input-bg)", color: "var(--admin-text)" }} />
+            </div>)}
+          </div>
+          <div className="flex flex-wrap items-center gap-3"><button type="button" disabled={savingFormConfig} onClick={saveFormConfig} className="rounded-xl px-4 py-2.5 text-xs font-bold text-white disabled:opacity-50" style={{ background: "var(--orange)" }}>{savingFormConfig ? "Enregistrement…" : "Enregistrer le formulaire"}</button>{formConfigMessage && <span className="text-xs" style={{ color: "var(--admin-text-muted)" }}>{formConfigMessage}</span>}</div>
+        </section>
       </div>
 
       {/* Detail Modal */}
@@ -490,6 +567,19 @@ function AdminFormations() {
                   <p style={{ color: "var(--admin-text)" }}>{selectedItem.role || "Non renseigné"}</p>
                 </div>
               </div>
+
+              <div>
+                <p className="font-semibold uppercase text-[10px] mb-0.5" style={{ color: "var(--admin-text-subtle)" }}>
+                  {formConfig.fields.find((field) => field.id === "project_management_experience")?.label || "Années d'expérience en gestion de projet"}
+                </p>
+                <p style={{ color: "var(--admin-text)" }}>{selectedItem.project_management_experience || "Non renseignée"}</p>
+              </div>
+              {Object.entries(selectedItem.custom_answers || {}).filter(([key]) => key !== "project_management_experience").map(([key, value]) => (
+                <div key={key}>
+                  <p className="font-semibold uppercase text-[10px] mb-0.5" style={{ color: "var(--admin-text-subtle)" }}>{formConfig.fields.find((field) => field.id === key)?.label || key}</p>
+                  <p className="whitespace-pre-wrap" style={{ color: "var(--admin-text)" }}>{value || "Non renseigné"}</p>
+                </div>
+              ))}
 
               {selectedItem.message ? (
                 <div>
