@@ -158,7 +158,9 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
       const pushConfig = await getAdminPushConfig({ data: { token } });
       if (!pushConfig.publicKey) throw new Error("Configurez VAPID_PUBLIC_KEY et VAPID_PRIVATE_KEY dans les variables d'environnement du serveur.");
 
-      const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+      await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+      const registration = await navigator.serviceWorker.ready;
+      if (!registration.active) throw new Error("Le service worker n'est pas encore actif. Rechargez la page admin puis réessayez.");
       let subscription = await registration.pushManager.getSubscription();
       if (!subscription) {
         const applicationServerKey = Uint8Array.from(atob(pushConfig.publicKey.replace(/-/g, "+").replace(/_/g, "/")), (character) => character.charCodeAt(0));
