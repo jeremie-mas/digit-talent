@@ -25,6 +25,7 @@ import { Route as AdminServicesRouteImport } from './routes/admin/services'
 import { Route as AdminTeamRouteImport } from './routes/admin/team'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as FormationInscriptionRouteImport } from './routes/formation_.inscription'
 import { Route as TalentDigitalisationRhRouteImport } from './routes/talent/digitalisation-rh'
 import { Route as TalentExternalisationRhRouteImport } from './routes/talent/externalisation-rh'
 import { Route as TalentGestionPaieRouteImport } from './routes/talent/gestion-paie'
@@ -111,6 +112,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormationInscriptionRoute = FormationInscriptionRouteImport.update({
+  id: '/formation_/inscription',
+  path: '/formation/inscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TalentDigitalisationRhRoute = TalentDigitalisationRhRouteImport.update({
   id: '/talent/digitalisation-rh',
   path: '/talent/digitalisation-rh',
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formation/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formation/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formation_/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
   '/talent/externalisation-rh': typeof TalentExternalisationRhRoute
   '/talent/gestion-paie': typeof TalentGestionPaieRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/admin/services'
     | '/admin/team'
     | '/blog/$slug'
+    | '/formation/inscription'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/admin/services'
     | '/admin/team'
     | '/blog/$slug'
+    | '/formation/inscription'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/admin/services'
     | '/admin/team'
     | '/blog/$slug'
+    | '/formation_/inscription'
     | '/talent/digitalisation-rh'
     | '/talent/externalisation-rh'
     | '/talent/gestion-paie'
@@ -294,6 +306,7 @@ export interface RootRouteChildren {
   AdminServicesRoute: typeof AdminServicesRoute
   AdminTeamRoute: typeof AdminTeamRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  FormationInscriptionRoute: typeof FormationInscriptionRoute
   TalentDigitalisationRhRoute: typeof TalentDigitalisationRhRoute
   TalentExternalisationRhRoute: typeof TalentExternalisationRhRoute
   TalentGestionPaieRoute: typeof TalentGestionPaieRoute
@@ -417,6 +430,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formation_/inscription': {
+      id: '/formation_/inscription'
+      path: '/formation/inscription'
+      fullPath: '/formation/inscription'
+      preLoaderRoute: typeof FormationInscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/talent/digitalisation-rh': {
       id: '/talent/digitalisation-rh'
       path: '/talent/digitalisation-rh'
@@ -470,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminServicesRoute: AdminServicesRoute,
   AdminTeamRoute: AdminTeamRoute,
   BlogSlugRoute: BlogSlugRoute,
+  FormationInscriptionRoute: FormationInscriptionRoute,
   TalentDigitalisationRhRoute: TalentDigitalisationRhRoute,
   TalentExternalisationRhRoute: TalentExternalisationRhRoute,
   TalentGestionPaieRoute: TalentGestionPaieRoute,

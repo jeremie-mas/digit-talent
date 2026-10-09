@@ -756,6 +756,14 @@ function FormationPage() {
                     <p className="text-[11px] text-muted-foreground text-center pt-1 pb-2">
                       🔒 {t("formation.form.privacy")}
                     </p>
+                    <p className="text-center text-xs text-muted-foreground">
+                      <a
+                        href={`/formation/inscription/?course=${encodeURIComponent(selectedCourse)}`}
+                        className="font-semibold text-accent underline-offset-4 hover:underline"
+                      >
+                        {t("formation.form.fullPageLink")}
+                      </a>
+                    </p>
                   </form>
                 </>
               )}

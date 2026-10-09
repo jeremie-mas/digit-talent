@@ -423,6 +423,8 @@ export const en: Dict = {
   "formation.form.submitting": "Sending your registration...",
   "formation.form.privacy": "Your data is strictly confidential and used solely for your training.",
 
+  "formation.form.fullPageLink": "Open the full-page registration form",
+
   // Blog (EN)
   "blog.hero.eyebrow": "Publications & Insights",
   "blog.hero.title": "The DIGIT & TALENT Blog",
@@ -865,6 +867,8 @@ export const fr: Dict = {
   "formation.form.submit": "Confirmer ma demande d'inscription",
   "formation.form.submitting": "Envoi de votre inscription en cours...",
   "formation.form.privacy": "Vos données restent strictement confidentielles et utilisées uniquement dans le cadre de votre formation.",
+
+  "formation.form.fullPageLink": "Ouvrir le formulaire sur une page dédiée",
 
   // Blog additions
   "blog.hero.eyebrow": "Publications & Insights",
