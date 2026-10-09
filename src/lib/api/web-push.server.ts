@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { getSupabaseServerClient } from "../supabase.server";
+import { getSupabaseServiceRoleClient } from "../supabase.server";
 
 type PushSubscription = {
   endpoint: string;
@@ -90,7 +90,7 @@ function encryptPayload(subscription: PushSubscription, payload: string): Buffer
 }
 
 export async function sendTrainingPushNotification(payload: { title: string; body: string; url: string }) {
-  const supabase = getSupabaseServerClient();
+  const supabase = getSupabaseServiceRoleClient();
   const keys = getVapidKeys();
   if (!supabase || !keys) return;
 

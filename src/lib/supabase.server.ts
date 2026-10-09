@@ -9,6 +9,19 @@ class Node20WebSocketFallback {
 }
 
 let cachedClient: SupabaseClient | null = null;
+let cachedServiceRoleClient: SupabaseClient | null = null;
+
+function createServerClient(url: string, key: string): SupabaseClient {
+  return createClient(url, key, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+    realtime: {
+      transport: Node20WebSocketFallback as any,
+    },
+  });
+}
 
 export function getSupabaseServerClient(): SupabaseClient | null {
   const url = process.env.SUPABASE_URL;
@@ -20,15 +33,7 @@ export function getSupabaseServerClient(): SupabaseClient | null {
 
   if (!cachedClient) {
     try {
-      cachedClient = createClient(url, key, {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        },
-        realtime: {
-          transport: Node20WebSocketFallback as any,
-        },
-      });
+      cachedClient = createServerClient(url, key);
     } catch (err) {
       console.error("Erreur initialisation Supabase Client :", err);
       return null;
@@ -36,4 +41,19 @@ export function getSupabaseServerClient(): SupabaseClient | null {
   }
 
   return cachedClient;
+}
+
+export function getSupabaseServiceRoleClient(): SupabaseClient | null {
+  const url = process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceRoleKey) return null;
+  if (!cachedServiceRoleClient) {
+    try {
+      cachedServiceRoleClient = createServerClient(url, serviceRoleKey);
+    } catch (error) {
+      console.error("Erreur initialisation client Supabase service_role :", error);
+      return null;
+    }
+  }
+  return cachedServiceRoleClient;
 }

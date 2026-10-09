@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { getSupabaseServerClient } from "../supabase.server";
+import { getSupabaseServerClient, getSupabaseServiceRoleClient } from "../supabase.server";
 import { verifySignedToken } from "./admin.auth.functions";
 import { getWebPushPublicKey } from "./web-push.server";
 
@@ -703,8 +703,8 @@ export const saveAdminPushSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const admin = verifySignedToken(data.token);
     if (!admin.valid) throw new Error("Non autorisé. Session expirée ou invalide.");
-    const supabase = getSupabaseServerClient();
-    if (!supabase) return { success: false, error: "Supabase non configuré." };
+    const supabase = getSupabaseServiceRoleClient();
+    if (!supabase) return { success: false, error: "SUPABASE_SERVICE_ROLE_KEY n'est pas configurée sur le serveur." };
     const { error } = await supabase.from("admin_push_subscriptions").upsert({
       endpoint: data.subscription.endpoint,
       subscription: data.subscription,
