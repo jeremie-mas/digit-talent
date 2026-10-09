@@ -257,7 +257,7 @@ function AdminDashboard() {
                     className="px-1.5 py-0.5 rounded font-mono text-[11px]"
                     style={{ backgroundColor: "rgba(245,158,11,0.2)" }}
                   >
-                    SUPABASE_SERVICE_ROLE_KEY
+                    SUPABASE_PUBLISHABLE_KEY
                   </code>{" "}
                   dans votre fichier <code className="font-mono">.env</code>, puis exécutez le script SQL dans{" "}
                   <code className="font-mono" style={{ color: "var(--orange)" }}>

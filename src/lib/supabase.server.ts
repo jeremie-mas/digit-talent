@@ -25,7 +25,7 @@ function createServerClient(url: string, key: string): SupabaseClient {
 
 export function getSupabaseServerClient(): SupabaseClient | null {
   const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY;
 
   if (!url || !key) {
     return null;
@@ -45,7 +45,7 @@ export function getSupabaseServerClient(): SupabaseClient | null {
 
 export function getSupabaseServiceRoleClient(): SupabaseClient | null {
   const url = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceRoleKey = process.env.SUPABASE_PUBLISHABLE_KEY;
   if (!url || !serviceRoleKey) return null;
   if (!cachedServiceRoleClient) {
     try {
