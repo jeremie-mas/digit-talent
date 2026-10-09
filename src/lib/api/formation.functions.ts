@@ -137,7 +137,7 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
 
     if (brevoApiKey) {
       try {
-        await fetch("https://api.brevo.com/v3/smtp/email", {
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
           method: "POST",
           headers: {
             "api-key": brevoApiKey,
@@ -153,9 +153,23 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
             textContent: textBody,
           }),
         });
+        if (!response.ok) {
+          console.warn("Échec notification email inscription formation :", response.status, await response.text());
+        }
       } catch (mailErr) {
         console.warn("Échec envoi email notification formation (non bloquant) :", mailErr);
       }
+    }
+
+    try {
+      const { sendTrainingPushNotification } = await import("./web-push.server");
+      await sendTrainingPushNotification({
+        title: "Nouvelle inscription à une formation",
+        body: "Une nouvelle inscription est disponible dans l'espace admin.",
+        url: "/admin/formations",
+      });
+    } catch (pushError) {
+      console.warn("Échec notification push inscription formation (non bloquant) :", pushError);
     }
 
     return { success: true as const };

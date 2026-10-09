@@ -99,6 +99,17 @@ DROP POLICY IF EXISTS "Gestion configuration formulaire formation" ON public.tra
 CREATE POLICY "Gestion configuration formulaire formation" ON public.training_form_config
   FOR ALL USING (true) WITH CHECK (true);
 
+CREATE TABLE IF NOT EXISTS public.admin_push_subscriptions (
+  endpoint TEXT PRIMARY KEY,
+  subscription JSONB NOT NULL,
+  admin_email TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+ALTER TABLE public.admin_push_subscriptions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Gestion abonnements push admin" ON public.admin_push_subscriptions;
+-- Aucun accès anon/authenticated : seules les requêtes serveur avec service_role peuvent gérer ces abonnements.
+
 -- Activation de Row Level Security (RLS)
 ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.team_members ENABLE ROW LEVEL SECURITY;

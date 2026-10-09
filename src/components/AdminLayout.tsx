@@ -15,8 +15,10 @@ import {
   Sun,
   Moon,
   Megaphone,
+  Bell,
 } from "lucide-react";
 import { verifyAdmin } from "@/lib/api/admin.auth.functions";
+import { getAdminPushConfig, getAdminTrainingNotificationSummary, saveAdminPushSubscription } from "@/lib/api/admin.data.functions";
 
 
 export type AdminTheme = "dark" | "light";
@@ -47,6 +49,12 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
   const [adminEmail, setAdminEmail] = React.useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [theme, setTheme] = React.useState<AdminTheme>("dark");
+  const [newRegistrationCount, setNewRegistrationCount] = React.useState(0);
+  const [registrationNotice, setRegistrationNotice] = React.useState<{ name: string; course: string } | null>(null);
+  const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission | "unsupported">("default");
+  const [pushActive, setPushActive] = React.useState(false);
+  const [pushSetupError, setPushSetupError] = React.useState<string | null>(null);
+  const latestRegistrationId = React.useRef<string | null>(null);
   const routerState = useRouterState();
   const navigate = useNavigate();
   const currentPath = routerState.location.pathname;
@@ -56,6 +64,13 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
     const storedTheme = localStorage.getItem("dt_admin_theme") as AdminTheme | null;
     if (storedTheme === "light" || storedTheme === "dark") {
       setTheme(storedTheme);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    setNotificationPermission("Notification" in window ? window.Notification.permission : "unsupported");
+    if ("serviceWorker" in navigator && "PushManager" in window) {
+      navigator.serviceWorker.getRegistration("/").then((registration) => registration?.pushManager.getSubscription()).then((subscription) => setPushActive(Boolean(subscription))).catch(() => setPushActive(false));
     }
   }, []);
 
@@ -91,10 +106,72 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
       });
   }, [navigate]);
 
+  React.useEffect(() => {
+    if (loading) return;
+    let active = true;
+    const pollRegistrations = async () => {
+      const token = localStorage.getItem("dt_admin_token");
+      if (!token) return;
+      try {
+        const summary = await getAdminTrainingNotificationSummary({ data: { token } });
+        if (!active) return;
+        setNewRegistrationCount(summary.newCount);
+        const latest = summary.latest as { id: string; full_name: string; training_course: string; status: string } | null;
+        if (latestRegistrationId.current && latest && latest.id !== latestRegistrationId.current && latest.status === "nouveau") {
+          setRegistrationNotice({ name: latest.full_name, course: latest.training_course });
+        }
+        if (latest) latestRegistrationId.current = latest.id;
+      } catch (error) {
+        console.error("Erreur vérification des nouvelles inscriptions:", error);
+      }
+    };
+    void pollRegistrations();
+    const interval = window.setInterval(pollRegistrations, 30_000);
+    const handleVisibility = () => { if (document.visibilityState === "visible") void pollRegistrations(); };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [loading]);
+
   const handleLogout = () => {
     localStorage.removeItem("dt_admin_token");
     localStorage.removeItem("dt_admin_email");
     navigate({ to: "/admin/login" });
+  };
+
+  const enableBrowserNotifications = async () => {
+    setPushSetupError(null);
+    try {
+      if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window) || !window.isSecureContext) {
+        setNotificationPermission("unsupported");
+        throw new Error("Les notifications push nécessitent un navigateur compatible et une connexion HTTPS.");
+      }
+      const permission = window.Notification.permission === "granted" ? "granted" : await window.Notification.requestPermission();
+      setNotificationPermission(permission);
+      if (permission !== "granted") throw new Error("Autorisez les notifications dans le navigateur pour continuer.");
+
+      const token = localStorage.getItem("dt_admin_token");
+      if (!token) throw new Error("La session admin a expiré. Reconnectez-vous.");
+      const pushConfig = await getAdminPushConfig({ data: { token } });
+      if (!pushConfig.publicKey) throw new Error("Configurez VAPID_PUBLIC_KEY et VAPID_PRIVATE_KEY dans les variables d'environnement du serveur.");
+
+      const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+      let subscription = await registration.pushManager.getSubscription();
+      if (!subscription) {
+        const applicationServerKey = Uint8Array.from(atob(pushConfig.publicKey.replace(/-/g, "+").replace(/_/g, "/")), (character) => character.charCodeAt(0));
+        subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey });
+      }
+      const json = subscription.toJSON();
+      if (!json.endpoint || !json.keys?.p256dh || !json.keys.auth) throw new Error("Le navigateur a retourné un abonnement push incomplet.");
+      const saved = await saveAdminPushSubscription({ data: { token, subscription: { endpoint: json.endpoint, expirationTime: json.expirationTime ?? null, keys: { p256dh: json.keys.p256dh, auth: json.keys.auth } } } });
+      if (!saved.success) throw new Error(saved.error || "Impossible d'enregistrer cet abonnement push.");
+      setPushActive(true);
+    } catch (error) {
+      setPushSetupError(error instanceof Error ? error.message : "Impossible d'activer les notifications push.");
+    }
   };
 
   if (loading) {
@@ -270,7 +347,12 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
                         className="h-4 w-4 shrink-0"
                         style={{ color: isActive ? "var(--orange)" : "var(--admin-text-subtle)" }}
                       />
-                      <span>{item.label}</span>
+                      <span className="flex-1">{item.label}</span>
+                      {item.to === "/admin/formations" && newRegistrationCount > 0 && (
+                        <span className="min-w-5 rounded-full px-1.5 py-0.5 text-center text-[10px] font-bold text-white" style={{ backgroundColor: "var(--orange)" }} aria-label={`${newRegistrationCount} nouvelle(s) inscription(s)`}>
+                          {newRegistrationCount > 99 ? "99+" : newRegistrationCount}
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
@@ -333,6 +415,18 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
 
         {/* Main Content Area */}
         <main className="flex-1 flex flex-col min-w-0">
+          {pushSetupError && <p className="mx-4 mt-2 text-xs text-red-500 md:mx-8" role="alert">{pushSetupError}</p>}
+          {registrationNotice && (
+            <div className="mx-4 mt-4 flex items-start gap-3 rounded-xl border p-4 shadow-lg md:mx-8" role="status" style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--orange)" }}>
+              <Bell className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "var(--orange)" }} />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold" style={{ color: "var(--admin-text)" }}>Nouvelle inscription à une formation</p>
+                <p className="mt-0.5 text-xs" style={{ color: "var(--admin-text-muted)" }}>{registrationNotice.name} — {registrationNotice.course}</p>
+                <Link to="/admin/formations" onClick={() => setRegistrationNotice(null)} className="mt-2 inline-block text-xs font-semibold underline" style={{ color: "var(--orange)" }}>Voir l’inscription</Link>
+              </div>
+              <button type="button" aria-label="Fermer la notification" onClick={() => setRegistrationNotice(null)} className="rounded p-1" style={{ color: "var(--admin-text-muted)" }}><X className="h-4 w-4" /></button>
+            </div>
+          )}
           {/* Top bar */}
           <header
             className="border-b px-6 py-4 transition-colors"
@@ -355,6 +449,19 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
               </div>
 
               <div className="flex items-center gap-3">
+                {!pushActive && (
+                  <button
+                    type="button"
+                    onClick={enableBrowserNotifications}
+                    disabled={notificationPermission === "denied" || notificationPermission === "unsupported"}
+                    className="flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold"
+                    style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--admin-border)", color: "var(--admin-text)" }}
+                    title={notificationPermission === "denied" ? "Autorisez les notifications dans les paramètres du navigateur" : "Recevoir les alertes même lorsque le navigateur est fermé"}
+                  >
+                    <Bell className="h-4 w-4" />
+                    {notificationPermission === "denied" ? "Notifications bloquées" : notificationPermission === "unsupported" ? "Push non disponible" : "Activer le push"}
+                  </button>
+                )}
                 {/* Theme Switcher Button Desktop */}
                 <button
                   onClick={toggleTheme}

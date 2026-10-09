@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { getSupabaseServerClient } from "../supabase.server";
 import { verifySignedToken } from "./admin.auth.functions";
+import { getWebPushPublicKey } from "./web-push.server";
 
 function assertAuth(token: string) {
   const verified = verifySignedToken(token);
@@ -666,6 +667,52 @@ export const getAdminTrainingRegistrations = createServerFn({ method: "POST" })
 
     if (error) throw new Error(error.message);
     return { configured: true, items: items ?? [] };
+  });
+
+export const getAdminTrainingNotificationSummary = createServerFn({ method: "POST" })
+  .validator(z.object({ token: z.string() }))
+  .handler(async ({ data }) => {
+    assertAuth(data.token);
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return { newCount: 0, latest: null };
+    const [countResult, latestResult] = await Promise.all([
+      supabase.from("training_registrations").select("id", { count: "exact", head: true }).eq("status", "nouveau"),
+      supabase.from("training_registrations").select("id, full_name, training_course, created_at, status").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+    ]);
+    if (countResult.error) throw new Error(countResult.error.message);
+    if (latestResult.error) throw new Error(latestResult.error.message);
+    return { newCount: countResult.count ?? 0, latest: latestResult.data ?? null };
+  });
+
+export const getAdminPushConfig = createServerFn({ method: "POST" })
+  .validator(z.object({ token: z.string() }))
+  .handler(async ({ data }) => {
+    assertAuth(data.token);
+    return { publicKey: getWebPushPublicKey() };
+  });
+
+export const saveAdminPushSubscription = createServerFn({ method: "POST" })
+  .validator(z.object({
+    token: z.string(),
+    subscription: z.object({
+      endpoint: z.string().url().max(2048),
+      expirationTime: z.number().nullable().optional(),
+      keys: z.object({ p256dh: z.string().min(1).max(256), auth: z.string().min(1).max(128) }),
+    }),
+  }))
+  .handler(async ({ data }) => {
+    const admin = verifySignedToken(data.token);
+    if (!admin.valid) throw new Error("Non autorisé. Session expirée ou invalide.");
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return { success: false, error: "Supabase non configuré." };
+    const { error } = await supabase.from("admin_push_subscriptions").upsert({
+      endpoint: data.subscription.endpoint,
+      subscription: data.subscription,
+      admin_email: admin.email || null,
+      updated_at: new Date().toISOString(),
+    });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
   });
 
 export const updateTrainingRegistrationStatus = createServerFn({ method: "POST" })
