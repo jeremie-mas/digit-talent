@@ -18,7 +18,7 @@ import {
   Bell,
 } from "lucide-react";
 import { verifyAdmin } from "@/lib/api/admin.auth.functions";
-import { getAdminPushConfig, getAdminTrainingNotificationSummary, saveAdminPushSubscription } from "@/lib/api/admin.data.functions";
+import { getAdminPushConfig, getAdminPushSubscriptionStatus, getAdminTrainingNotificationSummary, saveAdminPushSubscription } from "@/lib/api/admin.data.functions";
 
 
 export type AdminTheme = "dark" | "light";
@@ -70,7 +70,12 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
   React.useEffect(() => {
     setNotificationPermission("Notification" in window ? window.Notification.permission : "unsupported");
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.getRegistration("/").then((registration) => registration?.pushManager.getSubscription()).then((subscription) => setPushActive(Boolean(subscription))).catch(() => setPushActive(false));
+      const token = localStorage.getItem("dt_admin_token");
+      if (token) {
+        getAdminPushSubscriptionStatus({ data: { token } })
+          .then((status) => setPushActive(status.active))
+          .catch(() => setPushActive(false));
+      }
     }
   }, []);
 

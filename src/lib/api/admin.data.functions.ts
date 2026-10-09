@@ -691,6 +691,21 @@ export const getAdminPushConfig = createServerFn({ method: "POST" })
     return { publicKey: getWebPushPublicKey() };
   });
 
+export const getAdminPushSubscriptionStatus = createServerFn({ method: "POST" })
+  .validator(z.object({ token: z.string() }))
+  .handler(async ({ data }) => {
+    const admin = verifySignedToken(data.token);
+    if (!admin.valid) throw new Error("Non autorisé. Session expirée ou invalide.");
+    const supabase = getSupabaseServiceRoleClient();
+    if (!supabase) return { active: false, configured: false };
+    const { count, error } = await supabase
+      .from("admin_push_subscriptions")
+      .select("endpoint", { count: "exact", head: true })
+      .eq("admin_email", admin.email || "");
+    if (error) throw new Error(error.message);
+    return { active: (count ?? 0) > 0, configured: true };
+  });
+
 export const saveAdminPushSubscription = createServerFn({ method: "POST" })
   .validator(z.object({
     token: z.string(),
