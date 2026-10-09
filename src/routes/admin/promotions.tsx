@@ -310,7 +310,7 @@ function BannersTab() {
             </div>
 
             {/* Corps scrollable */}
-            <form onSubmit={handleSave} className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+            <form id="banner-form" onSubmit={handleSave} className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
               {error && <div className="rounded-xl border p-3 text-xs" style={{ backgroundColor: "rgba(239,68,68,0.1)", borderColor: "rgba(239,68,68,0.3)", color: "#ef4444" }}>{error}</div>}
 
               <div>
@@ -383,12 +383,8 @@ function BannersTab() {
               </button>
               <button
                 type="submit"
-                form=""
+                form="banner-form"
                 disabled={saving}
-                onClick={(e) => {
-                  const form = (e.currentTarget.closest("[data-modal]") as HTMLElement | null)?.querySelector("form");
-                  form?.requestSubmit();
-                }}
                 className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold text-white transition cursor-pointer disabled:opacity-50 hover:opacity-90"
                 style={{ backgroundColor: "var(--orange)" }}
               >

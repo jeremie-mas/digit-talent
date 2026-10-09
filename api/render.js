@@ -1,6 +1,14 @@
 import { createServer } from 'node:http';
 import { Readable } from 'node:stream';
 
+// TanStack Start consumes the raw request stream. Letting Vercel parse the
+// body first can leave the stream consumed before it reaches server.fetch().
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const serverModule = await import('../dist/server/server.js');
 const server = serverModule.default;
 
