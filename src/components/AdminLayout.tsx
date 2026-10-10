@@ -89,7 +89,11 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
     if ("serviceWorker" in navigator && "PushManager" in window) {
       const token = localStorage.getItem("dt_admin_token");
       if (token) {
-        getAdminPushSubscriptionStatus({ data: { token } })
+        void navigator.serviceWorker.ready
+          .then((registration) => registration.pushManager.getSubscription())
+          .then((subscription) => getAdminPushSubscriptionStatus({
+            data: { token, endpoint: subscription?.endpoint ?? "" },
+          }))
           .then((status) => setPushActive(status.active))
           .catch(() => setPushActive(false));
       }

@@ -692,7 +692,7 @@ export const getAdminPushConfig = createServerFn({ method: "POST" })
   });
 
 export const getAdminPushSubscriptionStatus = createServerFn({ method: "POST" })
-  .validator(z.object({ token: z.string() }))
+  .validator(z.object({ token: z.string(), endpoint: z.string().max(2048).optional() }))
   .handler(async ({ data }) => {
     const admin = verifySignedToken(data.token);
     if (!admin.valid) throw new Error("Non autorisé. Session expirée ou invalide.");
@@ -701,7 +701,7 @@ export const getAdminPushSubscriptionStatus = createServerFn({ method: "POST" })
     const { count, error } = await supabase
       .from("admin_push_subscriptions")
       .select("endpoint", { count: "exact", head: true })
-      .eq("admin_email", admin.email || "");
+      .eq(data.endpoint !== undefined ? "endpoint" : "admin_email", data.endpoint ?? admin.email ?? "");
     if (error) throw new Error(error.message);
     return { active: (count ?? 0) > 0, configured: true };
   });
