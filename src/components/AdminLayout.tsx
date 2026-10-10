@@ -231,6 +231,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
     { to: "/admin/services", label: "Services", icon: Cpu },
     { to: "/admin/projects", label: "Projets & Références", icon: Briefcase },
     { to: "/admin/promotions", label: "Promotions & Sessions", icon: Megaphone },
+    { to: "/admin/users", label: "Utilisateurs & sécurité", icon: Users },
   ];
 
 

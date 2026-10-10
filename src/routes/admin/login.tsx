@@ -103,6 +103,8 @@ function AdminLogin() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md px-4 mb-6 flex items-center justify-between">
         <Link
           to="/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-xs font-medium transition animate-fade-in-soft"
           style={{ color: "var(--admin-text-subtle)" }}
         >
@@ -274,37 +276,7 @@ function AdminLogin() {
                 </>
               )}
             </button>
-          </form>
-
-          {/* Quick guide helper */}
-          <div
-            className="mt-6 border-t pt-4 text-[11px]"
-            style={{ borderColor: "var(--admin-border)", color: "var(--admin-text-subtle)" }}
-          >
-            <p className="font-semibold mb-1" style={{ color: "var(--admin-text-muted)" }}>
-              💡 Accès par défaut (développement) :
-            </p>
-            <p>
-              Email :{" "}
-              <span className="font-mono font-semibold" style={{ color: "var(--orange)" }}>
-                admin@digit-talent.com
-              </span>
-            </p>
-            <p>
-              Mot de passe :{" "}
-              <span className="font-mono font-semibold" style={{ color: "var(--orange)" }}>
-                admin123
-              </span>
-            </p>
-            <p className="mt-1 text-[10px]" style={{ color: "var(--admin-text-subtle)" }}>
-              Configurable dans le fichier{" "}
-              <span className="font-mono" style={{ color: "var(--admin-text-muted)" }}>
-                .env
-              </span>{" "}
-              (ADMIN_EMAIL / ADMIN_PASSWORD_HASH).
-            </p>
-          </div>
-        </div>
+          </form>        </div>
       </div>
     </div>
   );

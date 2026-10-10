@@ -4,7 +4,7 @@
   "short_name": "DT Admin",
   "description": "Espace d'administration DIGIT & TALENT",
   "start_url": "/admin/login",
-  "scope": "/",
+  "scope": "/admin/",
   "display": "standalone",
   "background_color": "#070e1f",
   "theme_color": "#0A2540",

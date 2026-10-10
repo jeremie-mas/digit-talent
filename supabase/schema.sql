@@ -106,6 +106,18 @@ CREATE TABLE IF NOT EXISTS public.admin_push_subscriptions (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Comptes individuels de l'espace admin. Le compte ADMIN_EMAIL reçoit le rôle owner.
+CREATE TABLE IF NOT EXISTS public.admin_users (
+  email TEXT PRIMARY KEY,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'admin' CHECK (role IN ('owner', 'admin')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+ALTER TABLE public.admin_users ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Aucun accès direct aux comptes admin" ON public.admin_users;
+-- Seul le serveur avec service_role peut accéder à ces comptes.
+
 ALTER TABLE public.admin_push_subscriptions ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Gestion abonnements push admin" ON public.admin_push_subscriptions;
 -- Aucun accès anon/authenticated : seules les requêtes serveur avec service_role peuvent gérer ces abonnements.

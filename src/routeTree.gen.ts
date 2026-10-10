@@ -23,6 +23,7 @@ import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
 import { Route as AdminPromotionsRouteImport } from './routes/admin/promotions'
 import { Route as AdminServicesRouteImport } from './routes/admin/services'
 import { Route as AdminTeamRouteImport } from './routes/admin/team'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as FormationInscriptionRouteImport } from './routes/formation_.inscription'
@@ -102,6 +103,11 @@ const AdminTeamRoute = AdminTeamRouteImport.update({
   path: '/admin/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/admin/promotions': typeof AdminPromotionsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formation/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/admin/promotions': typeof AdminPromotionsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formation/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/admin/promotions': typeof AdminPromotionsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/team': typeof AdminTeamRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formation_/inscription': typeof FormationInscriptionRoute
   '/talent/digitalisation-rh': typeof TalentDigitalisationRhRoute
@@ -232,6 +241,7 @@ export interface FileRouteTypes {
     | '/admin/promotions'
     | '/admin/services'
     | '/admin/team'
+    | '/admin/users'
     | '/blog/$slug'
     | '/formation/inscription'
     | '/talent/digitalisation-rh'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/admin/promotions'
     | '/admin/services'
     | '/admin/team'
+    | '/admin/users'
     | '/blog/$slug'
     | '/formation/inscription'
     | '/talent/digitalisation-rh'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/admin/promotions'
     | '/admin/services'
     | '/admin/team'
+    | '/admin/users'
     | '/blog/$slug'
     | '/formation_/inscription'
     | '/talent/digitalisation-rh'
@@ -305,6 +317,7 @@ export interface RootRouteChildren {
   AdminPromotionsRoute: typeof AdminPromotionsRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminTeamRoute: typeof AdminTeamRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   BlogSlugRoute: typeof BlogSlugRoute
   FormationInscriptionRoute: typeof FormationInscriptionRoute
   TalentDigitalisationRhRoute: typeof TalentDigitalisationRhRoute
@@ -416,6 +429,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -489,6 +509,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminPromotionsRoute: AdminPromotionsRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminTeamRoute: AdminTeamRoute,
+  AdminUsersRoute: AdminUsersRoute,
   BlogSlugRoute: BlogSlugRoute,
   FormationInscriptionRoute: FormationInscriptionRoute,
   TalentDigitalisationRhRoute: TalentDigitalisationRhRoute,
