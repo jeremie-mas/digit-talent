@@ -16,6 +16,7 @@ import {
   Moon,
   Megaphone,
   Bell,
+  Download,
 } from "lucide-react";
 import { verifyAdmin } from "@/lib/api/admin.auth.functions";
 import { getAdminPushConfig, getAdminPushSubscriptionStatus, getAdminTrainingNotificationSummary, saveAdminPushSubscription } from "@/lib/api/admin.data.functions";
@@ -54,6 +55,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
   const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission | "unsupported">("default");
   const [pushActive, setPushActive] = React.useState(false);
   const [pushSetupError, setPushSetupError] = React.useState<string | null>(null);
+  const [installPrompt, setInstallPrompt] = React.useState<((...args: []) => Promise<void>) | null>(null);
   const latestRegistrationId = React.useRef<string | null>(null);
   const routerState = useRouterState();
   const navigate = useNavigate();
@@ -65,6 +67,21 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
     if (storedTheme === "light" || storedTheme === "dark") {
       setTheme(storedTheme);
     }
+  }, []);
+
+  React.useEffect(() => {
+    const handleInstallAvailable = (event: Event) => {
+      event.preventDefault();
+      const promptEvent = event as Event & { prompt: () => Promise<void> };
+      setInstallPrompt(() => promptEvent.prompt);
+    };
+    const handleInstalled = () => setInstallPrompt(null);
+    window.addEventListener("beforeinstallprompt", handleInstallAvailable);
+    window.addEventListener("appinstalled", handleInstalled);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleInstallAvailable);
+      window.removeEventListener("appinstalled", handleInstalled);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -456,6 +473,20 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
               </div>
 
               <div className="flex items-center gap-3">
+                {installPrompt && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await installPrompt();
+                      setInstallPrompt(null);
+                    }}
+                    className="flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold"
+                    style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--admin-border)", color: "var(--admin-text)" }}
+                  >
+                    <Download className="h-4 w-4" />
+                    Installer l’application
+                  </button>
+                )}
                 {!pushActive && (
                   <button
                     type="button"

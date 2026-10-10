@@ -64,6 +64,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#0A2540" },
       { title: "DIGIT & TALENT — Conseil en transformation digitale & talents" },
       { name: "description", content: "Cabinet de conseil basé à Lomé. Digital, cybersécurité, transformation organisationnelle, change management et formations PMP/CAPM." },
       { name: "author", content: "DIGIT & TALENT" },
@@ -75,6 +76,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -103,6 +105,14 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      void navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch((error) => {
+        console.error("Impossible d'enregistrer le service worker :", error);
+      });
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>

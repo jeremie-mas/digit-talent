@@ -1,0 +1,20 @@
+{
+  "id": "/admin/",
+  "name": "DIGIT & TALENT — Administration",
+  "short_name": "DT Admin",
+  "description": "Espace d'administration DIGIT & TALENT",
+  "start_url": "/admin/login",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070e1f",
+  "theme_color": "#0A2540",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "1100x1100",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
