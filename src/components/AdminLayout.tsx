@@ -56,6 +56,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
   const [pushActive, setPushActive] = React.useState(false);
   const [pushSetupError, setPushSetupError] = React.useState<string | null>(null);
   const [installPrompt, setInstallPrompt] = React.useState<((...args: []) => Promise<void>) | null>(null);
+  const [showInstallHelp, setShowInstallHelp] = React.useState(false);
   const latestRegistrationId = React.useRef<string | null>(null);
   const routerState = useRouterState();
   const navigate = useNavigate();
@@ -75,7 +76,10 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
       const promptEvent = event as Event & { prompt: () => Promise<void> };
       setInstallPrompt(() => promptEvent.prompt);
     };
-    const handleInstalled = () => setInstallPrompt(null);
+    const handleInstalled = () => {
+      setInstallPrompt(null);
+      setShowInstallHelp(false);
+    };
     window.addEventListener("beforeinstallprompt", handleInstallAvailable);
     window.addEventListener("appinstalled", handleInstalled);
     return () => {
@@ -478,10 +482,14 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
               </div>
 
               <div className="flex items-center gap-3">
-                {installPrompt && (
+                {(
                   <button
                     type="button"
                     onClick={async () => {
+                      if (!installPrompt) {
+                        setShowInstallHelp(true);
+                        return;
+                      }
                       await installPrompt();
                       setInstallPrompt(null);
                     }}
@@ -534,6 +542,33 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
               </div>
             </div>
           </header>
+
+          {showInstallHelp && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" role="presentation" onClick={() => setShowInstallHelp(false)}>
+              <section
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="install-help-title"
+                className="w-full max-w-md rounded-2xl border p-6 shadow-2xl"
+                style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--admin-border)", color: "var(--admin-text)" }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 id="install-help-title" className="text-lg font-bold">Installer l’espace admin</h2>
+                    <p className="mt-1 text-sm" style={{ color: "var(--admin-text-muted)" }}>Choisissez l’option correspondant à votre appareil.</p>
+                  </div>
+                  <button type="button" onClick={() => setShowInstallHelp(false)} aria-label="Fermer" className="rounded-lg p-1" style={{ color: "var(--admin-text-muted)" }}><X className="h-5 w-5" /></button>
+                </div>
+                <ul className="mt-5 space-y-3 text-sm" style={{ color: "var(--admin-text-muted)" }}>
+                  <li><strong style={{ color: "var(--admin-text)" }}>Android :</strong> dans Chrome, ouvrez le menu ⋮ puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».</li>
+                  <li><strong style={{ color: "var(--admin-text)" }}>iPhone/iPad :</strong> dans Safari, touchez Partager puis « Sur l’écran d’accueil ».</li>
+                  <li><strong style={{ color: "var(--admin-text)" }}>Ordinateur :</strong> dans Chrome ou Edge, cliquez sur l’icône d’installation dans la barre d’adresse, ou choisissez « Installer cette application » dans le menu.</li>
+                </ul>
+                <p className="mt-4 text-xs" style={{ color: "var(--admin-text-subtle)" }}>L’installation est disponible lorsque le site est publié en HTTPS.</p>
+              </section>
+            </div>
+          )}
 
           {/* Page body */}
           <div className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">{children}</div>
