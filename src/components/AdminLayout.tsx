@@ -18,7 +18,7 @@ import {
   Bell,
 } from "lucide-react";
 import { verifyAdmin } from "@/lib/api/admin.auth.functions";
-import { getAdminPushConfig, getAdminPushSubscriptionStatus, getAdminTrainingNotificationSummary, saveAdminPushSubscription } from "@/lib/api/admin.data.functions";
+import { getAdminPushConfig, getAdminPushSubscriptionStatus, getAdminTrainingNotificationSummary, saveAdminPushSubscription, sendAdminPushTest } from "@/lib/api/admin.data.functions";
 
 
 export type AdminTheme = "dark" | "light";
@@ -54,6 +54,8 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
   const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission | "unsupported">("default");
   const [pushActive, setPushActive] = React.useState(false);
   const [pushSetupError, setPushSetupError] = React.useState<string | null>(null);
+  const [pushTestMessage, setPushTestMessage] = React.useState<string | null>(null);
+  const [pushTestLoading, setPushTestLoading] = React.useState(false);
   const latestRegistrationId = React.useRef<string | null>(null);
   const routerState = useRouterState();
   const navigate = useNavigate();
@@ -77,7 +79,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
           .then((subscription) => getAdminPushSubscriptionStatus({
             data: { token, endpoint: subscription?.endpoint ?? "" },
           }))
-          .then((status) => setPushActive(status.active))
+          .then((status) => setPushActive(status.active && window.Notification.permission === "granted"))
           .catch(() => setPushActive(false));
       }
     }
@@ -153,6 +155,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
 
   const enableBrowserNotifications = async () => {
     setPushSetupError(null);
+    setPushTestMessage(null);
     try {
       if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window) || !window.isSecureContext) {
         setNotificationPermission("unsupported");
@@ -182,6 +185,27 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
       setPushActive(true);
     } catch (error) {
       setPushSetupError(error instanceof Error ? error.message : "Impossible d'activer les notifications push.");
+    }
+  };
+
+  const testBrowserNotifications = async () => {
+    setPushTestLoading(true);
+    setPushTestMessage(null);
+    setPushSetupError(null);
+    try {
+      const token = localStorage.getItem("dt_admin_token");
+      if (!token) throw new Error("Session admin expirée. Reconnectez-vous.");
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      if (!subscription) throw new Error("Cet appareil n’a plus d’abonnement push. Réactivez les notifications.");
+      const result = await sendAdminPushTest({ data: { token, endpoint: subscription.endpoint } });
+      if (result.error) throw new Error(result.error);
+      setPushTestMessage("Notification de test envoyée. Vérifiez aussi les réglages de notifications de votre téléphone.");
+    } catch (error) {
+      setPushSetupError(error instanceof Error ? error.message : "Le test de notification a échoué.");
+      setPushActive(false);
+    } finally {
+      setPushTestLoading(false);
     }
   };
 
@@ -428,6 +452,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
         {/* Main Content Area */}
         <main className="flex-1 flex flex-col min-w-0">
           {pushSetupError && <p className="mx-4 mt-2 text-xs text-red-500 md:mx-8" role="alert">{pushSetupError}</p>}
+          {pushTestMessage && <p className="mx-4 mt-2 text-xs text-green-500 md:mx-8" role="status">{pushTestMessage}</p>}
           {registrationNotice && (
             <div className="mx-4 mt-4 flex items-start gap-3 rounded-xl border p-4 shadow-lg md:mx-8" role="status" style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--orange)" }}>
               <Bell className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "var(--orange)" }} />
@@ -472,6 +497,18 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
                   >
                     <Bell className="h-4 w-4" />
                     {notificationPermission === "denied" ? "Notifications bloquées" : notificationPermission === "unsupported" ? "Push non disponible" : "Activer le push"}
+                  </button>
+                )}
+                {pushActive && (
+                  <button
+                    type="button"
+                    onClick={testBrowserNotifications}
+                    disabled={pushTestLoading}
+                    className="flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold disabled:opacity-60"
+                    style={{ backgroundColor: "var(--admin-card-bg)", borderColor: "var(--admin-border)", color: "var(--admin-text)" }}
+                  >
+                    <Bell className="h-4 w-4" />
+                    {pushTestLoading ? "Test en cours…" : "Tester les notifications"}
                   </button>
                 )}
                 {/* Theme Switcher Button Desktop */}

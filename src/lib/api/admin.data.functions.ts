@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { getSupabaseServerClient, getSupabaseServiceRoleClient } from "../supabase.server";
 import { verifySignedToken } from "./admin.auth.functions";
-import { getWebPushPublicKey } from "./web-push.server";
+import { getWebPushPublicKey, sendTrainingPushNotification } from "./web-push.server";
 
 function assertAuth(token: string) {
   const verified = verifySignedToken(token);
@@ -689,6 +689,18 @@ export const getAdminPushConfig = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     assertAuth(data.token);
     return { publicKey: getWebPushPublicKey() };
+  });
+
+export const sendAdminPushTest = createServerFn({ method: "POST" })
+  .validator(z.object({ token: z.string(), endpoint: z.string().url().max(2048) }))
+  .handler(async ({ data }) => {
+    const admin = verifySignedToken(data.token);
+    if (!admin.valid || !admin.email) throw new Error("Session expirée. Reconnectez-vous.");
+    return sendTrainingPushNotification({
+      title: "Test des notifications DIGIT & TALENT",
+      body: "Les notifications sont bien activées sur cet appareil.",
+      url: "/admin/formations",
+    }, admin.email, data.endpoint);
   });
 
 export const getAdminPushSubscriptionStatus = createServerFn({ method: "POST" })

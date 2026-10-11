@@ -89,18 +89,25 @@ function encryptPayload(subscription: PushSubscription, payload: string): Buffer
   return Buffer.concat([salt, recordSize, Buffer.from([asPublicKey.length]), asPublicKey, ciphertext]);
 }
 
-export async function sendTrainingPushNotification(payload: { title: string; body: string; url: string }) {
+export async function sendTrainingPushNotification(payload: { title: string; body: string; url: string }, adminEmail?: string, endpoint?: string) {
   const supabase = getSupabaseServiceRoleClient();
   const keys = getVapidKeys();
-  if (!supabase || !keys) return;
+  if (!supabase) return { sent: 0, error: "Supabase service role is not configured." };
+  if (!keys) return { sent: 0, error: "VAPID keys are not configured." };
 
-  const { data: rows, error } = await supabase.from("admin_push_subscriptions").select("endpoint, subscription");
+  let query = supabase.from("admin_push_subscriptions").select("endpoint, subscription");
+  if (adminEmail) query = query.eq("admin_email", adminEmail);
+  if (endpoint) query = query.eq("endpoint", endpoint);
+  const { data: rows, error } = await query;
   if (error) {
     console.error("Impossible de lire les abonnements Web Push admin :", error.message);
-    return;
+    return { sent: 0, error: "Could not read registered push subscriptions." };
   }
 
-  await Promise.all((rows ?? []).map(async (row) => {
+  if (!rows?.length) return { sent: 0, error: "No subscribed phone was found. Enable notifications on this device first." };
+  let sent = 0;
+  let failed = 0;
+  await Promise.all(rows.map(async (row) => {
     const subscription = row.subscription as PushSubscription;
     try {
       const response = await fetch(subscription.endpoint, {
@@ -115,13 +122,20 @@ export async function sendTrainingPushNotification(payload: { title: string; bod
         body: encryptPayload(subscription, JSON.stringify(payload)),
         signal: AbortSignal.timeout(5000),
       });
+      if (response.ok) sent += 1;
       if (response.status === 404 || response.status === 410) {
+        failed += 1;
         await supabase.from("admin_push_subscriptions").delete().eq("endpoint", subscription.endpoint);
       } else if (!response.ok) {
+        failed += 1;
         console.warn("Échec envoi push admin :", response.status, await response.text());
       }
     } catch (error) {
+      failed += 1;
       console.warn("Échec envoi push admin :", error);
     }
   }));
+  return sent > 0
+    ? { sent, error: null }
+    : { sent: 0, error: failed ? "The push service refused delivery. Check VAPID keys and phone subscription." : "No notification was sent." };
 }
