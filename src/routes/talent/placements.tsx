@@ -10,7 +10,7 @@ export const Route = createFileRoute("/talent/placements")({
   head: () => ({
     meta: [
       { title: "Placements — DIGIT & TALENT" },
-      { name: "description", content: "Placement de talents en CDI, CDD ou mission dans les secteurs clés de l'économie africaine." },
+      { name: "description", content: "Talent placement on permanent, fixed-term or contract assignments in key sectors of the African economy." },
     ],
   }),
   component: Placements,

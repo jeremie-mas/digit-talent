@@ -12,7 +12,7 @@ export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services — DIGIT & TALENT" },
-      { name: "description", content: "Digital, PROSCI ADKAR change management and CAPM/PMP training, organizational transformation, cybersecurity." },
+      { name: "description", content: "Digitalization, PROSCI ADKAR change management, CAPM/PMP training, organizational transformation and cybersecurity for African organizations." },
       { property: "og:title", content: "Our services — DIGIT & TALENT" },
       { property: "og:description", content: "A full range of services for your digital and organizational transformation." },
     ],

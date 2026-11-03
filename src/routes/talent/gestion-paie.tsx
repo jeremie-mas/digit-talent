@@ -9,8 +9,8 @@ import { Calculator, FileSpreadsheet, CheckCircle, TrendingUp, ArrowRight } from
 export const Route = createFileRoute("/talent/gestion-paie")({
   head: () => ({
     meta: [
-      { title: "Gestion de la Paie — DIGIT & TALENT" },
-      { name: "description", content: "Traitement fiable, conforme et sécurisé de la paie de vos collaborateurs, avec déclarations sociales incluses." },
+      { title: "Payroll Management — DIGIT & TALENT" },
+      { name: "description", content: "Reliable, compliant and secure payroll processing for your employees, including social security filings." },
     ],
   }),
   component: GestionPaie,

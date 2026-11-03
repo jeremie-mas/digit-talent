@@ -9,8 +9,8 @@ import { Database, Zap, BarChart2, GraduationCap, ArrowRight } from "lucide-reac
 export const Route = createFileRoute("/talent/digitalisation-rh")({
   head: () => ({
     meta: [
-      { title: "Digitalisation RH — DIGIT & TALENT" },
-      { name: "description", content: "Transformation digitale de vos processus RH : SIRH, automatisation, analytics et formation des équipes." },
+      { title: "HR Digitalization — DIGIT & TALENT" },
+      { name: "description", content: "Digital transformation of your HR processes: HRIS, automation, analytics and team training." },
     ],
   }),
   component: DigitalisationRH,

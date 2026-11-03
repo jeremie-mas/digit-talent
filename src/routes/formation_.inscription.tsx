@@ -13,10 +13,10 @@ export const Route = createFileRoute("/formation_/inscription")({
   }),
   head: () => ({
     meta: [
-      { title: "Inscription à une formation — DIGIT & TALENT" },
+      { title: "Training registration — DIGIT & TALENT" },
       {
         name: "description",
-        content: "Inscrivez-vous aux formations certifiantes PMP®, CAPM®, Prosci et transformation digitale de DIGIT & TALENT.",
+        content: "Register for DIGIT & TALENT certification training: PMP®, CAPM®, Prosci and digital transformation.",
       },
       { name: "robots", content: "index, follow" },
     ],

@@ -12,8 +12,8 @@ const LanguageContext = createContext<Ctx | null>(null);
 const STORAGE_KEY = "lang";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Default de base : Français (Togo / Afrique de l'Ouest)
-  const [lang, setLangState] = useState<Lang>("fr");
+  // Langue par défaut : anglais
+  const [lang, setLangState] = useState<Lang>("en");
 
   // Hydrate from localStorage on the client
   useEffect(() => {

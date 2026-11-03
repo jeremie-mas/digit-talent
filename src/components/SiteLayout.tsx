@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import { Menu, X, Mail, Phone, MapPin, ArrowUp, ChevronDown } from "lucide-react";
-import logoAsset from "@/assets/digit-talent-logo.png";
+import logoAsset from "@/assets/digit-talent-logo.webp";
 import { useT } from "@/i18n/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -61,14 +61,14 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               Fueling Dreams, Forging Success.
             </span>
           </Link>
-          <nav className="hidden items-center gap-9 lg:flex">
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-9">
             {nav.slice(0, 3).map((n) => {
               const active = location.pathname === n.to;
               return (
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`relative text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative whitespace-nowrap text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     active
                       ? "text-accent after:scale-x-100"
                       : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -86,7 +86,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               onMouseLeave={closeTalent}
             >
               <button
-                className={`flex items-center gap-1 text-base font-medium transition-colors ${
+                className={`flex items-center gap-1 whitespace-nowrap text-base font-medium transition-colors ${
                   location.pathname.startsWith("/talent")
                     ? "text-accent"
                     : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -119,7 +119,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`relative text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative whitespace-nowrap text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     active
                       ? "text-accent after:scale-x-100"
                       : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -130,7 +130,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               );
             })}
             <LanguageSwitcher />
-            <Link to="/contact" className="btn btn-primary !py-2.5 !px-5">
+            <Link to="/contact" className="btn btn-primary whitespace-nowrap !py-2.5 !px-5">
               {t("nav.cta")}
             </Link>
           </nav>

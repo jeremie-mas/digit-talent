@@ -11,9 +11,9 @@ import { HeroPromoStrip } from "@/components/HeroPromoStrip";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digit & Talent | Digital Transformation & Talent Consulting in Africa" },
-      { name: "description", content: "Consulting firm based in Lomé. Digital transformation,Project Management training, change management and cybersecurity since 2012." },
-      { property: "og:title", content: "DIGIT & TALENT — Fueling Dreams, Forging Success" },
+      { title: "DIGIT & TALENT | Digital Transformation, PMP Training & Talent in Lomé, Togo" },
+      { name: "description", content: "Consulting firm based in Lomé since 2012: digital transformation, PMP/CAPM certification training, Prosci ADKAR change management and cybersecurity." },
+      { property: "og:title", content: "DIGIT & TALENT — Your transformation starts here" },
       { property: "og:description", content: "The convergence of digital and talent at the service of your growth." },
     ],
   }),
@@ -54,7 +54,9 @@ function Home() {
         <div className="absolute inset-x-0 top-0 h-[390px] sm:inset-y-0 sm:left-auto sm:h-auto sm:w-[52%]">
           <img
             src={imagery.professionalMan}
-            alt="Professional consultant in a tech office environment"
+            alt="DIGIT & TALENT consultant"
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full object-cover object-center"
           />
           {/* Fondu gauche pour intégration naturelle */}
@@ -126,7 +128,7 @@ function Home() {
             </span>
 
             <h1
-              className="animate-fade-up mt-7 text-5xl font-bold leading-[1.04] text-white sm:text-6xl lg:text-7xl"
+              className="animate-fade-up mt-7 text-4xl font-bold leading-[1.08] text-white [overflow-wrap:anywhere] min-[400px]:text-5xl sm:text-6xl lg:text-7xl"
               style={{ animationDelay: "120ms" }}
             >
               {t("home.hero.titleA")}{" "}

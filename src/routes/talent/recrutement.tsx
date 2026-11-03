@@ -9,8 +9,8 @@ import { Search, UserCheck, Users, ClipboardCheck, ArrowRight } from "lucide-rea
 export const Route = createFileRoute("/talent/recrutement")({
   head: () => ({
     meta: [
-      { title: "Recrutement — DIGIT & TALENT" },
-      { name: "description", content: "Identification, sourcing et sélection de profils qualifiés adaptés à votre culture et vos enjeux stratégiques." },
+      { title: "Recruitment — DIGIT & TALENT" },
+      { name: "description", content: "Identifying, sourcing and selecting qualified profiles that fit your culture and strategic goals." },
     ],
   }),
   component: Recrutement,

@@ -9,8 +9,8 @@ import { FileText, Shield, Settings, BarChart2, ArrowRight } from "lucide-react"
 export const Route = createFileRoute("/talent/externalisation-rh")({
   head: () => ({
     meta: [
-      { title: "Externalisation RH — DIGIT & TALENT" },
-      { name: "description", content: "Déléguez la gestion de vos ressources humaines à nos experts et concentrez-vous sur votre cœur de métier." },
+      { title: "HR Outsourcing — DIGIT & TALENT" },
+      { name: "description", content: "Delegate your human resources management to our experts and focus on your core business." },
     ],
   }),
   component: ExternalisationRH,

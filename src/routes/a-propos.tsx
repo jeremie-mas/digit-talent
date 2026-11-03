@@ -26,14 +26,14 @@ import {
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
-      { title: "À propos — DIGIT & TALENT" },
+      { title: "About us — DIGIT & TALENT" },
       {
         name: "description",
         content:
-          "Fondé en 2012 à Lomé, DIGIT & TALENT réunit des consultants certifiés au service de la convergence du digital et des talents en Afrique.",
+          "Founded in 2012 in Lomé, DIGIT & TALENT brings together certified consultants serving the convergence of digital and talent in Africa.",
       },
-      { property: "og:title", content: "À propos de DIGIT & TALENT" },
-      { property: "og:description", content: "Notre vision, notre mission, nos valeurs et notre équipe." },
+      { property: "og:title", content: "About DIGIT & TALENT" },
+      { property: "og:description", content: "Our vision, mission, values and team." },
     ],
   }),
   component: About,

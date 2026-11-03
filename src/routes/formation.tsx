@@ -30,16 +30,16 @@ export const Route = createFileRoute("/formation")({
   }),
   head: () => ({
     meta: [
-      { title: "Catalogue des Formations Certifiantes — DIGIT & TALENT" },
+      { title: "Certification Training Catalog — DIGIT & TALENT" },
       {
         name: "description",
         content:
-          "Découvrez le catalogue des formations certifiantes DIGIT & TALENT : Certifications mondiales PMP®, CAPM®, Conduite du Changement Prosci et Transformation Digitale.",
+          "Explore the DIGIT & TALENT certification training catalog: globally recognized PMP®, CAPM®, Prosci change management and digital transformation.",
       },
-      { property: "og:title", content: "Formations Professionnelles & Certifications — DIGIT & TALENT" },
+      { property: "og:title", content: "Professional Training & Certifications — DIGIT & TALENT" },
       {
         property: "og:description",
-        content: "Développez vos compétences et décrochez vos certifications internationales PMI et Prosci.",
+        content: "Build your skills and earn internationally recognized PMI and Prosci certifications.",
       },
     ],
   }),

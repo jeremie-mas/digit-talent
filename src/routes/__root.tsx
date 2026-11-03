@@ -13,6 +13,37 @@ import appCss from "../styles.css?url";
 // LIGNE SUPPRIMÉE : import { reportdigit_talentError } from "../lib/digit_talent-error-reporting";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 
+const SITE_URL = "https://www.digit-talent.com";
+const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+
+// Données structurées (JSON-LD) pour le référencement local
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "DIGIT & TALENT",
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon.png`,
+  image: OG_IMAGE,
+  description:
+    "Consulting firm based in Lomé, Togo: digital transformation, PMP/CAPM training, Prosci ADKAR change management and cybersecurity.",
+  foundingDate: "2012-10-04",
+  email: "contact@digit-talent.com",
+  telephone: "+228 91 98 20 23",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "96, Rue Gbotobare, Quartier Todman Casablanca",
+    addressLocality: "Lomé",
+    addressCountry: "TG",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "07:30",
+    closes: "18:00",
+  },
+  areaServed: "Africa",
+};
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -60,31 +91,47 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: ({ matches }) => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#0A2540" },
-      { title: "DIGIT & TALENT — Conseil en transformation digitale & talents" },
-      { name: "description", content: "Cabinet de conseil basé à Lomé. Digital, cybersécurité, transformation organisationnelle, change management et formations PMP/CAPM." },
-      { name: "author", content: "DIGIT & TALENT" },
-      { property: "og:title", content: "DIGIT & TALENT" },
-      { property: "og:description", content: "La convergence du digital et des talents au service de votre croissance." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "apple-touch-icon", href: "/favicon.png" },
-      ...(matches.some((match) => match.routeId.startsWith("/admin"))
-        ? [{ rel: "manifest" as const, href: "/admin/manifest.webmanifest" }]
-        : []),
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" },
-    ],
-  }),
+  head: ({ matches }) => {
+    const pathname = matches[matches.length - 1]?.pathname ?? "/";
+    const canonical = `${SITE_URL}${pathname === "/" ? "/" : pathname.replace(/\/$/, "")}`;
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "theme-color", content: "#0A2540" },
+        { title: "DIGIT & TALENT — Digital Transformation & Talent Consulting" },
+        { name: "description", content: "Consulting firm based in Lomé, Togo: digital transformation, cybersecurity, organizational transformation, change management and PMP/CAPM training." },
+        { name: "author", content: "DIGIT & TALENT" },
+        { property: "og:title", content: "DIGIT & TALENT" },
+        { property: "og:description", content: "The convergence of digital and talent at the service of your growth." },
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "DIGIT & TALENT" },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:locale:alternate", content: "fr_FR" },
+        { property: "og:url", content: canonical },
+        { property: "og:image", content: OG_IMAGE },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: OG_IMAGE },
+      ],
+      links: [
+        { rel: "canonical", href: canonical },
+        { rel: "icon", type: "image/png", href: "/favicon.png" },
+        { rel: "apple-touch-icon", href: "/favicon.png" },
+        ...(matches.some((match) => match.routeId.startsWith("/admin"))
+          ? [{ rel: "manifest" as const, href: "/admin/manifest.webmanifest" }]
+          : []),
+        { rel: "stylesheet", href: appCss },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" },
+      ],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(organizationJsonLd) },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

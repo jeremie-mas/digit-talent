@@ -22,16 +22,16 @@ import { useT } from "@/i18n/LanguageProvider";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Blog & Actualités — DIGIT & TALENT" },
+      { title: "Blog & News — DIGIT & TALENT" },
       {
         name: "description",
         content:
-          "Découvrez nos articles, analyses et guides sur la gestion de projet (PMP/CAPM), la transformation digitale et le management des talents en Afrique.",
+          "Articles, analysis and guides on project management (PMP/CAPM), digital transformation and talent management in Africa.",
       },
-      { property: "og:title", content: "Blog & Actualités — DIGIT & TALENT" },
+      { property: "og:title", content: "Blog & News — DIGIT & TALENT" },
       {
         property: "og:description",
-        content: "Analyses, guides et retours d'expérience par les experts DIGIT & TALENT.",
+        content: "Insights, guides and field experience from DIGIT & TALENT experts.",
       },
     ],
   }),

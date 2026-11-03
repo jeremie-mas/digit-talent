@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://www.digit-talent.com/</loc>
-  </url>
-
-  <url>
-    <loc>https://www.digit-talent.com/services</loc>
-  </url>
-
-  <url>
-    <loc>https://www.digit-talent.com/a-propos</loc>
-  </url>
-
-  <url>
-    <loc>https://www.digit-talent.com/contact</loc>
-  </url>
-
+  <url><loc>https://www.digit-talent.com/</loc></url>
+  <url><loc>https://www.digit-talent.com/services</loc></url>
+  <url><loc>https://www.digit-talent.com/formation</loc></url>
+  <url><loc>https://www.digit-talent.com/formation/inscription</loc></url>
+  <url><loc>https://www.digit-talent.com/blog</loc></url>
+  <url><loc>https://www.digit-talent.com/a-propos</loc></url>
+  <url><loc>https://www.digit-talent.com/contact</loc></url>
+  <url><loc>https://www.digit-talent.com/talent/recrutement</loc></url>
+  <url><loc>https://www.digit-talent.com/talent/externalisation-rh</loc></url>
+  <url><loc>https://www.digit-talent.com/talent/placements</loc></url>
+  <url><loc>https://www.digit-talent.com/talent/gestion-paie</loc></url>
+  <url><loc>https://www.digit-talent.com/talent/digitalisation-rh</loc></url>
 </urlset>
