@@ -1,9 +1,12 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, useEffect, useRef, type ReactNode } from "react";
-import { Menu, X, Mail, Phone, MapPin, ArrowUp, ChevronDown } from "lucide-react";
+import { Menu, X, Mail, Phone, MapPin, ArrowUp, ChevronDown, LogIn } from "lucide-react";
 import logoAsset from "@/assets/digit-talent-logo.webp";
 import { useT } from "@/i18n/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+
+// Page de connexion de la plateforme LMS (configurable via VITE_LMS_URL)
+const LMS_LOGIN_URL = `${(import.meta.env.VITE_LMS_URL || "https://app.digit-talent.com").replace(/\/$/, "")}/login`;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -55,20 +58,20 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <Link to="/" className="flex flex-col items-center">
-            <img src={logoAsset} alt="DIGIT & TALENT" className={`h-25 w-auto transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
+          <Link to="/" className="flex shrink-0 flex-col items-center">
+            <img src={logoAsset} alt="DIGIT & TALENT" className={`h-16 w-auto transition-all duration-300 xl:h-25 ${scrolled ? "" : "brightness-0 invert"}`} />
             <span className={`w-full text-center text-[9px] italic tracking-wide transition-colors duration-300 ${scrolled ? "text-foreground/50" : "text-white/70"}`}>
               Fueling Dreams, Forging Success.
             </span>
           </Link>
-          <nav className="hidden items-center gap-6 lg:flex xl:gap-9">
+          <nav className="hidden items-center gap-4 lg:flex xl:gap-7">
             {nav.slice(0, 3).map((n) => {
               const active = location.pathname === n.to;
               return (
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`relative whitespace-nowrap text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative whitespace-nowrap text-sm font-medium xl:text-base transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     active
                       ? "text-accent after:scale-x-100"
                       : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -86,7 +89,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               onMouseLeave={closeTalent}
             >
               <button
-                className={`flex items-center gap-1 whitespace-nowrap text-base font-medium transition-colors ${
+                className={`flex items-center gap-1 whitespace-nowrap text-sm font-medium xl:text-base transition-colors ${
                   location.pathname.startsWith("/talent")
                     ? "text-accent"
                     : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -119,7 +122,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`relative whitespace-nowrap text-base font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative whitespace-nowrap text-sm font-medium xl:text-base transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     active
                       ? "text-accent after:scale-x-100"
                       : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -130,6 +133,19 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               );
             })}
             <LanguageSwitcher />
+            <a
+              href={LMS_LOGIN_URL}
+              aria-label={t("nav.login")}
+              title={t("nav.login")}
+              className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border p-2.5 text-sm font-semibold transition-colors 2xl:px-4 2xl:py-2 ${
+                scrolled
+                  ? "border-border text-foreground/80 hover:border-accent hover:text-accent"
+                  : "border-white/30 text-white hover:border-white hover:bg-white/10"
+              }`}
+            >
+              <LogIn className="h-4 w-4" />
+              <span className="hidden 2xl:inline">{t("nav.login")}</span>
+            </a>
             <Link to="/contact" className="btn btn-primary whitespace-nowrap !py-2.5 !px-5">
               {t("nav.cta")}
             </Link>
@@ -146,7 +162,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
         {open && (
-          <div className="border-t border-border/60 bg-background/98">
+          <div className="border-t border-border/60 bg-background shadow-lg">
             <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4">
               {nav.slice(0, 3).map((n) => (
                 <Link
@@ -210,6 +226,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                   {n.label}
                 </Link>
               ))}
+              <a
+                href={LMS_LOGIN_URL}
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:border-accent hover:text-accent"
+              >
+                <LogIn className="h-4 w-4" />
+                {t("nav.login")}
+              </a>
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}

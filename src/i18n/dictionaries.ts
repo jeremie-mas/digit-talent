@@ -11,6 +11,7 @@ export const en: Dict = {
   "nav.about": "About",
   "nav.contact": "Contact",
   "nav.cta": "Start a project",
+  "nav.login": "Log in",
 
   // Footer
   "footer.tagline": "The convergence of digital and talent at the service of African companies' growth. Since 2012.",
@@ -451,6 +452,7 @@ export const fr: Dict = {
   "nav.about": "À propos",
   "nav.contact": "Contact",
   "nav.cta": "Démarrer un projet",
+  "nav.login": "Connexion",
 
   // Footer
   "footer.tagline": "La convergence du digital et des talents au service de la croissance des entreprises africaines. Depuis 2012.",
