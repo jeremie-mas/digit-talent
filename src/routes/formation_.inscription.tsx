@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowLeft, CheckCircle2, GraduationCap, Send, ShieldCheck } from "lucide-react";
+import { imagery } from "@/assets/imagery";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useT } from "@/i18n/LanguageProvider";
@@ -96,15 +97,26 @@ function TrainingRegistrationPage() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep py-20 pt-[145px] text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-deep to-blue/30" />
-        <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-          <p className="eyebrow">{formConfig.badge}</p>
-          <h1 className="mt-4 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl">
+      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
+        <img
+          src={imagery.coworkersAi}
+          alt="Session de formation professionnelle et certification"
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
+        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
+          <p className="eyebrow animate-fade-in-soft">{formConfig.badge}</p>
+          <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>
             {formConfig.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm font-semibold text-accent sm:text-base">{formConfig.sessionText}</p>
-          {formConfig.description && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">{formConfig.description}</p>}
+          <p className="animate-fade-up mt-6 max-w-2xl text-base font-semibold text-accent sm:text-lg" style={{ animationDelay: "240ms" }}>
+            {formConfig.sessionText}
+          </p>
+          {formConfig.description && (
+            <p className="animate-fade-up mt-3 max-w-2xl text-lg leading-relaxed text-white/75" style={{ animationDelay: "300ms" }}>
+              {formConfig.description}
+            </p>
+          )}
         </div>
         <Breadcrumb
           crumbs={[
