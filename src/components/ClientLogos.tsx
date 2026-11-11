@@ -34,7 +34,7 @@ export function ClientLogos({ clients = DEFAULT_CLIENTS }: { clients?: { img: st
                   <img
                     src={c.img}
                     alt={copy === 1 ? "" : c.alt}
-                    loading="lazy"
+                    decoding="async"
                     className="max-h-16 w-auto max-w-[140px] object-contain opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
                   />
                 </li>

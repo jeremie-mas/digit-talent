@@ -306,10 +306,13 @@
 .reveal.reveal-left.is-visible,
 .reveal.reveal-right.is-visible,
 .reveal.reveal-scale.is-visible { transform: none; }
-/* Image dévoilée par un rideau, avec léger zoom arrière */
-.reveal.reveal-image { opacity: 1; transform: none; clip-path: inset(0 0 100% 0 round 1rem); }
-.reveal.reveal-image img { transform: scale(1.15); transition: transform 1.6s var(--ease-out-expo); }
-.reveal.reveal-image.is-visible { clip-path: inset(0 0 0 0 round 1rem); }
+/* Image dévoilée par un rideau, avec léger zoom arrière.
+   Le rideau s'applique aux enfants, jamais au bloc observé : un bloc entièrement
+   masqué n'est pas détecté par l'IntersectionObserver et ne s'afficherait jamais. */
+.reveal.reveal-image { opacity: 1; transform: none; }
+.reveal.reveal-image > * { clip-path: inset(0 0 100% 0); transition: clip-path 1.2s var(--ease-out-expo); }
+.reveal.reveal-image img { transform: scale(1.15); transition: transform 1.6s var(--ease-out-expo), clip-path 1.2s var(--ease-out-expo); }
+.reveal.reveal-image.is-visible > * { clip-path: inset(0 0 0 0); }
 .reveal.reveal-image.is-visible img { transform: scale(1); }
 /* Enfants qui apparaissent l'un après l'autre */
 .reveal.reveal-stagger { opacity: 1; transform: none; }
@@ -376,7 +379,7 @@
 @utility animate-beam-sweep { animation: beam-sweep 8s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-stagger > *, .reveal-image img { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
+  .reveal, .reveal-stagger > *, .reveal-image > *, .reveal-image img { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
   .word-mask > span,
   .network-animated line,
   .network-animated circle,

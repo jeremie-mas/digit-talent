@@ -32,6 +32,12 @@ export function Reveal({ children, as: Tag = "div", delay = 0, variant = "up", c
       setVisible(true);
       return;
     }
+    // Sécurité : un bloc déjà à l'écran au chargement s'affiche sans attendre l'observateur
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const id = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(id);
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
