@@ -115,11 +115,8 @@ function About() {
             { icon: Target, title: t("about.mission.title"), text: t("about.mission.desc") },
           ].map((b, idx) => (
             <Reveal key={b.title} delay={idx * 120}>
-              <div className="card-surface card-interactive group h-full p-8 lg:p-10">
-                <div className="icon-tile h-14 w-14 group-hover:icon-tile-accent">
-                  <b.icon className="h-6 w-6" />
-                </div>
-                <h2 className="mt-6 text-2xl font-bold text-navy">{b.title}</h2>
+              <div className="card-surface card-interactive h-full p-8 lg:p-10">
+                <h2 className="text-2xl font-bold text-navy">{b.title}</h2>
                 <p className="mt-3 leading-relaxed text-muted-foreground">{b.text}</p>
               </div>
             </Reveal>
@@ -137,10 +134,7 @@ function About() {
         <ol className="grid border-t border-navy/15 sm:grid-cols-2 lg:col-span-8">
           {values.map((v, idx) => (
             <Reveal key={v.key} as="li" delay={idx * 50} className="border-b border-navy/15 py-8 sm:odd:pr-10 sm:even:pl-10">
-              <div className="flex items-center gap-3">
-                <v.icon className="h-5 w-5 text-accent" />
-                <h3 className="text-xl font-semibold text-navy">{t(`about.val.${v.key}.title`)}</h3>
-              </div>
+              <h3 className="text-xl font-semibold text-navy">{t(`about.val.${v.key}.title`)}</h3>
               <p className="mt-3 leading-relaxed text-muted-foreground">{t(`about.val.${v.key}.desc`)}</p>
             </Reveal>
           ))}

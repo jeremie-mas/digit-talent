@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import {
   GraduationCap,
@@ -19,6 +19,8 @@ import { useState, type FormEvent, useEffect } from "react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { PageHero } from "@/components/PageHero";
+import { CohortSlider } from "@/components/CohortSlider";
+import { COHORTS } from "@/data/cohorts";
 import { submitTrainingRegistration } from "@/lib/api/formation.functions";
 import { DEFAULT_TRAINING_FORM_CONFIG, getPublicTrainingFormConfig, type TrainingFormConfig } from "@/lib/api/training-form.functions";
 import { getPublicServices } from "@/lib/api/public.data.functions";
@@ -370,21 +372,16 @@ function FormationPage() {
                 <div>
                   {/* Top Header: Badge + Logo/Icon */}
                   <div className="flex items-start justify-between gap-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-accent/10 text-accent border border-accent/20">
-                      <Sparkles className="h-3 w-3" />
+                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
                       {course.badge}
                     </span>
 
-                    {course.logoBadge ? (
+                    {course.logoBadge && (
                       <img
                         src={course.logoBadge}
                         alt={course.shortTitle}
                         className="h-14 w-14 object-contain shrink-0 drop-shadow-sm"
                       />
-                    ) : (
-                      <div className="flex h-12 w-12 items-center justify-center icon-tile shrink-0">
-                        <GraduationCap className="h-6 w-6" />
-                      </div>
                     )}
                   </div>
 
@@ -483,6 +480,25 @@ function FormationPage() {
             </div>
           </div>
         </Reveal>
+      </section>
+
+      {/* Nos cohortes : photos en carrousel */}
+      <section className="overflow-hidden bg-mesh section-y">
+        <div className="container-site">
+          <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <div className="max-w-2xl">
+              <p className="eyebrow">{t("formation.cohorts.eyebrow")}</p>
+              <h2 className="mt-4 text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("formation.cohorts.title")}</h2>
+              <p className="mt-5 leading-relaxed text-muted-foreground sm:text-lg">{t("formation.cohorts.desc")}</p>
+            </div>
+            <Link to="/certifies" className="btn btn-outline-dark shrink-0 self-start lg:self-auto">
+              {t("formation.cohorts.certified")} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
+          <Reveal className="mt-12">
+            <CohortSlider cohorts={COHORTS} />
+          </Reveal>
+        </div>
       </section>
 
       {/* POP-UP MODAL: FORMULAIRE D'INSCRIPTION RESPONSIVE */}

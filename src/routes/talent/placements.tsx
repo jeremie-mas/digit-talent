@@ -43,12 +43,10 @@ function Placements() {
         <h2 className="mt-4 max-w-2xl text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("talent.placements.section.title")}</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{t("talent.placements.section.desc")}</p>
         <Reveal variant="stagger" className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
-            <div key={f.title} className="group card-surface card-interactive p-7">
-              <div className="icon-tile h-14 w-14 group-hover:icon-tile-accent">
-                <f.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-6 text-lg font-semibold text-navy">{f.title}</h3>
+          {features.map((f, i) => (
+            <div key={f.title} className="card-surface card-interactive p-7">
+              <p className="font-display text-sm font-semibold text-accent">0{i + 1}</p>
+              <h3 className="mt-4 text-lg font-semibold text-navy">{f.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
             </div>
           ))}

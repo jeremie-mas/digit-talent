@@ -117,19 +117,19 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       >
         {/* Barre d'informations (ordinateur) */}
         <div
-          className={`hidden overflow-hidden border-b border-white/10 transition-all duration-300 lg:block ${
+          className={`hidden overflow-hidden border-b border-border bg-white transition-all duration-300 lg:block ${
             scrolled ? "max-h-0 border-transparent opacity-0" : "max-h-10 opacity-100"
           }`}
         >
-          <div className="container-site flex h-9 items-center justify-between text-xs text-white/65">
+          <div className="container-site flex h-9 items-center justify-between text-xs text-navy/70">
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-accent" />{t("footer.address")}</span>
-              <a href="mailto:contact@digit-talent.com" className="flex items-center gap-1.5 transition hover:text-white"><Mail className="h-3.5 w-3.5 text-accent" />contact@digit-talent.com</a>
-              <a href="tel:+22891982023" className="flex items-center gap-1.5 transition hover:text-white"><Phone className="h-3.5 w-3.5 text-accent" />+228 91 98 20 23</a>
+              <a href="mailto:contact@digit-talent.com" className="flex items-center gap-1.5 transition hover:text-accent"><Mail className="h-3.5 w-3.5 text-accent" />contact@digit-talent.com</a>
+              <a href="tel:+22891982023" className="flex items-center gap-1.5 transition hover:text-accent"><Phone className="h-3.5 w-3.5 text-accent" />+228 91 98 20 23</a>
             </div>
             <div className="flex items-center gap-5">
               <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-accent" />{t("contact.info.hoursV")}</span>
-              <span className="h-3.5 w-px bg-white/15" />
+              <span className="h-3.5 w-px bg-navy/15" />
               <div className="flex items-center gap-3">
                 {SOCIALS.slice(0, 2).map((s) => (
                   <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="transition hover:text-accent">
@@ -381,6 +381,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                     <Link to={n.to} className="text-white/65 transition hover:text-accent">{n.label}</Link>
                   </li>
                 ))}
+                <li>
+                  <Link to="/certifies" className="text-white/65 transition hover:text-accent">{t("nav.certified")}</Link>
+                </li>
               </ul>
             </div>
           </div>

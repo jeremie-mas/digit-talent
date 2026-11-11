@@ -93,25 +93,15 @@ function Services() {
                     <img src={s.image} alt={title} className="aspect-[4/3] w-full object-cover" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/50 to-transparent" />
                   </Reveal>
-                  <Reveal variant="scale" delay={500} className={`absolute -bottom-6 ${reverse ? "-left-4 lg:-left-6" : "-right-4 lg:-right-6"}`}>
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-white shadow-[0_12px_30px_-12px_rgb(10_37_64/0.5)]">
-                      <s.icon className="h-7 w-7" />
-                    </div>
-                  </Reveal>
                 </div>
                 <Reveal variant={reverse ? "left" : "right"} delay={150}>
                   <p className="eyebrow">{t("services.hero.eyebrow")} · 0{i + 1}</p>
                   <h2 className="mt-4 text-3xl font-bold leading-tight text-navy">{title}</h2>
                   <p className="mt-2 text-sm font-semibold text-muted-foreground">{t(`svc.${s.key}.subtitle`)}</p>
                   <p className="mt-5 leading-relaxed text-muted-foreground">{t(`svc.${s.key}.intro`)}</p>
-                  <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                  <ul className="mt-7 grid list-disc gap-x-8 gap-y-2.5 pl-5 text-sm text-foreground/85 marker:text-accent sm:grid-cols-2">
                     {s.points.map((p) => (
-                      <li key={p} className="flex items-start gap-2.5 text-sm text-foreground/85">
-                        <span className="icon-tile icon-tile-accent mt-0.5 h-5 w-5 shrink-0 rounded-full">
-                          <Check className="h-3 w-3" />
-                        </span>
-                        <span>{t(`svc.${s.key}.${p}`)}</span>
-                      </li>
+                      <li key={p}>{t(`svc.${s.key}.${p}`)}</li>
                     ))}
                   </ul>
                   <div className="mt-8 rounded-2xl bg-mesh px-5 py-4 ring-1 ring-border/60">

@@ -57,7 +57,7 @@ function Home() {
     <SiteLayout>
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-deep text-white">
-        <div className="absolute inset-x-0 top-0 h-[420px] lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[48%]">
+        <div className="absolute inset-x-0 top-0 h-[420px] lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[52%]">
           <img
             src={imagery.professionalMan}
             alt="DIGIT & TALENT consultant"
@@ -66,6 +66,15 @@ function Home() {
             className="hero-zoom h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/30 to-navy-deep/40 lg:bg-gradient-to-r lg:from-navy-deep lg:via-navy-deep/20 lg:to-transparent" />
+          {/* Badge partenaire PMI : même emplacement que sur la version en ligne */}
+          <div className="animate-float-slow absolute bottom-8 right-5 z-10 lg:bottom-24 lg:right-10 xl:bottom-50 xl:right-80">
+            <img
+              src={imagery.authorizedTrainingPartner}
+              alt="PMI Authorized Training Partner"
+              className="animate-fade-up h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)] lg:h-52 xl:h-72"
+              style={{ animationDelay: "900ms" }}
+            />
+          </div>
         </div>
         <NetworkPattern animated className="absolute -bottom-20 -left-20 h-[460px] text-white/[0.12]" />
 
@@ -91,13 +100,6 @@ function Home() {
             </div>
           </div>
         </div>
-
-        <img
-          src={imagery.authorizedTrainingPartner}
-          alt="PMI Authorized Training Partner"
-          className="animate-fade-up absolute right-5 top-[250px] h-28 w-28 lg:right-[6%] lg:top-auto lg:bottom-16 lg:h-36 lg:w-36"
-          style={{ animationDelay: "900ms" }}
-        />
       </section>
 
       {/* Chiffres clés */}

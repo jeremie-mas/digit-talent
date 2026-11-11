@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as CertifiesRouteImport } from './routes/certifies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FormationRouteImport } from './routes/formation'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
 const AProposRoute = AProposRouteImport.update({
   id: '/a-propos',
   path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CertifiesRoute = CertifiesRouteImport.update({
+  id: '/certifies',
+  path: '/certifies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -152,6 +158,7 @@ const TalentRecrutementRoute = TalentRecrutementRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/certifies': typeof CertifiesRoute
   '/contact': typeof ContactRoute
   '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/certifies': typeof CertifiesRoute
   '/contact': typeof ContactRoute
   '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/certifies': typeof CertifiesRoute
   '/contact': typeof ContactRoute
   '/formation': typeof FormationRoute
   '/services': typeof ServicesRoute
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-propos'
+    | '/certifies'
     | '/contact'
     | '/formation'
     | '/services'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-propos'
+    | '/certifies'
     | '/contact'
     | '/formation'
     | '/services'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-propos'
+    | '/certifies'
     | '/contact'
     | '/formation'
     | '/services'
@@ -306,6 +318,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
+  CertifiesRoute: typeof CertifiesRoute
   ContactRoute: typeof ContactRoute
   FormationRoute: typeof FormationRoute
   ServicesRoute: typeof ServicesRoute
@@ -343,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/a-propos'
       fullPath: '/a-propos'
       preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/certifies': {
+      id: '/certifies'
+      path: '/certifies'
+      fullPath: '/certifies'
+      preLoaderRoute: typeof CertifiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -498,6 +518,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
+  CertifiesRoute: CertifiesRoute,
   ContactRoute: ContactRoute,
   FormationRoute: FormationRoute,
   ServicesRoute: ServicesRoute,

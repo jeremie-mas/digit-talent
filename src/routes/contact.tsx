@@ -108,10 +108,7 @@ function Contact() {
             { icon: Clock, title: t("contact.info.hours"), value: t("contact.info.hoursV") },
           ] as { icon: typeof MapPin; title: string; value: string; href?: string }[]).map((c, idx) => (
             <Reveal key={c.title} delay={idx * 80}>
-              <div className="card-surface card-interactive group flex gap-4 p-5">
-                <div className="icon-tile h-12 w-12 shrink-0 group-hover:icon-tile-accent">
-                  <c.icon className="h-5 w-5" />
-                </div>
+              <div className="card-surface p-5">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{c.title}</p>
                   {c.href ? (
