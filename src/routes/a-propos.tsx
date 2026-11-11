@@ -17,6 +17,7 @@ import { useT } from "@/i18n/LanguageProvider";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { CtaBand } from "@/components/CtaBand";
+import { NetworkPattern } from "@/components/NetworkPattern";
 import { useState, useEffect } from "react";
 import {
   getPublicTeam,
@@ -98,8 +99,7 @@ function About() {
               ))}
             </div>
           </Reveal>
-          <Reveal className="relative grid grid-cols-2 gap-4">
-            <div className="animate-blob-3 pointer-events-none absolute -right-10 -top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+          <Reveal variant="stagger" className="relative grid grid-cols-2 gap-4">
             <img src={imagery.teamLaughing} alt="Collaboration d'équipe" loading="lazy" className="col-span-2 aspect-[16/9] w-full rounded-2xl object-cover" />
             <img src={imagery.coworkersAi} alt="Consultants travaillant sur des projets d'innovation" loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />
             <img src={imagery.leaderPitch} alt="Présentation de performance" loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />
@@ -128,32 +128,31 @@ function About() {
       </section>
 
       {/* Valeurs */}
-      <section className="container-site section-y">
-        <Reveal>
-          <SectionHeading eyebrow={t("about.values.eyebrow")} title={t("about.values.title")} />
+      <section className="container-site section-y grid gap-12 lg:grid-cols-12">
+        <Reveal className="lg:col-span-4">
+          <div className="lg:sticky lg:top-32">
+            <SectionHeading eyebrow={t("about.values.eyebrow")} title={t("about.values.title")} />
+          </div>
         </Reveal>
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <ol className="grid border-t border-navy/15 sm:grid-cols-2 lg:col-span-8">
           {values.map((v, idx) => (
-            <Reveal key={v.key} delay={idx * 60} className="group card-surface card-interactive p-8">
-              <div className="icon-tile icon-tile-accent h-12 w-12 group-hover:-rotate-6">
-                <v.icon className="h-5 w-5" />
+            <Reveal key={v.key} as="li" delay={idx * 50} className="border-b border-navy/15 py-8 sm:odd:pr-10 sm:even:pl-10">
+              <div className="flex items-center gap-3">
+                <v.icon className="h-5 w-5 text-accent" />
+                <h3 className="text-xl font-semibold text-navy">{t(`about.val.${v.key}.title`)}</h3>
               </div>
-              <h3 className="mt-6 text-lg font-semibold text-navy">{t(`about.val.${v.key}.title`)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(`about.val.${v.key}.desc`)}</p>
+              <p className="mt-3 leading-relaxed text-muted-foreground">{t(`about.val.${v.key}.desc`)}</p>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </section>
 
       {/* Direction */}
       <Reveal as="section" className="container-site pb-24">
-        <div className="relative grid gap-10 overflow-hidden rounded-3xl bg-deep p-10 text-white lg:grid-cols-[auto_1fr] lg:items-center lg:gap-16 lg:p-16">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.06]"
-            style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
-          />
+        <div className="relative grid gap-10 overflow-hidden rounded-2xl bg-deep p-10 text-white lg:grid-cols-[auto_1fr] lg:items-center lg:gap-16 lg:p-16">
+          <NetworkPattern animated className="absolute -right-10 -top-10 h-[120%] text-white/10" />
           <div className="relative w-fit shrink-0">
-            <div className="flex h-40 w-40 items-center justify-center rounded-full border-4 border-white/10 bg-gradient-to-br from-accent to-orange-soft text-5xl font-bold text-white">
+            <div className="flex h-40 w-40 items-center justify-center rounded-full bg-accent text-5xl font-bold text-white">
               CY
             </div>
             <span className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full bg-navy shadow-lg ring-4 ring-navy-deep">
@@ -216,7 +215,7 @@ function About() {
 
       {/* Certifications */}
       <Reveal as="section" className="container-site pb-24">
-        <div className="flex flex-col gap-8 rounded-3xl border border-border/60 bg-mesh p-10 lg:flex-row lg:items-center lg:justify-between lg:p-12">
+        <div className="flex flex-col gap-8 rounded-2xl border border-border bg-mesh p-10 lg:flex-row lg:items-center lg:justify-between lg:p-12">
           <div className="flex items-center gap-6">
             <img src={imagery.authorizedTrainingPartner} alt="PMI Authorized Training Partner" className="h-20 w-20 shrink-0 object-contain" loading="lazy" />
             <div>

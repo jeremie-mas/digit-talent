@@ -433,7 +433,7 @@ function FormationPage() {
 
         {/* Intra-entreprise / Custom banner */}
         <Reveal>
-          <div className="mt-16 rounded-3xl border border-border/60 bg-mesh p-8 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="mt-16 rounded-2xl border border-border bg-mesh p-8 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
                 <Users className="h-4 w-4" />

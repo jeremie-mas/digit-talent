@@ -109,7 +109,7 @@ function Contact() {
           ] as { icon: typeof MapPin; title: string; value: string; href?: string }[]).map((c, idx) => (
             <Reveal key={c.title} delay={idx * 80}>
               <div className="card-surface card-interactive group flex gap-4 p-5">
-                <div className="icon-tile h-12 w-12 shrink-0 group-hover:icon-tile-accent group-hover:-rotate-6">
+                <div className="icon-tile h-12 w-12 shrink-0 group-hover:icon-tile-accent">
                   <c.icon className="h-5 w-5" />
                 </div>
                 <div>
@@ -196,7 +196,7 @@ function Contact() {
 
       {/* Google Maps */}
       <Reveal as="section" className="container-site pb-24">
-        <div className="overflow-hidden rounded-3xl border border-border/60 shadow-[0_30px_60px_-30px_rgb(10_37_64/0.4)]">
+        <div className="overflow-hidden rounded-2xl border border-border">
           <iframe
             title="DIGIT & TALENT — Lomé"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d1.2255!3d6.1375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDgnMTUuMCJOIDHCsDEzJzMxLjgiRQ!5e0!3m2!1sfr!2stg!4v1"

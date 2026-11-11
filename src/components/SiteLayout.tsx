@@ -70,8 +70,15 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     label: t(`svc.${key}.title`),
   }));
 
+  const progressRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      // Barre de progression de lecture (mise à jour directe, sans re-rendu)
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -95,6 +102,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <div
+        ref={progressRef}
+        aria-hidden="true"
+        className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-accent"
+        style={{ transform: "scaleX(0)" }}
+      />
       <header
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           scrolled
@@ -187,7 +200,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 href={LMS_LOGIN_URL}
                 aria-label={t("nav.login")}
                 title={t("nav.login")}
-                className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 py-2.5 text-sm font-semibold transition-colors ${
+                className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg border px-3.5 py-2.5 text-sm font-semibold transition-colors ${
                   scrolled
                     ? "border-border text-navy/80 hover:border-accent hover:text-accent"
                     : "border-white/30 text-white hover:border-white hover:bg-white/10"
@@ -326,7 +339,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-white/40 hover:text-white"
                 >
                   <SocialIcon>{s.icon}</SocialIcon>
                 </a>
@@ -397,7 +410,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
         {/* Accès plateforme */}
         <div className="container-site">
-          <div className="glass-dark flex flex-col items-start justify-between gap-4 rounded-2xl px-6 py-5 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-start justify-between gap-4 rounded-xl border border-white/10 px-6 py-5 sm:flex-row sm:items-center">
             <div>
               <p className="text-sm font-semibold text-white">{t("footer.platform")}</p>
               <p className="mt-0.5 text-sm text-white/55">{t("footer.platformDesc")}</p>

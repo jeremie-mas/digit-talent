@@ -73,7 +73,7 @@ function Services() {
             <a
               key={s.key}
               href={`#${s.key}`}
-              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm font-medium text-navy/75 transition hover:border-accent/30 hover:bg-accent/5 hover:text-navy"
+              className="inline-flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-2 text-sm font-medium text-navy/75 transition hover:border-accent hover:text-navy"
             >
               <span className="font-display text-xs font-semibold text-accent">0{i + 1}</span>
               {t(`svc.${s.key}.title`)}
@@ -87,19 +87,19 @@ function Services() {
           const reverse = i % 2 === 1;
           const title = t(`svc.${s.key}.title`);
           return (
-            <Reveal key={s.key}>
-              <article id={s.key} className="grid scroll-mt-40 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <article key={s.key} id={s.key} className="grid scroll-mt-40 items-center gap-10 lg:grid-cols-2 lg:gap-16">
                 <div className={`relative ${reverse ? "lg:order-2" : ""}`}>
-                  <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-accent/20 via-transparent to-blue/20 blur-2xl" />
-                  <div className="group/img relative overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(10_37_64/0.55)]">
-                    <img src={s.image} alt={title} className="aspect-[4/3] w-full object-cover transition duration-700 group-hover/img:scale-105" loading="lazy" />
+                  <Reveal variant="image" className="img-zoom relative rounded-2xl">
+                    <img src={s.image} alt={title} className="aspect-[4/3] w-full object-cover" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/50 to-transparent" />
-                  </div>
-                  <div className={`absolute -bottom-6 flex h-16 w-16 items-center justify-center icon-tile icon-tile-accent rounded-2xl ${reverse ? "-left-4 lg:-left-6" : "-right-4 lg:-right-6"}`}>
-                    <s.icon className="h-7 w-7" />
-                  </div>
+                  </Reveal>
+                  <Reveal variant="scale" delay={500} className={`absolute -bottom-6 ${reverse ? "-left-4 lg:-left-6" : "-right-4 lg:-right-6"}`}>
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-white shadow-[0_12px_30px_-12px_rgb(10_37_64/0.5)]">
+                      <s.icon className="h-7 w-7" />
+                    </div>
+                  </Reveal>
                 </div>
-                <div>
+                <Reveal variant={reverse ? "left" : "right"} delay={150}>
                   <p className="eyebrow">{t("services.hero.eyebrow")} · 0{i + 1}</p>
                   <h2 className="mt-4 text-3xl font-bold leading-tight text-navy">{title}</h2>
                   <p className="mt-2 text-sm font-semibold text-muted-foreground">{t(`svc.${s.key}.subtitle`)}</p>
@@ -129,9 +129,8 @@ function Services() {
                       </div>
                     </div>
                   )}
-                </div>
+                </Reveal>
               </article>
-            </Reveal>
           );
         })}
       </section>
