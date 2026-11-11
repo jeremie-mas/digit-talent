@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
 import {
   Calendar,
   ArrowLeft,
@@ -73,58 +73,48 @@ function BlogPostPage() {
   return (
     <SiteLayout>
       {/* Article Header */}
-      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
-        {article.cover_url && (
-          <img
-            src={article.cover_url}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-40"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      <PageHero
+        image={article.cover_url || undefined}
+        top={
           <Link
             to={"/blog" as any}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-white/60 hover:text-accent transition mb-6"
+            className="mb-6 inline-flex items-center gap-2 text-xs font-semibold text-white/60 transition hover:text-accent"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Retour à la liste des articles
           </Link>
-
-          <div>
-            <span className="inline-block rounded-full bg-accent/20 border border-accent/40 px-3.5 py-1 text-xs font-semibold text-accent mb-4">
-              {article.category}
+        }
+        eyebrow={
+          <span className="inline-block rounded-md border border-accent/40 bg-accent/20 px-3 py-1 text-xs font-semibold text-accent">
+            {article.category}
+          </span>
+        }
+        title={article.title}
+        description={
+          <div className="flex flex-wrap items-center gap-4 border-t border-white/10 pt-4 text-xs text-white/70">
+            <span className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5 text-accent" />
+              Publié le{" "}
+              {new Date(article.created_at).toLocaleDateString("fr-FR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
             </span>
-            <h1 className="animate-fade-up max-w-3xl text-4xl font-bold leading-[1.1] text-white sm:text-5xl" style={{ animationDelay: "120ms" }}>
-              {article.title}
-            </h1>
-            <div className="mt-6 flex max-w-3xl flex-wrap items-center gap-4 text-xs text-white/70 pt-4 border-t border-white/10">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-accent" />
-                Publié le{" "}
-                {new Date(article.created_at).toLocaleDateString("fr-FR", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
-              <span>•</span>
-              <span>DIGIT &amp; TALENT Insights</span>
-            </div>
+            <span>•</span>
+            <span>DIGIT &amp; TALENT Insights</span>
           </div>
-        </div>
-        <Breadcrumb
-          crumbs={[
-            { label: "Blog", to: "/blog" },
-            { label: article.title },
-          ]}
-        />
-      </section>
+        }
+        crumbs={[
+          { label: "Blog", to: "/blog" },
+          { label: article.title },
+        ]}
+      />
 
       {/* Article Body */}
       <article className="mx-auto max-w-4xl px-5 py-16 lg:px-8">
         {article.cover_url && (
-          <div className="mb-12 overflow-hidden rounded-2xl shadow-elevated">
+          <div className="mb-12 overflow-hidden rounded-xl shadow-elevated">
             <img
               src={article.cover_url}
               alt={article.title}
@@ -191,7 +181,7 @@ function BlogPostPage() {
         </div>
 
         {/* CTA Card Footer */}
-        <div className="mt-16 rounded-2xl bg-navy-deep text-white p-8 sm:p-10 shadow-elevated relative overflow-hidden">
+        <div className="mt-16 rounded-xl bg-navy-deep text-white p-8 sm:p-10 shadow-elevated relative overflow-hidden">
           <div className="max-w-xl">
             <span className="eyebrow" style={{ color: "var(--orange)" }}>
               Passez à l'action
@@ -206,7 +196,7 @@ function BlogPostPage() {
               <Link to="/formation" className="btn btn-primary text-xs sm:text-sm">
                 Découvrir les formations <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/contact" className="btn btn-outline-light text-xs sm:text-sm">
+              <Link to="/contact" className="btn btn-outline-white text-xs sm:text-sm">
                 Contacter un expert
               </Link>
             </div>

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowLeft, CheckCircle2, GraduationCap, Send, ShieldCheck } from "lucide-react";
 import { imagery } from "@/assets/imagery";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useT } from "@/i18n/LanguageProvider";
 import { submitTrainingRegistration } from "@/lib/api/formation.functions";
@@ -97,38 +97,26 @@ function TrainingRegistrationPage() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
-        <img
-          src={imagery.coworkersAi}
-          alt="Session de formation professionnelle et certification"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
-          <p className="eyebrow animate-fade-in-soft">{formConfig.badge}</p>
-          <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>
-            {formConfig.title}
-          </h1>
-          <p className="animate-fade-up mt-6 max-w-2xl text-base font-semibold text-accent sm:text-lg" style={{ animationDelay: "240ms" }}>
-            {formConfig.sessionText}
-          </p>
-          {formConfig.description && (
-            <p className="animate-fade-up mt-3 max-w-2xl text-lg leading-relaxed text-white/75" style={{ animationDelay: "300ms" }}>
-              {formConfig.description}
-            </p>
-          )}
-        </div>
-        <Breadcrumb
-          crumbs={[
-            { label: t("nav.training"), to: "/formation" },
-            { label: formConfig.title },
-          ]}
-        />
-      </section>
+      <PageHero
+        image={imagery.coworkersAi}
+        imageAlt="Session de formation professionnelle et certification"
+        eyebrow={formConfig.badge}
+        title={formConfig.title}
+        description={
+          <>
+            <p className="text-base font-semibold text-accent sm:text-lg">{formConfig.sessionText}</p>
+            {formConfig.description && <p className="mt-3">{formConfig.description}</p>}
+          </>
+        }
+        crumbs={[
+          { label: t("nav.training"), to: "/formation" },
+          { label: formConfig.title },
+        ]}
+      />
 
-      <main className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16 lg:px-8">
         {sent ? (
-          <section className="rounded-3xl border border-border bg-card p-7 text-center shadow-soft sm:p-10" aria-live="polite">
+          <section className="rounded-xl border border-border bg-card p-7 text-center shadow-soft sm:p-10" aria-live="polite">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10 text-accent">
               <CheckCircle2 className="h-9 w-9" />
             </div>
@@ -150,7 +138,7 @@ function TrainingRegistrationPage() {
             </div>
           </section>
         ) : (
-          <section className="rounded-3xl border border-border bg-card p-5 shadow-soft sm:p-8">
+          <section className="rounded-xl border border-border bg-card p-5 shadow-soft sm:p-8">
             <div className="mb-6 flex items-center gap-3 border-b border-border pb-5">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 <GraduationCap className="h-6 w-6" />
@@ -225,7 +213,7 @@ function TrainingRegistrationPage() {
             </form>
           </section>
         )}
-      </main>
+      </div>
     </SiteLayout>
   );
 }

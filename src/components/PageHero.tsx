@@ -1,0 +1,65 @@
+import type { ReactNode } from "react";
+import { Breadcrumb } from "@/components/Breadcrumb";
+
+interface Crumb {
+  label: string;
+  to?: string;
+}
+
+/** Hero des pages intérieures (même gabarit sur tout le site, hors accueil). */
+export function PageHero({
+  image,
+  imageAlt = "",
+  eyebrow,
+  title,
+  description,
+  crumbs,
+  top,
+  children,
+}: {
+  image?: string;
+  imageAlt?: string;
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  crumbs: Crumb[];
+  /** Contenu affiché au-dessus du surtitre (ex. lien retour) */
+  top?: ReactNode;
+  /** Contenu affiché sous la description (boutons, badges…) */
+  children?: ReactNode;
+}) {
+  return (
+    <section className="relative overflow-hidden bg-deep pb-16 pt-[150px] text-white">
+      {image && (
+        <img
+          src={image}
+          alt={imageAlt}
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover opacity-35 mix-blend-luminosity"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-accent/60 via-white/10 to-transparent" />
+      <div className="container-site relative py-20">
+        {top}
+        {eyebrow && (typeof eyebrow === "string" ? <p className="eyebrow animate-fade-in-soft">{eyebrow}</p> : eyebrow)}
+        <h1
+          className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl"
+          style={{ animationDelay: "120ms" }}
+        >
+          {title}
+        </h1>
+        {description && (
+          <div
+            className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/75"
+            style={{ animationDelay: "240ms" }}
+          >
+            {description}
+          </div>
+        )}
+        {children}
+      </div>
+      <Breadcrumb crumbs={crumbs} />
+    </section>
+  );
+}

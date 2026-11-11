@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
+import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { imagery } from "@/assets/imagery";
 import {
@@ -79,35 +80,19 @@ function BlogIndex() {
   return (
     <SiteLayout>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
-        <img
-          src={imagery.technicianServer}
-          alt={t("blog.hero.eyebrow")}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
-          <p className="eyebrow animate-fade-in-soft">{t("blog.hero.eyebrow")}</p>
-          <h1
-            className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl text-white"
-            style={{ animationDelay: "120ms" }}
-          >
-            {t("blog.hero.title")}
-          </h1>
-          <p
-            className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/75"
-            style={{ animationDelay: "240ms" }}
-          >
-            {t("blog.hero.desc")}
-          </p>
-        </div>
-        <Breadcrumb crumbs={[{ label: t("blog.hero.title") }]} />
-      </section>
+      <PageHero
+        image={imagery.technicianServer}
+        imageAlt={t("blog.hero.eyebrow")}
+        eyebrow={t("blog.hero.eyebrow")}
+        title={t("blog.hero.title")}
+        description={t("blog.hero.desc")}
+        crumbs={[{ label: t("blog.hero.title") }]}
+      />
 
       {/* Main Content */}
-      <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      <section className="container-site section-y">
         {/* Search & Categories Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 mb-12">
+        <div className="mb-12 flex flex-col justify-between gap-5 border-b border-border/70 pb-8 md:flex-row md:items-center">
           {/* Categories */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
             {categories.map((cat) => (
@@ -151,7 +136,7 @@ function BlogIndex() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {filteredArticles.map((article, idx) => (
               <Reveal key={article.id} delay={idx * 80}>
-                <article className="card-surface card-interactive group flex flex-col h-full overflow-hidden rounded-2xl border border-border">
+                <article className="card-surface card-interactive group flex flex-col h-full overflow-hidden">
                   {/* Cover Image */}
                   <Link
                     to={`/blog/${article.slug}` as any}
@@ -188,14 +173,14 @@ function BlogIndex() {
                         </span>
                       </div>
 
-                      <h2 className="text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-accent">
+                      <h2 className="text-lg font-bold leading-snug text-navy transition-colors group-hover:text-accent">
                         <Link to={`/blog/${article.slug}` as any}>
                           {article.title}
                         </Link>
                       </h2>
 
                       {article.excerpt && (
-                        <p className="mt-2.5 text-xs text-muted-foreground line-clamp-3 leading-relaxed">
+                        <p className="mt-2.5 text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                           {article.excerpt}
                         </p>
                       )}
@@ -217,6 +202,8 @@ function BlogIndex() {
           </div>
         )}
       </section>
+
+      <CtaBand />
     </SiteLayout>
   );
 }

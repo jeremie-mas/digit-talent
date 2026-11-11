@@ -5,7 +5,7 @@ import { useState, type FormEvent, type ChangeEvent } from "react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
 import { useT } from "@/i18n/LanguageProvider";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
 import { submitContact } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
@@ -89,24 +89,17 @@ function Contact() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
-        <img
-          src={imagery.futuristicBusiness}
-          alt="Professional exchange in a digital environment"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
-          <p className="eyebrow animate-fade-in-soft">{t("contact.hero.eyebrow")}</p>
-          <h1 className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl" style={{ animationDelay: "120ms" }}>{t("contact.hero.title")}</h1>
-          <p className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/75" style={{ animationDelay: "240ms" }}>{t("contact.hero.desc")}</p>
-        </div>
-        <Breadcrumb crumbs={[{ label: t("nav.contact") }]} />
-      </section>
+      <PageHero
+        image={imagery.futuristicBusiness}
+        imageAlt="Professional exchange in a digital environment"
+        eyebrow={t("contact.hero.eyebrow")}
+        title={t("contact.hero.title")}
+        description={t("contact.hero.desc")}
+        crumbs={[{ label: t("nav.contact") }]}
+      />
 
-
-      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-24 lg:grid-cols-[1fr_1.4fr] lg:px-8">
-        {/* Info */}
+      <section className="container-site section-y grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+        {/* Coordonnées */}
         <div className="space-y-4">
           {([
             { icon: MapPin, title: t("contact.info.address"), value: t("contact.info.addressV") },
@@ -116,7 +109,7 @@ function Contact() {
           ] as { icon: typeof MapPin; title: string; value: string; href?: string }[]).map((c, idx) => (
             <Reveal key={c.title} delay={idx * 80}>
               <div className="card-surface card-interactive group flex gap-4 p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-navy text-accent transition duration-300 group-hover:bg-accent group-hover:text-white">
+                <div className="icon-tile h-12 w-12 shrink-0 group-hover:icon-tile-accent group-hover:-rotate-6">
                   <c.icon className="h-5 w-5" />
                 </div>
                 <div>
@@ -202,8 +195,8 @@ function Contact() {
       </section>
 
       {/* Google Maps */}
-      <Reveal as="section" className="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
-        <div className="overflow-hidden rounded-2xl border border-border shadow-[var(--shadow-soft)]">
+      <Reveal as="section" className="container-site pb-24">
+        <div className="overflow-hidden rounded-3xl border border-border/60 shadow-[0_30px_60px_-30px_rgb(10_37_64/0.4)]">
           <iframe
             title="DIGIT & TALENT — Lomé"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d1.2255!3d6.1375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDgnMTUuMCJOIDHCsDEzJzMxLjgiRQ!5e0!3m2!1sfr!2stg!4v1"

@@ -1,12 +1,44 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, useEffect, useRef, type ReactNode } from "react";
-import { Menu, X, Mail, Phone, MapPin, ArrowUp, ChevronDown, LogIn } from "lucide-react";
+import { Menu, X, Mail, Phone, MapPin, ArrowUp, ArrowRight, ChevronDown, LogIn, Clock } from "lucide-react";
 import logoAsset from "@/assets/digit-talent-logo.webp";
+import { imagery } from "@/assets/imagery";
 import { useT } from "@/i18n/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // Page de connexion de la plateforme LMS (configurable via VITE_LMS_URL)
 const LMS_LOGIN_URL = `${(import.meta.env.VITE_LMS_URL || "https://app.digit-talent.com").replace(/\/$/, "")}/login`;
+
+const SOCIALS = [
+  {
+    href: "https://www.linkedin.com/company/digit-talent",
+    label: "LinkedIn",
+    icon: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>,
+  },
+  {
+    href: "https://www.facebook.com/digittalent",
+    label: "Facebook",
+    icon: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
+  },
+  {
+    href: "https://twitter.com/digittalent",
+    label: "Twitter / X",
+    icon: <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />,
+  },
+  {
+    href: "https://www.instagram.com/digittalent",
+    label: "Instagram",
+    icon: <><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></>,
+  },
+];
+
+function SocialIcon({ children }: { children: ReactNode }) {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      {children}
+    </svg>
+  );
+}
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -33,8 +65,14 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     { to: "/talent/digitalisation-rh", label: t("nav.talent.digitalisation") },
   ];
 
+  const expertiseItems = ["digital", "training", "transfo", "change", "cyber"].map((key) => ({
+    hash: key,
+    label: t(`svc.${key}.title`),
+  }));
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -48,148 +86,155 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     { to: "/contact", label: t("nav.contact") },
   ] as const;
 
+  const linkClass = (active: boolean) =>
+    `relative whitespace-nowrap py-2 text-[15px] font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+      active
+        ? "text-accent after:scale-x-100"
+        : scrolled ? "text-navy/75 hover:text-navy" : "text-white/85 hover:text-white"
+    }`;
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header
-        className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
+        className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? "border-border/80 bg-background/95 shadow-[0_2px_20px_-4px_rgb(15_23_42/0.12)] backdrop-blur-xl"
-            : "border-transparent bg-transparent backdrop-blur-none"
+            ? "bg-background/95 shadow-[0_2px_20px_-6px_rgb(15_23_42/0.15)] backdrop-blur-xl"
+            : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <Link to="/" className="flex shrink-0 flex-col items-center">
-            <img src={logoAsset} alt="DIGIT & TALENT" className={`h-16 w-auto transition-all duration-300 xl:h-25 ${scrolled ? "" : "brightness-0 invert"}`} />
-            <span className={`w-full text-center text-[9px] italic tracking-wide transition-colors duration-300 ${scrolled ? "text-foreground/50" : "text-white/70"}`}>
-              Fueling Dreams, Forging Success.
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-4 lg:flex xl:gap-7">
-            {nav.slice(0, 3).map((n) => {
-              const active = location.pathname === n.to;
-              return (
-                <Link
-                  key={n.to}
-                  to={n.to}
-                  className={`relative whitespace-nowrap text-sm font-medium xl:text-base transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                    active
-                      ? "text-accent after:scale-x-100"
-                      : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {n.label}
-                </Link>
-              );
-            })}
-
-            {/* Talent dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={openTalent}
-              onMouseLeave={closeTalent}
-            >
-              <button
-                className={`flex items-center gap-1 whitespace-nowrap text-sm font-medium xl:text-base transition-colors ${
-                  location.pathname.startsWith("/talent")
-                    ? "text-accent"
-                    : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
-                }`}
-              >
-                {t("nav.talent")}
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${talentOpen ? "rotate-180" : ""}`} />
-              </button>
-              {talentOpen && (
-                <div className="absolute left-0 top-full z-30 mt-2 w-56 overflow-hidden rounded-xl border border-border/60 bg-background py-1.5 shadow-[0_8px_30px_-8px_rgb(15_23_42/0.18)]">
-                  {talentItems.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setTalentOpen(false)}
-                      className={`block px-4 py-2.5 text-sm transition-colors hover:bg-secondary hover:text-foreground ${
-                        location.pathname === item.to ? "bg-accent/8 font-semibold text-accent" : "text-foreground/70"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+        {/* Barre d'informations (ordinateur) */}
+        <div
+          className={`hidden overflow-hidden border-b border-white/10 transition-all duration-300 lg:block ${
+            scrolled ? "max-h-0 border-transparent opacity-0" : "max-h-10 opacity-100"
+          }`}
+        >
+          <div className="container-site flex h-9 items-center justify-between text-xs text-white/65">
+            <div className="flex items-center gap-6">
+              <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-accent" />{t("footer.address")}</span>
+              <a href="mailto:contact@digit-talent.com" className="flex items-center gap-1.5 transition hover:text-white"><Mail className="h-3.5 w-3.5 text-accent" />contact@digit-talent.com</a>
+              <a href="tel:+22891982023" className="flex items-center gap-1.5 transition hover:text-white"><Phone className="h-3.5 w-3.5 text-accent" />+228 91 98 20 23</a>
             </div>
-
-            {nav.slice(3).map((n) => {
-              const active = location.pathname === n.to;
-              return (
-                <Link
-                  key={n.to}
-                  to={n.to}
-                  className={`relative whitespace-nowrap text-sm font-medium xl:text-base transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                    active
-                      ? "text-accent after:scale-x-100"
-                      : scrolled ? "text-foreground/65 hover:text-foreground" : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {n.label}
-                </Link>
-              );
-            })}
-            <LanguageSwitcher />
-            <a
-              href={LMS_LOGIN_URL}
-              aria-label={t("nav.login")}
-              title={t("nav.login")}
-              className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border p-2.5 text-sm font-semibold transition-colors 2xl:px-4 2xl:py-2 ${
-                scrolled
-                  ? "border-border text-foreground/80 hover:border-accent hover:text-accent"
-                  : "border-white/30 text-white hover:border-white hover:bg-white/10"
-              }`}
-            >
-              <LogIn className="h-4 w-4" />
-              <span className="hidden 2xl:inline">{t("nav.login")}</span>
-            </a>
-            <Link to="/contact" className="btn btn-primary whitespace-nowrap !py-2.5 !px-5">
-              {t("nav.cta")}
-            </Link>
-          </nav>
-          <div className="flex items-center gap-2 lg:hidden">
-            <LanguageSwitcher />
-            <button
-              className={`rounded-md p-2 transition-colors ${scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"}`}
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Menu"
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            <div className="flex items-center gap-5">
+              <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-accent" />{t("contact.info.hoursV")}</span>
+              <span className="h-3.5 w-px bg-white/15" />
+              <div className="flex items-center gap-3">
+                {SOCIALS.slice(0, 2).map((s) => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="transition hover:text-accent">
+                    <SocialIcon>{s.icon}</SocialIcon>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className={`border-b transition-colors duration-300 ${scrolled ? "border-border/80" : "border-transparent"}`}>
+          <div className="container-site flex items-center justify-between gap-6 py-3">
+            <Link to="/" className="flex shrink-0 flex-col items-center">
+              <img src={logoAsset} alt="DIGIT & TALENT" className={`h-12 w-auto transition-all duration-300 xl:h-14 ${scrolled ? "" : "brightness-0 invert"}`} />
+              <span className={`mt-0.5 w-full text-center text-[8px] italic tracking-wide transition-colors duration-300 ${scrolled ? "text-foreground/50" : "text-white/70"}`}>
+                Fueling Dreams, Forging Success.
+              </span>
+            </Link>
+            <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+              {nav.slice(0, 3).map((n) => (
+                <Link key={n.to} to={n.to} className={linkClass(location.pathname === n.to)}>
+                  {n.label}
+                </Link>
+              ))}
+
+              {/* Menu déroulant Talent */}
+              <div className="relative" onMouseEnter={openTalent} onMouseLeave={closeTalent}>
+                <button
+                  className={`flex items-center gap-1 py-2 ${linkClass(location.pathname.startsWith("/talent"))}`}
+                  aria-expanded={talentOpen}
+                  onClick={() => setTalentOpen((v) => !v)}
+                >
+                  {t("nav.talent")}
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${talentOpen ? "rotate-180" : ""}`} />
+                </button>
+                {talentOpen && (
+                  <div className="absolute left-1/2 top-full z-30 mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-2xl border border-border/60 bg-background/95 p-2 shadow-[0_24px_50px_-16px_rgb(15_23_42/0.35)] backdrop-blur-xl">
+                    {talentItems.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setTalentOpen(false)}
+                        className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-colors hover:bg-secondary hover:text-navy ${
+                          location.pathname === item.to ? "bg-accent/8 font-semibold text-accent" : "text-foreground/75"
+                        }`}
+                      >
+                        {item.label}
+                        <ArrowRight className="h-3.5 w-3.5 opacity-40" />
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {nav.slice(3).map((n) => (
+                <Link key={n.to} to={n.to} className={linkClass(location.pathname === n.to)}>
+                  {n.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="hidden items-center gap-3 lg:flex">
+              <LanguageSwitcher />
+              <Link to="/contact" className="btn btn-primary !py-2.5 !px-5">
+                {t("nav.cta")}
+              </Link>
+              <a
+                href={LMS_LOGIN_URL}
+                aria-label={t("nav.login")}
+                title={t("nav.login")}
+                className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 py-2.5 text-sm font-semibold transition-colors ${
+                  scrolled
+                    ? "border-border text-navy/80 hover:border-accent hover:text-accent"
+                    : "border-white/30 text-white hover:border-white hover:bg-white/10"
+                }`}
+              >
+                <LogIn className="h-4 w-4" />
+                <span className="hidden xl:inline">{t("nav.login")}</span>
+              </a>
+            </div>
+            <div className="flex items-center gap-2 lg:hidden">
+              <LanguageSwitcher />
+              <button
+                className={`rounded-md p-2 transition-colors ${scrolled || open ? "text-navy/80 hover:text-navy" : "text-white/85 hover:text-white"}`}
+                onClick={() => setOpen((v) => !v)}
+                aria-label="Menu"
+                aria-expanded={open}
+              >
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
         {open && (
-          <div className="border-t border-border/60 bg-background shadow-lg">
-            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4">
+          <div className="max-h-[calc(100vh-80px)] overflow-y-auto border-t border-border/60 bg-background shadow-lg lg:hidden">
+            <nav className="container-site flex flex-col gap-1 py-4">
               {nav.slice(0, 3).map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
                   onClick={() => setOpen(false)}
                   className={`rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                    location.pathname === n.to
-                      ? "bg-accent/10 text-accent"
-                      : "text-foreground/80 hover:bg-secondary"
+                    location.pathname === n.to ? "bg-accent/10 text-accent" : "text-foreground/80 hover:bg-secondary"
                   }`}
                 >
                   {n.label}
                 </Link>
               ))}
 
-              {/* Talent mobile section */}
               <div>
                 <button
                   onClick={() => setTalentMobileOpen((v) => !v)}
                   className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                    location.pathname.startsWith("/talent")
-                      ? "bg-accent/10 text-accent"
-                      : "text-foreground/80 hover:bg-secondary"
+                    location.pathname.startsWith("/talent") ? "bg-accent/10 text-accent" : "text-foreground/80 hover:bg-secondary"
                   }`}
                 >
-                  Talent
+                  {t("nav.talent")}
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${talentMobileOpen ? "rotate-180" : ""}`} />
                 </button>
                 {talentMobileOpen && (
@@ -200,9 +245,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                         to={item.to}
                         onClick={() => setOpen(false)}
                         className={`block rounded-lg px-3 py-2 text-sm transition ${
-                          location.pathname === item.to
-                            ? "font-semibold text-accent"
-                            : "text-foreground/70 hover:bg-secondary hover:text-foreground"
+                          location.pathname === item.to ? "font-semibold text-accent" : "text-foreground/70 hover:bg-secondary hover:text-foreground"
                         }`}
                       >
                         {item.label}
@@ -218,38 +261,29 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                   to={n.to}
                   onClick={() => setOpen(false)}
                   className={`rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                    location.pathname === n.to
-                      ? "bg-accent/10 text-accent"
-                      : "text-foreground/80 hover:bg-secondary"
+                    location.pathname === n.to ? "bg-accent/10 text-accent" : "text-foreground/80 hover:bg-secondary"
                   }`}
                 >
                   {n.label}
                 </Link>
               ))}
-              <a
-                href={LMS_LOGIN_URL}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:border-accent hover:text-accent"
-              >
-                <LogIn className="h-4 w-4" />
-                {t("nav.login")}
-              </a>
-              <Link
-                to="/contact"
-                onClick={() => setOpen(false)}
-                className="btn btn-primary mt-2 justify-center"
-              >
-                {t("nav.cta")}
-              </Link>
+              <div className="mt-3 grid gap-2 border-t border-border/60 pt-4">
+                <Link to="/contact" onClick={() => setOpen(false)} className="btn btn-primary justify-center">
+                  {t("nav.cta")}
+                </Link>
+                <a href={LMS_LOGIN_URL} className="btn btn-outline-dark justify-center">
+                  <LogIn className="h-4 w-4" />
+                  {t("nav.login")}
+                </a>
+              </div>
             </nav>
           </div>
         )}
       </header>
 
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
 
-      {/* WhatsApp floating button */}
+      {/* Bouton WhatsApp */}
       <a
         href="https://wa.me/22891982023"
         target="_blank"
@@ -263,7 +297,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         </svg>
       </a>
 
-      {/* Back to top */}
+      {/* Retour en haut */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Retour en haut"
@@ -274,81 +308,109 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <ArrowUp className="h-4 w-4" />
       </button>
 
-      <footer className="mt-20 bg-navy-deep text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
-          <div className="lg:col-span-2">
-            <img
-              src={logoAsset}
-              alt="DIGIT & TALENT"
-              className="h-16 w-auto brightness-0 invert"
-            />
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60">
-              {t("footer.tagline")}
-            </p>
-            <div className="mt-5 flex gap-4">
-              <a href="https://www.linkedin.com/company/digit-talent" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/45 transition hover:text-accent">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-              <a href="https://www.facebook.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/45 transition hover:text-accent">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-              <a href="https://twitter.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" className="text-white/45 transition hover:text-accent">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-              </a>
-              <a href="https://www.instagram.com/digittalent" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/45 transition hover:text-accent">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              </a>
+      <footer className="relative overflow-hidden bg-deep text-primary-foreground">
+        <div className="container-site grid gap-12 py-16 lg:grid-cols-12 lg:py-20">
+          {/* Marque */}
+          <div className="lg:col-span-4">
+            <img src={logoAsset} alt="DIGIT & TALENT" className="h-14 w-auto brightness-0 invert" />
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/60">{t("footer.tagline")}</p>
+            <div className="mt-6 flex items-center gap-4">
+              <img src={imagery.authorizedTrainingPartner} alt="PMI Authorized Training Partner" className="h-16 w-16 object-contain" loading="lazy" />
+              <p className="max-w-[12rem] text-xs leading-relaxed text-white/50">{t("home.stats.atp")}</p>
+            </div>
+            <div className="mt-6 flex gap-2">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
+                >
+                  <SocialIcon>{s.icon}</SocialIcon>
+                </a>
+              ))}
             </div>
           </div>
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">
-              {t("footer.navigation")}
-            </h4>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {nav.map((n) => (
-                <li key={n.to}>
-                  <Link
-                    to={n.to}
-                    className="text-white/65 transition hover:text-accent"
-                  >
-                    {n.label}
+
+          {/* Expertises */}
+          <div className="lg:col-span-3">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{t("footer.expertise")}</h4>
+            <ul className="mt-5 space-y-3 text-sm">
+              {expertiseItems.map((e) => (
+                <li key={e.hash}>
+                  <Link to="/services" hash={e.hash} className="text-white/65 transition hover:text-accent">
+                    {e.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">
-              {t("footer.contact")}
-            </h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/65">
+
+          {/* Talent + Cabinet */}
+          <div className="grid grid-cols-2 gap-8 lg:col-span-2 lg:grid-cols-1">
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{t("footer.talent")}</h4>
+              <ul className="mt-5 space-y-3 text-sm">
+                {talentItems.map((item) => (
+                  <li key={item.to}>
+                    <Link to={item.to} className="text-white/65 transition hover:text-accent">{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{t("footer.company")}</h4>
+              <ul className="mt-5 space-y-3 text-sm">
+                {nav.slice(2).map((n) => (
+                  <li key={n.to}>
+                    <Link to={n.to} className="text-white/65 transition hover:text-accent">{n.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="lg:col-span-3">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">{t("footer.contact")}</h4>
+            <ul className="mt-5 space-y-4 text-sm text-white/65">
               <li className="flex gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                 {t("footer.address")}
               </li>
               <li className="flex gap-2.5">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <a
-                  href="mailto:contact@digit-talent.com"
-                  className="transition hover:text-accent"
-                >
-                  contact@digit-talent.com
-                </a>
+                <a href="mailto:contact@digit-talent.com" className="transition hover:text-accent">contact@digit-talent.com</a>
               </li>
               <li className="flex gap-2.5">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <a href="tel:+22891982023" className="transition hover:text-accent">
-                  +228 91 98 20 23
-                </a>
+                <span>
+                  <a href="tel:+22891982023" className="block transition hover:text-accent">+228 91 98 20 23</a>
+                  <a href="tel:+22899900821" className="block transition hover:text-accent">+228 99 90 08 21</a>
+                </span>
               </li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/10">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-5 py-6 text-xs text-white/35 sm:flex-row lg:px-8">
-            <p>
-              © {new Date().getFullYear()} DIGIT & TALENT. {t("footer.rights")}
-            </p>
+
+        {/* Accès plateforme */}
+        <div className="container-site">
+          <div className="glass-dark flex flex-col items-start justify-between gap-4 rounded-2xl px-6 py-5 sm:flex-row sm:items-center">
+            <div>
+              <p className="text-sm font-semibold text-white">{t("footer.platform")}</p>
+              <p className="mt-0.5 text-sm text-white/55">{t("footer.platformDesc")}</p>
+            </div>
+            <a href={LMS_LOGIN_URL} className="btn btn-outline-white !py-2.5">
+              <LogIn className="h-4 w-4" /> {t("nav.login")}
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-white/10">
+          <div className="container-site flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/40 sm:flex-row">
+            <p>© {new Date().getFullYear()} DIGIT & TALENT. {t("footer.rights")}</p>
             <p className="italic">{t("footer.slogan")}</p>
           </div>
         </div>

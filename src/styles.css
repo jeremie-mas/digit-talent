@@ -37,7 +37,7 @@
   --color-blue-light: var(--blue-light);
   --color-anthracite: var(--anthracite);
   --font-display: "Poppins", sans-serif;
-  --font-sans: "Poppins", sans-serif;
+  --font-sans: "Inter", "Poppins", sans-serif;
 }
 
 :root {
@@ -77,6 +77,7 @@
 @layer base {
   * { border-color: var(--color-border); }
   html { scroll-behavior: smooth; }
+  html, body { overflow-x: clip; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -86,6 +87,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 }
 
@@ -103,25 +105,40 @@
   align-items: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 1.625rem;
   font-size: 0.875rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1;
-  transition: transform 0.2s var(--ease-out-expo), box-shadow 0.25s var(--ease-out-expo), background-color 0.2s, color 0.2s, border-color 0.2s;
+  transition: transform 0.25s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo), background 0.25s, color 0.2s, border-color 0.2s;
   white-space: nowrap;
 }
 @utility btn-primary {
-  background-color: var(--orange);
+  background: linear-gradient(135deg, #FF8A3D 0%, var(--orange) 55%, #E0560F 100%);
   color: var(--accent-foreground);
-  box-shadow: var(--shadow-accent);
-  &:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 16px 38px -10px rgb(242 106 33 / 0.55); }
+  box-shadow: 0 10px 28px -10px rgb(242 106 33 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  &:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -10px rgb(242 106 33 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.3); }
   &:active { transform: translateY(0); }
 }
 @utility btn-outline-dark {
-  background-color: transparent;
+  background-color: white;
   color: var(--navy);
-  border: 1px solid rgb(10 37 64 / 0.2);
-  &:hover { background-color: var(--navy); color: white; }
+  border: 1px solid rgb(10 37 64 / 0.15);
+  box-shadow: var(--shadow-soft);
+  &:hover { background-color: var(--navy); color: white; border-color: var(--navy); transform: translateY(-2px); }
+}
+@utility btn-navy {
+  background: linear-gradient(135deg, #12365C 0%, var(--navy) 60%, var(--navy-deep) 100%);
+  color: white;
+  box-shadow: 0 10px 28px -12px rgb(10 37 64 / 0.6);
+  &:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgb(10 37 64 / 0.7); }
+}
+@utility btn-outline-white {
+  background-color: rgb(255 255 255 / 0.06);
+  color: white;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  backdrop-filter: blur(8px);
+  &:hover { background-color: white; color: var(--navy); border-color: white; transform: translateY(-2px); }
 }
 @utility btn-outline-light {
   background-color: rgb(255 255 255 / 0.06);
@@ -134,16 +151,16 @@
 /* ---------- Cartes ---------- */
 @utility card-surface {
   background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-soft);
-  transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo), border-color 0.25s;
+  border: 1px solid rgb(10 37 64 / 0.07);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+  transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo), border-color 0.3s;
 }
 @utility card-interactive {
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-elevated);
-    border-color: rgb(242 106 33 / 0.3);
+    transform: translateY(-6px);
+    border-color: rgb(242 106 33 / 0.25);
+    box-shadow: 0 2px 4px rgb(15 23 42 / 0.04), 0 28px 50px -20px rgb(10 37 64 / 0.35), 0 0 0 4px rgb(242 106 33 / 0.06);
   }
 }
 @utility glass {
@@ -151,57 +168,116 @@
   backdrop-filter: blur(12px);
   border: 1px solid color-mix(in oklab, white 60%, transparent);
 }
+@utility glass-dark {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0.02));
+  backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.12);
+}
 @utility gradient-text {
-  background: linear-gradient(
-    115deg,
-    var(--orange) 0%,
-    #FFA875 25%,
-    var(--orange-soft) 50%,
-    #FFA875 75%,
-    var(--orange) 100%
-  );
-  background-size: 200% auto;
+  background: linear-gradient(100deg, #FF9A5A 0%, var(--orange) 45%, #FFB37A 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: text-gradient-flow 5s ease-in-out infinite;
+  -webkit-text-fill-color: transparent;
+}
+@utility gradient-text-navy {
+  background: linear-gradient(100deg, var(--navy) 0%, #1E5BB8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Pastille d'icône en dégradé */
+@utility icon-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, #1A4A80 0%, var(--navy) 55%, var(--navy-deep) 100%);
+  color: #FFB37A;
+  box-shadow: 0 10px 22px -10px rgb(10 37 64 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.12);
+  transition: background 0.35s, color 0.35s, transform 0.35s var(--ease-out-expo);
+}
+@utility icon-tile-accent {
+  background: linear-gradient(135deg, #FF9A5A 0%, var(--orange) 60%, #E0560F 100%);
+  color: white;
+  box-shadow: 0 10px 22px -10px rgb(242 106 33 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.25);
 }
 @utility tag {
   display: inline-flex;
   align-items: center;
   border-radius: 9999px;
-  border: 1px solid rgb(10 37 64 / 0.15);
-  background-color: var(--secondary);
-  padding: 0.375rem 1rem;
+  border: 1px solid rgb(10 37 64 / 0.12);
+  background-color: white;
+  padding: 0.5rem 1.125rem;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--navy);
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-soft);
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   &:hover {
-    background-color: var(--orange);
+    background: linear-gradient(135deg, #FF8A3D, var(--orange));
     color: white;
     border-color: var(--orange);
-    box-shadow: 0 4px 14px -4px rgb(242 106 33 / 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -8px rgb(242 106 33 / 0.6);
   }
 }
 
+/* ---------- Fonds ---------- */
+/* Fond clair avec halos de couleur discrets */
+@utility bg-mesh {
+  background-color: #F5F8FC;
+  background-image:
+    radial-gradient(40rem 26rem at 0% 0%, rgb(37 99 235 / 0.07), transparent 70%),
+    radial-gradient(36rem 24rem at 100% 100%, rgb(242 106 33 / 0.08), transparent 70%);
+}
+/* Fond sombre en dégradé */
+@utility bg-deep {
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(50rem 30rem at 85% 0%, rgb(37 99 235 / 0.28), transparent 65%),
+    radial-gradient(40rem 26rem at 0% 100%, rgb(242 106 33 / 0.18), transparent 65%);
+}
+@utility bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.9) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ---------- Mise en page ---------- */
+@utility section-y {
+  padding-block: 5rem;
+  @media (width >= 64rem) { padding-block: 7rem; }
+}
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
 /* ---------- Typo helpers ---------- */
+/* Surtitre en pastille */
 @utility eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid rgb(242 106 33 / 0.25);
+  background-color: rgb(242 106 33 / 0.08);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--orange);
   &::before {
     content: "";
     display: inline-block;
-    width: 1.75rem;
-    height: 1px;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
     background-color: currentColor;
-    opacity: 0.7;
+    box-shadow: 0 0 0 3px rgb(242 106 33 / 0.18);
   }
 }
 

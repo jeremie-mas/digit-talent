@@ -18,7 +18,7 @@ import {
 import { useState, type FormEvent, useEffect } from "react";
 import { imagery } from "@/assets/imagery";
 import { Reveal } from "@/components/Reveal";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
 import { submitTrainingRegistration } from "@/lib/api/formation.functions";
 import { DEFAULT_TRAINING_FORM_CONFIG, getPublicTrainingFormConfig, type TrainingFormConfig } from "@/lib/api/training-form.functions";
 import { getPublicServices } from "@/lib/api/public.data.functions";
@@ -278,30 +278,14 @@ function FormationPage() {
   return (
     <SiteLayout>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-navy-deep pb-16 pt-[150px] text-white">
-        <img
-          src={imagery.coworkersAi}
-          alt="Session de formation professionnelle et certification"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy-deep/40" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 lg:px-8">
-          <p className="eyebrow animate-fade-in-soft">
-            {t("formation.hero.eyebrow")}
-          </p>
-          <h1
-            className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-[1.1] sm:text-5xl text-white"
-            style={{ animationDelay: "120ms" }}
-          >
-            {t("formation.hero.title")}
-          </h1>
-          <p
-            className="animate-fade-up mt-6 max-w-2xl text-lg leading-relaxed text-white/75"
-            style={{ animationDelay: "240ms" }}
-          >
-            {t("formation.hero.desc")}
-          </p>
-
+      <PageHero
+        image={imagery.coworkersAi}
+        imageAlt="Session de formation professionnelle et certification"
+        eyebrow={t("formation.hero.eyebrow")}
+        title={t("formation.hero.title")}
+        description={t("formation.hero.desc")}
+        crumbs={[{ label: t("formation.hero.breadcrumb") }]}
+      >
           {/* Quick CTA to open popup */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <button
@@ -336,18 +320,16 @@ function FormationPage() {
               <span>{t("formation.hero.badge3")}</span>
             </div>
           </div>
-        </div>
-        <Breadcrumb crumbs={[{ label: t("formation.hero.breadcrumb") }]} />
-      </section>
+      </PageHero>
 
       {/* Main Formations Section */}
-      <section id="catalogue" className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      <section id="catalogue" className="container-site section-y scroll-mt-28">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-10 border-b border-border/80">
           <div>
             <Reveal>
               <p className="eyebrow">{t("formation.catalogue.eyebrow")}</p>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-navy leading-tight">
                 {t("formation.catalogue.title")}
               </h2>
               <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
@@ -368,7 +350,7 @@ function FormationPage() {
                 key={tab.id}
                 type="button"
                 onClick={() => setSelectedCategory(tab.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition cursor-pointer ${
                   selectedCategory === tab.id
                     ? "bg-accent text-white shadow-sm"
                     : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 border border-border"
@@ -384,7 +366,7 @@ function FormationPage() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {filteredCourses.map((course) => (
             <Reveal key={course.id}>
-              <div className="card-surface p-7 sm:p-8 rounded-2xl border border-border shadow-soft hover:shadow-elevated hover:border-accent/50 transition-all duration-300 flex flex-col justify-between h-full group">
+              <div className="card-surface card-interactive p-7 sm:p-8 flex flex-col justify-between h-full group">
                 <div>
                   {/* Top Header: Badge + Logo/Icon */}
                   <div className="flex items-start justify-between gap-4">
@@ -400,14 +382,14 @@ function FormationPage() {
                         className="h-14 w-14 object-contain shrink-0 drop-shadow-sm"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-accent shrink-0 shadow-sm">
+                      <div className="flex h-12 w-12 items-center justify-center icon-tile shrink-0">
                         <GraduationCap className="h-6 w-6" />
                       </div>
                     )}
                   </div>
 
                   {/* Title */}
-                  <h3 className="mt-4 text-xl sm:text-2xl font-bold text-foreground group-hover:text-accent transition-colors leading-snug">
+                  <h3 className="mt-5 text-xl sm:text-2xl font-bold text-navy group-hover:text-accent transition-colors leading-snug">
                     {course.title}
                   </h3>
 
@@ -451,7 +433,7 @@ function FormationPage() {
 
         {/* Intra-entreprise / Custom banner */}
         <Reveal>
-          <div className="mt-16 card-surface p-8 sm:p-10 rounded-2xl border border-border bg-gradient-to-br from-secondary/60 via-card to-secondary/30 shadow-soft flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="mt-16 rounded-3xl border border-border/60 bg-mesh p-8 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
                 <Users className="h-4 w-4" />

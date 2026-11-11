@@ -13,6 +13,18 @@ export const en: Dict = {
   "nav.cta": "Start a project",
   "nav.login": "Log in",
 
+  // Refonte corporate
+  "footer.expertise": "Expertise",
+  "footer.company": "Company",
+  "footer.talent": "Talent solutions",
+  "footer.platform": "Learning platform",
+  "footer.platformDesc": "Access your courses, sessions and certifications.",
+  "home.about.more": "Learn more about us",
+  "home.exp.more": "Learn more",
+  "home.exp.custom.title": "A specific need?",
+  "home.exp.custom.desc": "Every organization is unique. Let's design a tailored engagement together.",
+  "home.stats.atp": "PMI® Authorized Training Partner",
+
   // Footer
   "footer.tagline": "The convergence of digital and talent at the service of African companies' growth. Since 2012.",
   "footer.navigation": "Navigation",
@@ -453,6 +465,18 @@ export const fr: Dict = {
   "nav.contact": "Contact",
   "nav.cta": "Démarrer un projet",
   "nav.login": "Connexion",
+
+  // Refonte corporate
+  "footer.expertise": "Expertises",
+  "footer.company": "Le cabinet",
+  "footer.talent": "Solutions Talent",
+  "footer.platform": "Plateforme de formation",
+  "footer.platformDesc": "Accédez à vos cours, sessions et certifications.",
+  "home.about.more": "En savoir plus sur nous",
+  "home.exp.more": "En savoir plus",
+  "home.exp.custom.title": "Un besoin spécifique ?",
+  "home.exp.custom.desc": "Chaque organisation est unique. Construisons ensemble un accompagnement sur mesure.",
+  "home.stats.atp": "Partenaire de formation agréé PMI®",
 
   // Footer
   "footer.tagline": "La convergence du digital et des talents au service de la croissance des entreprises africaines. Depuis 2012.",

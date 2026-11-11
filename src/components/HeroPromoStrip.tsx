@@ -274,7 +274,7 @@ export function HeroPromoStrip() {
                   { value: countdown.seconds, label: t("promo.seconds") },
                 ].map((unit, idx) => (
                   <div key={idx} className="flex items-center gap-3 sm:gap-4">
-                    <div className="flex flex-col items-center justify-center rounded-2xl border border-white/15 bg-white/10 backdrop-blur-sm w-16 h-16 sm:w-20 sm:h-20 shadow-lg">
+                    <div className="flex flex-col items-center justify-center rounded-lg border border-white/15 bg-white/10 backdrop-blur-sm w-16 h-16 sm:w-20 sm:h-20">
                       <span className="font-mono text-2xl sm:text-3xl font-bold text-white tabular-nums leading-none">
                         {String(unit.value).padStart(2, "0")}
                       </span>
@@ -294,7 +294,7 @@ export function HeroPromoStrip() {
               {/* Droite : CTA */}
               <a
                 href="/formation"
-                className="shrink-0 inline-flex items-center gap-2.5 rounded-2xl px-6 py-3.5 text-sm sm:text-base font-bold text-white shadow-lg transition hover:opacity-90 hover:scale-105"
+                className="shrink-0 inline-flex items-center gap-2.5 rounded-lg px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-105"
                 style={{ backgroundColor: "var(--orange)" }}
               >
                 {t("promo.registerNow")}
