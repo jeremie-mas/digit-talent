@@ -11,6 +11,10 @@ import { ClientLogos } from "@/components/ClientLogos";
 import { CtaBand } from "@/components/CtaBand";
 import { NetworkPattern } from "@/components/NetworkPattern";
 import { AnimatedWords } from "@/components/AnimatedWords";
+import { CERTIFIED } from "@/data/certified";
+
+// Les 3 certifiés les plus récents qui ont un visuel de félicitations
+const featuredCertified = CERTIFIED.filter((p) => p.poster).slice(0, 3);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -114,6 +118,41 @@ function Home() {
           </div>
         </Reveal>
       </section>
+
+      {/* Nouveaux certifiés : visuels de félicitations les plus récents */}
+      {featuredCertified.length > 0 && (
+        <section className="bg-mesh section-y">
+          <div className="container-site grid gap-12 lg:grid-cols-12 lg:items-center">
+            <Reveal variant="left" className="lg:col-span-4">
+              <p className="eyebrow">{t("home.certified.eyebrow")}</p>
+              <h2 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-navy sm:text-5xl">{t("home.certified.title")}</h2>
+              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{t("home.certified.desc")}</p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link to="/certifies" className="btn btn-primary">
+                  {t("home.certified.btn")} <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link to="/formation" search={{ course: "" }} className="btn btn-outline-dark">
+                  {t("certified.cta.btn")}
+                </Link>
+              </div>
+            </Reveal>
+            <div className={`grid gap-6 sm:grid-cols-2 lg:col-span-8 ${featuredCertified.length >= 3 ? "lg:grid-cols-3" : ""}`}>
+              {featuredCertified.map((p, i) => (
+                <Reveal key={p.name} variant="scale" delay={i * 150}>
+                  <Link to="/certifies" className="img-zoom block overflow-hidden rounded-2xl shadow-[0_24px_50px_-24px_rgb(10_37_64/0.55)]">
+                    <img
+                      src={p.poster}
+                      alt={`${t("home.certified.alt")} ${p.name}, ${p.certification}`}
+                      loading="lazy"
+                      className="aspect-[4/5] w-full object-cover"
+                    />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Qui sommes-nous : grande affirmation + photos */}
       <section className="container-site section-y">

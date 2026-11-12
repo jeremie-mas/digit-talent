@@ -49,6 +49,8 @@ function CertifiedPage() {
     return [...map.entries()].sort((a, b) => b[1] - a[1]);
   }, []);
 
+  const posters = CERTIFIED.filter((p) => p.poster);
+
   const people = CERTIFIED.filter((p) => {
     const term = search.trim().toLowerCase();
     const matchesFilter = filter === "all" || p.certification === filter;
@@ -80,6 +82,22 @@ function CertifiedPage() {
           </Reveal>
         ) : (
           <>
+            {/* Visuels de félicitations */}
+            {posters.length > 0 && (
+              <div className="mb-16">
+                <h2 className="text-2xl font-bold text-navy">{t("certified.posters.title")}</h2>
+                <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {posters.map((p, i) => (
+                    <Reveal key={p.name} variant="scale" delay={(i % 3) * 120}>
+                      <a href={p.poster} target="_blank" rel="noreferrer" className="img-zoom block overflow-hidden rounded-2xl shadow-[0_24px_50px_-24px_rgb(10_37_64/0.55)]">
+                        <img src={p.poster} alt={`${p.name}, ${p.certification}`} loading="lazy" className="aspect-[4/5] w-full object-cover" />
+                      </a>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Chiffres par certification */}
             <Reveal as="dl" variant="stagger" className="grid grid-cols-2 border-y border-border sm:grid-cols-4">
               <div className="py-6 pr-6">
