@@ -55,9 +55,9 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-deep text-white">
-        <div className="absolute inset-x-0 top-0 h-[420px] lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[52%]">
+      {/* Hero : photo pleine largeur sous un voile gris anthracite (teinte du logo), plus léger côté photo */}
+      <section className="relative overflow-hidden bg-[#1C232B] text-white">
+        <div className="absolute inset-x-0 top-0 h-[460px] lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[64%]">
           <img
             src={imagery.professionalMan}
             alt="DIGIT & TALENT consultant"
@@ -65,13 +65,13 @@ function Home() {
             decoding="async"
             className="hero-zoom h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/30 to-navy-deep/40 lg:bg-gradient-to-r lg:from-navy-deep lg:via-navy-deep/20 lg:to-transparent" />
+          <div className="absolute inset-0 -bottom-px bg-gradient-to-t from-[#1C232B] via-[#1C232B]/40 to-[#1C232B]/20 lg:-left-1 lg:bottom-0 lg:bg-gradient-to-r lg:from-[#1C232B] lg:from-2% lg:via-[#1C232B]/45 lg:via-30% lg:to-[#1C232B]/10" />
           {/* Badge partenaire PMI : même emplacement que sur la version en ligne */}
           <div className="animate-float-slow absolute bottom-8 right-5 z-10 lg:bottom-24 lg:right-10 xl:bottom-50 xl:right-80">
             <img
               src={imagery.authorizedTrainingPartner}
               alt="PMI Authorized Training Partner"
-              className="animate-fade-up h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.5)] lg:h-52 xl:h-72"
+              className="animate-fade-up h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.45)] lg:h-52 xl:h-72"
               style={{ animationDelay: "900ms" }}
             />
           </div>
@@ -87,7 +87,7 @@ function Home() {
               {t("home.hero.titleC") && <>{" "}<AnimatedWords text={t("home.hero.titleC")} delay={500} /></>}
               {t("home.hero.titleD") && <>{" "}<AnimatedWords text={t("home.hero.titleD")} delay={600} className="text-accent" /></>}
             </h1>
-            <p className="animate-fade-up mt-7 text-lg leading-relaxed text-white/70" style={{ animationDelay: "500ms" }}>
+            <p className="animate-fade-up mt-7 text-lg leading-relaxed text-white/80" style={{ animationDelay: "500ms" }}>
               {t("home.hero.desc")}
             </p>
             <div className="animate-fade-up mt-10 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>

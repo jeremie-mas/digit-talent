@@ -40,7 +40,7 @@ function SocialIcon({ children }: { children: ReactNode }) {
   );
 }
 
-export function SiteLayout({ children }: { children: ReactNode }) {
+export function SiteLayout({ children, lightHero = false }: { children: ReactNode; /** Hero clair : en-tête en couleurs foncées dès le haut de page */ lightHero?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [talentOpen, setTalentOpen] = useState(false);
@@ -93,11 +93,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     { to: "/contact", label: t("nav.contact") },
   ] as const;
 
+  const onLight = scrolled || lightHero;
+
   const linkClass = (active: boolean) =>
     `relative whitespace-nowrap py-2 text-[15px] font-medium transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 ${
       active
         ? "text-accent after:scale-x-100"
-        : scrolled ? "text-navy/75 hover:text-navy" : "text-white/85 hover:text-white"
+        : onLight ? "text-navy/75 hover:text-navy" : "text-white/85 hover:text-white"
     }`;
 
   return (
@@ -144,8 +146,8 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <div className={`border-b transition-colors duration-300 ${scrolled ? "border-border/80" : "border-transparent"}`}>
           <div className="container-site flex items-center justify-between gap-6 py-3">
             <Link to="/" className="flex shrink-0 flex-col items-center">
-              <img src={logoAsset} alt="DIGIT & TALENT" className={`h-12 w-auto transition-all duration-300 xl:h-14 ${scrolled ? "" : "brightness-0 invert"}`} />
-              <span className={`mt-0.5 w-full text-center text-[8px] italic tracking-wide transition-colors duration-300 ${scrolled ? "text-foreground/50" : "text-white/70"}`}>
+              <img src={logoAsset} alt="DIGIT & TALENT" className={`h-12 w-auto transition-all duration-300 xl:h-14 ${onLight ? "" : "brightness-0 invert"}`} />
+              <span className={`mt-0.5 w-full text-center text-[8px] italic tracking-wide transition-colors duration-300 ${onLight ? "text-foreground/50" : "text-white/70"}`}>
                 Fueling Dreams, Forging Success.
               </span>
             </Link>
@@ -201,7 +203,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 aria-label={t("nav.login")}
                 title={t("nav.login")}
                 className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg border px-3.5 py-2.5 text-sm font-semibold transition-colors ${
-                  scrolled
+                  onLight
                     ? "border-border text-navy/80 hover:border-accent hover:text-accent"
                     : "border-white/30 text-white hover:border-white hover:bg-white/10"
                 }`}
@@ -213,7 +215,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <div className="flex items-center gap-2 lg:hidden">
               <LanguageSwitcher />
               <button
-                className={`rounded-md p-2 transition-colors ${scrolled || open ? "text-navy/80 hover:text-navy" : "text-white/85 hover:text-white"}`}
+                className={`rounded-md p-2 transition-colors ${onLight || open ? "text-navy/80 hover:text-navy" : "text-white/85 hover:text-white"}`}
                 onClick={() => setOpen((v) => !v)}
                 aria-label="Menu"
                 aria-expanded={open}
