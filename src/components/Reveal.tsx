@@ -1,27 +1,14 @@
 import { useEffect, useRef, useState, type ReactNode, type ElementType, type CSSProperties } from "react";
 
-type RevealVariant = "up" | "left" | "right" | "scale" | "image" | "stagger";
-
 type RevealProps = {
   children: ReactNode;
   as?: ElementType;
   delay?: number;
-  /** Type d'apparition : montée (défaut), glissement, zoom, rideau sur image ou enfants en cascade */
-  variant?: RevealVariant;
   className?: string;
   style?: CSSProperties;
 };
 
-const VARIANT_CLASS: Record<RevealVariant, string> = {
-  up: "",
-  left: "reveal-left",
-  right: "reveal-right",
-  scale: "reveal-scale",
-  image: "reveal-image",
-  stagger: "reveal-stagger",
-};
-
-export function Reveal({ children, as: Tag = "div", delay = 0, variant = "up", className = "", style }: RevealProps) {
+export function Reveal({ children, as: Tag = "div", delay = 0, className = "", style }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -54,7 +41,7 @@ export function Reveal({ children, as: Tag = "div", delay = 0, variant = "up", c
   return (
     <Tag
       ref={ref as never}
-      className={`reveal ${VARIANT_CLASS[variant]} ${visible ? "is-visible" : ""} ${className}`}
+      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms`, ...style }}
     >
       {children}

@@ -7,7 +7,7 @@ import type { AdminTheme } from "@/components/AdminLayout";
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
-      { title: "Connexion Administration — DIGIT & TALENT" },
+      { title: "Connexion Administration | DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

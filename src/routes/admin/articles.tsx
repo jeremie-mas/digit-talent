@@ -12,7 +12,7 @@ import {
 export const Route = createFileRoute("/admin/articles")({
   head: () => ({
     meta: [
-      { title: "Gestion des Articles — Admin DIGIT & TALENT" },
+      { title: "Gestion des Articles | Admin DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

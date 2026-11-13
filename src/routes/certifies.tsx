@@ -12,12 +12,12 @@ import { CERTIFIED, type Certification } from "@/data/certified";
 export const Route = createFileRoute("/certifies")({
   head: () => ({
     meta: [
-      { title: "Our certified professionals — DIGIT & TALENT" },
+      { title: "Our certified professionals | DIGIT & TALENT" },
       {
         name: "description",
         content: "Professionals who earned their PMP®, CAPM® or Prosci® certification after training with DIGIT & TALENT in Lomé.",
       },
-      { property: "og:title", content: "Our certified professionals — DIGIT & TALENT" },
+      { property: "og:title", content: "Our certified professionals | DIGIT & TALENT" },
     ],
   }),
   component: CertifiedPage,
@@ -64,7 +64,6 @@ function CertifiedPage() {
       <PageHero
         image={imagery.leaderPitch}
         imageAlt="Session de certification"
-        eyebrow={t("certified.hero.eyebrow")}
         title={t("certified.hero.title")}
         description={t("certified.hero.desc")}
         crumbs={[{ label: t("nav.training"), to: "/formation" }, { label: t("certified.hero.title") }]}
@@ -88,7 +87,7 @@ function CertifiedPage() {
                 <h2 className="text-2xl font-bold text-navy">{t("certified.posters.title")}</h2>
                 <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {posters.map((p, i) => (
-                    <Reveal key={p.name} variant="scale" delay={(i % 3) * 120}>
+                    <Reveal key={p.name} delay={(i % 3) * 120}>
                       <a href={p.poster} target="_blank" rel="noreferrer" className="img-zoom block overflow-hidden rounded-2xl shadow-[0_24px_50px_-24px_rgb(10_37_64/0.55)]">
                         <img src={p.poster} alt={`${p.name}, ${p.certification}`} loading="lazy" className="aspect-[4/5] w-full object-cover" />
                       </a>
@@ -99,7 +98,7 @@ function CertifiedPage() {
             )}
 
             {/* Chiffres par certification */}
-            <Reveal as="dl" variant="stagger" className="grid grid-cols-2 border-y border-border sm:grid-cols-4">
+            <Reveal as="dl" className="grid grid-cols-2 border-y border-border sm:grid-cols-4">
               <div className="py-6 pr-6">
                 <dt className="font-display text-4xl font-bold text-navy">{CERTIFIED.length}</dt>
                 <dd className="mt-1 text-sm text-muted-foreground">{t("certified.count")}</dd>
@@ -170,7 +169,7 @@ function CertifiedPage() {
                         <img src={BADGES[p.certification]} alt={p.certification} className="h-10 w-10 object-contain" loading="lazy" />
                       )}
                       {p.linkedin && (
-                        <a href={p.linkedin} target="_blank" rel="noreferrer" aria-label={`LinkedIn — ${p.name}`} className="text-navy/60 transition hover:text-accent">
+                        <a href={p.linkedin} target="_blank" rel="noreferrer" aria-label={`LinkedIn, ${p.name}`} className="text-navy/60 transition hover:text-accent">
                           <Linkedin className="h-4 w-4" />
                         </a>
                       )}

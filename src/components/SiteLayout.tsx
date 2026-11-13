@@ -70,14 +70,9 @@ export function SiteLayout({ children, lightHero = false }: { children: ReactNod
     label: t(`svc.${key}.title`),
   }));
 
-  const progressRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
-      // Barre de progression de lecture (mise à jour directe, sans re-rendu)
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -104,12 +99,6 @@ export function SiteLayout({ children, lightHero = false }: { children: ReactNod
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <div
-        ref={progressRef}
-        aria-hidden="true"
-        className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-accent"
-        style={{ transform: "scaleX(0)" }}
-      />
       <header
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           scrolled

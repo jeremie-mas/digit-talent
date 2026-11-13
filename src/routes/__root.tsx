@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "theme-color", content: "#0A2540" },
-        { title: "DIGIT & TALENT — Digital Transformation & Talent Consulting" },
+        { title: "DIGIT & TALENT | Digital Transformation & Talent Consulting" },
         { name: "description", content: "Consulting firm based in Lomé, Togo: digital transformation, cybersecurity, organizational transformation, change management and PMP/CAPM training." },
         { name: "author", content: "DIGIT & TALENT" },
         { property: "og:title", content: "DIGIT & TALENT" },
@@ -125,7 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { rel: "stylesheet", href: appCss },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-        { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" },
+        { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" },
       ],
       scripts: [
         { type: "application/ld+json", children: JSON.stringify(organizationJsonLd) },

@@ -21,7 +21,7 @@ import { DEFAULT_TRAINING_FORM_CONFIG, getAdminTrainingFormConfig, saveAdminTrai
 export const Route = createFileRoute("/admin/formations")({
   head: () => ({
     meta: [
-      { title: "Inscriptions aux Formations — Admin DIGIT & TALENT" },
+      { title: "Inscriptions aux Formations | Admin DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

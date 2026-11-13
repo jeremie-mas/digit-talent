@@ -458,7 +458,7 @@ export function AdminLayout({ children, title, description, actions }: AdminLayo
               <Bell className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "var(--orange)" }} />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-bold" style={{ color: "var(--admin-text)" }}>Nouvelle inscription à une formation</p>
-                <p className="mt-0.5 text-xs" style={{ color: "var(--admin-text-muted)" }}>{registrationNotice.name} — {registrationNotice.course}</p>
+                <p className="mt-0.5 text-xs" style={{ color: "var(--admin-text-muted)" }}>{registrationNotice.name} · {registrationNotice.course}</p>
                 <Link to="/admin/formations" onClick={() => setRegistrationNotice(null)} className="mt-2 inline-block text-xs font-semibold underline" style={{ color: "var(--orange)" }}>Voir l’inscription</Link>
               </div>
               <button type="button" aria-label="Fermer la notification" onClick={() => setRegistrationNotice(null)} className="rounded p-1" style={{ color: "var(--admin-text-muted)" }}><X className="h-4 w-4" /></button>

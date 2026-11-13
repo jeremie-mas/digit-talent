@@ -32,13 +32,13 @@ export const Route = createFileRoute("/formation")({
   }),
   head: () => ({
     meta: [
-      { title: "Certification Training Catalog — DIGIT & TALENT" },
+      { title: "Certification Training Catalog | DIGIT & TALENT" },
       {
         name: "description",
         content:
           "Explore the DIGIT & TALENT certification training catalog: globally recognized PMP®, CAPM®, Prosci change management and digital transformation.",
       },
-      { property: "og:title", content: "Professional Training & Certifications — DIGIT & TALENT" },
+      { property: "og:title", content: "Professional Training & Certifications | DIGIT & TALENT" },
       {
         property: "og:description",
         content: "Build your skills and earn internationally recognized PMI and Prosci certifications.",
@@ -283,7 +283,6 @@ function FormationPage() {
       <PageHero
         image={imagery.coworkersAi}
         imageAlt="Session de formation professionnelle et certification"
-        eyebrow={t("formation.hero.eyebrow")}
         title={t("formation.hero.title")}
         description={t("formation.hero.desc")}
         crumbs={[{ label: t("formation.hero.breadcrumb") }]}
@@ -330,8 +329,7 @@ function FormationPage() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-10 border-b border-border/80">
           <div>
             <Reveal>
-              <p className="eyebrow">{t("formation.catalogue.eyebrow")}</p>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-navy leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-navy leading-tight">
                 {t("formation.catalogue.title")}
               </h2>
               <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
@@ -432,10 +430,6 @@ function FormationPage() {
         <Reveal>
           <div className="mt-16 rounded-2xl border border-border bg-mesh p-8 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
-                <Users className="h-4 w-4" />
-                <span>{t("formation.intra.eyebrow")}</span>
-              </div>
               <h3 className="text-xl sm:text-2xl font-bold text-foreground">
                 {t("formation.intra.title")}
               </h3>
@@ -487,8 +481,7 @@ function FormationPage() {
         <div className="container-site">
           <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div className="max-w-2xl">
-              <p className="eyebrow">{t("formation.cohorts.eyebrow")}</p>
-              <h2 className="mt-4 text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("formation.cohorts.title")}</h2>
+              <h2 className="text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("formation.cohorts.title")}</h2>
               <p className="mt-5 leading-relaxed text-muted-foreground sm:text-lg">{t("formation.cohorts.desc")}</p>
             </div>
             <Link to="/certifies" className="btn btn-outline-dark shrink-0 self-start lg:self-auto">
@@ -501,185 +494,131 @@ function FormationPage() {
         </div>
       </section>
 
-      {/* POP-UP MODAL: FORMULAIRE D'INSCRIPTION RESPONSIVE */}
+      {/* Fenêtre d'inscription */}
       {isModalOpen && (
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-navy-deep/80 backdrop-blur-sm animate-fade-in overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy-deep/70 p-3 sm:p-6"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               handleCloseModal();
             }
           }}
         >
-          <div className="relative w-full max-w-2xl max-h-[92dvh] sm:max-h-[90vh] flex flex-col bg-card rounded-2xl sm:rounded-3xl border border-border shadow-2xl animate-fade-up overflow-hidden">
-            {/* Modal Header (Fixe, toujours visible) */}
-            <div className="flex items-start justify-between gap-3 px-4 py-3.5 sm:px-7 sm:py-5 border-b border-border bg-card shrink-0">
-              <div className="min-w-0 pr-1">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-accent/10 text-accent mb-1">
-                  <GraduationCap className="h-3.5 w-3.5 shrink-0" />
-                  <span>{formConfig.badge}</span>
-                </div>
-                <h3 id="modal-title" className="text-lg sm:text-2xl font-bold text-foreground leading-snug">
+          <div className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-hidden rounded-lg bg-white shadow-xl">
+            {/* En-tête */}
+            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-border px-5 py-4 sm:px-8 sm:py-5">
+              <div className="min-w-0">
+                <h2 id="modal-title" className="text-xl font-bold leading-snug text-navy sm:text-2xl">
                   {sent ? formConfig.successTitle : formConfig.title}
-                </h3>
-                <p className="mt-0.5 text-xs sm:text-sm text-muted-foreground">
-                  {sent
-                    ? formConfig.confirmSubtitle
-                    : formConfig.sessionText}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {sent ? formConfig.confirmSubtitle : formConfig.sessionText}
                 </p>
-                {!sent && formConfig.description && <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">{formConfig.description}</p>}
               </div>
-
-              {/* Close Button X */}
               <button
                 type="button"
                 onClick={handleCloseModal}
-                aria-label="Fermer la boîte de dialogue"
-                className="shrink-0 p-2 -mr-1 -mt-1 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary transition cursor-pointer"
+                aria-label="Fermer"
+                className="shrink-0 rounded-md p-1.5 text-muted-foreground transition hover:bg-secondary hover:text-navy"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Modal Body (Scrollable avec inertie douce) */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-7 sm:py-6">
+            {/* Contenu */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-8 sm:py-6">
               {sent ? (
-                <div className="py-4 sm:py-6 flex flex-col items-center justify-center text-center">
-                  <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-accent/15 text-accent mb-4 shadow-accent">
-                    <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8" />
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">{formConfig.successTitle}</h4>
-                  <p className="mt-2.5 max-w-md text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    {formConfig.successText} <strong className="text-foreground">{selectedCourse}</strong>.
+                <div className="py-2">
+                  <p className="text-sm leading-relaxed text-foreground">
+                    {formConfig.successText} <strong>{selectedCourse}</strong>.
                   </p>
-
-                  <div className="mt-5 p-3.5 sm:p-4 rounded-xl bg-secondary/60 border border-border text-xs max-w-md text-left w-full space-y-1">
-                    <p className="font-semibold text-foreground mb-1">{formConfig.nextStepsTitle}</p>
-                    {formConfig.nextSteps.map((step, index) => <p key={`${index}-${step}`} className="text-muted-foreground">{index + 1}. {step}</p>)}
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
-                    <button
-                      type="button"
-                      onClick={handleCloseModal}
-                      className="btn btn-primary text-xs sm:text-sm cursor-pointer w-full sm:w-auto !px-6"
-                    >
+                  <h3 className="mt-6 text-sm font-semibold text-navy">{formConfig.nextStepsTitle}</h3>
+                  <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
+                    {formConfig.nextSteps.map((step, index) => <li key={`${index}-${step}`}>{step}</li>)}
+                  </ol>
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <button type="button" onClick={handleCloseModal} className="btn btn-primary justify-center">
                       {formConfig.closeLabel}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setSent(false)}
-                      className="btn btn-outline-dark text-xs sm:text-sm cursor-pointer w-full sm:w-auto"
-                    >
+                    <button type="button" onClick={() => setSent(false)} className="btn btn-outline-dark justify-center">
                       {formConfig.anotherRegistrationLabel}
                     </button>
                   </div>
                 </div>
               ) : (
                 <>
+                  {formConfig.description && <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{formConfig.description}</p>}
                   {errorMessage && (
-                    <div className="mb-4 sm:mb-5 rounded-xl border border-destructive/30 bg-destructive/10 p-3 sm:p-4 text-xs text-destructive">
+                    <p role="alert" className="mb-5 rounded-md border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                       {errorMessage}
-                    </div>
+                    </p>
                   )}
 
-                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-4.5">
-                    {/* Honeypot anti-spam */}
-                    <input
-                      type="text"
-                      name="website"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      aria-hidden="true"
-                      className="hidden"
-                    />
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Champ anti-spam invisible */}
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
-                    {/* Choix de la formation */}
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
+                      <label htmlFor="modal-course" className="mb-1.5 block text-sm font-medium text-navy">
                         {formConfig.courseLabel} *
                       </label>
                       <select
+                        id="modal-course"
                         value={selectedCourse}
                         onChange={(e) => setSelectedCourse(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-xs sm:text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20 cursor-pointer"
+                        className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy"
                       >
                         {formConfig.courses.map((course) => <option key={course} value={course}>{course}</option>)}
                       </select>
                     </div>
 
-                    {/* Préférence de format / session */}
-                    <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
-                        {formConfig.formatLabel} *
-                      </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        {[
-                          ...formConfig.formats,
-                        ].map((format) => (
-                          <label
-                            key={format}
-                            className={`flex items-start gap-2.5 rounded-xl border p-2.5 cursor-pointer transition ${
-                              sessionPreference === format
-                                ? "border-accent bg-accent/10 text-accent font-semibold ring-1 ring-accent/30"
-                                : "border-border text-muted-foreground hover:bg-secondary/60"
-                            }`}
-                          >
+                    <fieldset>
+                      <legend className="mb-1.5 block text-sm font-medium text-navy">{formConfig.formatLabel} *</legend>
+                      <div className="mt-1 space-y-2">
+                        {formConfig.formats.map((format) => (
+                          <label key={format} className="flex cursor-pointer items-start gap-2.5 text-sm text-foreground">
                             <input
                               type="radio"
                               name="sessionPreference"
                               value={format}
                               checked={sessionPreference === format}
                               onChange={(e) => setSessionPreference(e.target.value)}
-                              className="mt-0.5 shrink-0 accent-accent"
+                              className="mt-0.5 shrink-0 accent-navy"
                             />
-                            <span className="leading-tight">{format}</span>
+                            <span>{format}</span>
                           </label>
                         ))}
                       </div>
-                    </div>
+                    </fieldset>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       {formConfig.fields.filter((field) => field.enabled).map((field) => (
-                        <div key={field.id}>
-                          <label className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1">{field.label}{field.required ? " *" : ` (${formConfig.optionalLabel})`}</label>
-                          {field.type === "textarea" ? <textarea name={`field_${field.id}`} required={field.required} placeholder={field.placeholder} rows={2} className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-xs sm:text-sm text-foreground" /> : <input type={field.type} name={`field_${field.id}`} required={field.required} placeholder={field.placeholder} className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-xs sm:text-sm text-foreground" />}
+                        <div key={field.id} className={field.type === "textarea" ? "sm:col-span-2" : ""}>
+                          <label htmlFor={`modal-field-${field.id}`} className="mb-1.5 block text-sm font-medium text-navy">
+                            {field.label}{field.required ? " *" : ` (${formConfig.optionalLabel})`}
+                          </label>
+                          {field.type === "textarea" ? (
+                            <textarea id={`modal-field-${field.id}`} name={`field_${field.id}`} required={field.required} placeholder={field.placeholder} rows={3} className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy" />
+                          ) : (
+                            <input id={`modal-field-${field.id}`} type={field.type} name={`field_${field.id}`} required={field.required} placeholder={field.placeholder} className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy" />
+                          )}
                         </div>
                       ))}
                     </div>
 
-                    {/* Submit button */}
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        disabled={submitting}
-                        className="btn btn-primary w-full !py-3 sm:!py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-accent text-xs sm:text-sm font-semibold disabled:opacity-50"
-                      >
-                        {submitting ? (
-                          <>
-                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                            <span>{formConfig.submittingLabel}</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>{formConfig.submitLabel}</span>
-                            <Send className="h-4 w-4" />
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <button type="submit" disabled={submitting} className="btn btn-primary w-full justify-center disabled:opacity-60">
+                      {submitting ? formConfig.submittingLabel : formConfig.submitLabel}
+                    </button>
 
-                    <p className="text-[11px] text-muted-foreground text-center pt-1 pb-2">
-                      🔒 {formConfig.privacyText}
-                    </p>
-                    <p className="text-center text-xs text-muted-foreground">
+                    <p className="text-xs leading-relaxed text-muted-foreground">{formConfig.privacyText}</p>
+                    <p className="text-sm">
                       <a
                         href={`/formation/inscription/?course=${encodeURIComponent(selectedCourse)}`}
-                        className="font-semibold text-accent underline-offset-4 hover:underline"
+                        className="font-medium text-navy underline underline-offset-4 hover:text-accent"
                       >
                         {formConfig.fullPageLinkText}
                       </a>

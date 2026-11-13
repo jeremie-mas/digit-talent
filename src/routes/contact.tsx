@@ -11,9 +11,9 @@ import { submitContact } from "@/lib/api/contact.functions";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — DIGIT & TALENT" },
+      { title: "Contact | DIGIT & TALENT" },
       { name: "description", content: "Contact DIGIT & TALENT in Lomé for your digitalization, organizational transformation and training projects." },
-      { property: "og:title", content: "Contact — DIGIT & TALENT" },
+      { property: "og:title", content: "Contact | DIGIT & TALENT" },
       { property: "og:description", content: "Let's discuss your digital or organizational transformation project." },
     ],
   }),
@@ -92,7 +92,6 @@ function Contact() {
       <PageHero
         image={imagery.futuristicBusiness}
         imageAlt="Professional exchange in a digital environment"
-        eyebrow={t("contact.hero.eyebrow")}
         title={t("contact.hero.title")}
         description={t("contact.hero.desc")}
         crumbs={[{ label: t("nav.contact") }]}
@@ -104,7 +103,7 @@ function Contact() {
           {([
             { icon: MapPin, title: t("contact.info.address"), value: t("contact.info.addressV") },
             { icon: Mail, title: t("contact.info.email"), value: "contact@digit-talent.com", href: "mailto:contact@digit-talent.com" },
-            { icon: Phone, title: t("contact.info.phone"), value: "+228 91 98 20 23 — +228 99 90 08 21", href: "tel:+22891982023" },
+            { icon: Phone, title: t("contact.info.phone"), value: "+228 91 98 20 23 / +228 99 90 08 21", href: "tel:+22891982023" },
             { icon: Clock, title: t("contact.info.hours"), value: t("contact.info.hoursV") },
           ] as { icon: typeof MapPin; title: string; value: string; href?: string }[]).map((c, idx) => (
             <Reveal key={c.title} delay={idx * 80}>
@@ -138,8 +137,7 @@ function Contact() {
             </div>
           ) : (
             <>
-              <p className="eyebrow">{t("contact.form.eyebrow")}</p>
-              <h2 className="mt-4 text-2xl font-bold tracking-tight">{t("contact.form.title")}</h2>
+              <h2 className="text-2xl font-bold tracking-tight">{t("contact.form.title")}</h2>
               <p className="mt-1.5 text-sm text-muted-foreground">{t("contact.form.hint")}</p>
               <input
                 name="website"
@@ -195,7 +193,7 @@ function Contact() {
       <Reveal as="section" className="container-site pb-24">
         <div className="overflow-hidden rounded-2xl border border-border">
           <iframe
-            title="DIGIT & TALENT — Lomé"
+            title="DIGIT & TALENT, Lomé"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d1.2255!3d6.1375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDgnMTUuMCJOIDHCsDEzJzMxLjgiRQ!5e0!3m2!1sfr!2stg!4v1"
             width="100%"
             height="380"

@@ -22,6 +22,6 @@ export interface Cohort {
 export const COHORTS: Cohort[] = [
   { image: imagery.leaderPitch, title: "Certification PMP®", place: "Lomé" },
   { image: imagery.coworkersAi, title: "Certification CAPM®", place: "Lomé" },
-  { image: imagery.teamLaughing, title: "Conduite du changement — Prosci®", place: "Lomé" },
+  { image: imagery.teamLaughing, title: "Conduite du changement : Prosci®", place: "Lomé" },
   { image: imagery.management, title: "Transformation digitale & IA", place: "Lomé · En ligne" },
 ];

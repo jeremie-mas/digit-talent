@@ -49,22 +49,18 @@ export function HeroSlideImages({ slides, index }: { slides: HeroSlide[]; index:
   );
 }
 
-/** Indicateurs : numéro, légende et barre de progression ; cliquables. */
+/** Indicateurs : de simples points cliquables, le point actif est allongé. */
 export function HeroSlideIndicators({
   slides,
   index,
-  cycle,
-  delay = 6000,
   onSelect,
 }: {
   slides: HeroSlide[];
   index: number;
-  cycle: number;
-  delay?: number;
   onSelect: (i: number) => void;
 }) {
   return (
-    <div className="grid grid-cols-4 gap-3 sm:gap-5">
+    <div className="flex items-center gap-2">
       {slides.map((s, i) => (
         <button
           key={s.image}
@@ -72,22 +68,8 @@ export function HeroSlideIndicators({
           onClick={() => onSelect(i)}
           aria-label={s.label}
           aria-current={i === index}
-          className="group text-left"
-        >
-          <span className="relative block h-[3px] overflow-hidden rounded-full bg-white/20">
-            {i === index && (
-              <span
-                key={`${index}-${cycle}`}
-                className="hero-progress absolute inset-y-0 left-0 bg-accent"
-                style={{ animationDuration: `${delay}ms` }}
-              />
-            )}
-            {i < index && <span className="absolute inset-0 bg-white/50" />}
-          </span>
-          <span className={`mt-3 hidden text-xs font-semibold uppercase tracking-[0.1em] transition-colors sm:block ${i === index ? "text-white" : "text-white/45 group-hover:text-white/75"}`}>
-            <span className="text-accent">0{i + 1}</span> {s.label}
-          </span>
-        </button>
+          className={`h-2 rounded-full transition-all duration-500 ${i === index ? "w-8 bg-accent" : "w-2 bg-white/40 hover:bg-white/70"}`}
+        />
       ))}
     </div>
   );

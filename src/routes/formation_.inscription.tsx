@@ -14,7 +14,7 @@ export const Route = createFileRoute("/formation_/inscription")({
   }),
   head: () => ({
     meta: [
-      { title: "Training registration — DIGIT & TALENT" },
+      { title: "Training registration | DIGIT & TALENT" },
       {
         name: "description",
         content: "Register for DIGIT & TALENT certification training: PMP®, CAPM®, Prosci and digital transformation.",
@@ -100,7 +100,6 @@ function TrainingRegistrationPage() {
       <PageHero
         image={imagery.coworkersAi}
         imageAlt="Session de formation professionnelle et certification"
-        eyebrow={formConfig.badge}
         title={formConfig.title}
         description={
           <>
@@ -116,50 +115,37 @@ function TrainingRegistrationPage() {
 
       <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16 lg:px-8">
         {sent ? (
-          <section className="rounded-xl border border-border bg-card p-7 text-center shadow-soft sm:p-10" aria-live="polite">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10 text-accent">
-              <CheckCircle2 className="h-9 w-9" />
-            </div>
-            <h2 className="mt-5 text-2xl font-bold text-foreground">{formConfig.successTitle}</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              {formConfig.successText} <strong className="text-foreground">{selectedCourse}</strong>.
+          <section className="rounded-lg border border-border bg-white p-6 sm:p-10" aria-live="polite">
+            <h2 className="text-2xl font-bold text-navy">{formConfig.successTitle}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-foreground">
+              {formConfig.successText} <strong>{selectedCourse}</strong>.
             </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="/formation" className="btn btn-primary inline-flex items-center justify-center gap-2">
-                <ArrowLeft className="h-4 w-4" /> {formConfig.returnLabel}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="/formation" className="btn btn-primary justify-center">
+                {formConfig.returnLabel}
               </a>
-              <button
-                type="button"
-                onClick={() => setSent(false)}
-                className="btn btn-outline-dark cursor-pointer"
-              >
+              <button type="button" onClick={() => setSent(false)} className="btn btn-outline-dark justify-center">
                 {formConfig.anotherRegistrationLabel}
               </button>
             </div>
           </section>
         ) : (
-          <section className="rounded-xl border border-border bg-card p-5 shadow-soft sm:p-8">
-            <div className="mb-6 flex items-center gap-3 border-b border-border pb-5">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                <GraduationCap className="h-6 w-6" />
-              </div>
-              <div>
-                <h2 className="font-semibold text-foreground">{formConfig.title}</h2>
-                <p className="mt-0.5 text-xs font-medium text-accent">{formConfig.sessionText}</p>
-              </div>
-            </div>
+          <section className="rounded-lg border border-border bg-white p-6 sm:p-10">
+            <h2 className="text-xl font-bold text-navy">{formConfig.title}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{formConfig.sessionText}</p>
+            <hr className="my-6 border-border" />
 
             {errorMessage && (
-              <div role="alert" className="mb-5 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+              <p role="alert" className="mb-5 rounded-md border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                 {errorMessage}
-              </div>
+              </p>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
               <div>
-                <label htmlFor="registration-course" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground">
+                <label htmlFor="registration-course" className="mb-1.5 block text-sm font-medium text-navy">
                   {formConfig.courseLabel} *
                 </label>
                 <select
@@ -167,19 +153,17 @@ function TrainingRegistrationPage() {
                   value={selectedCourse}
                   onChange={(event) => setSelectedCourse(event.target.value)}
                   required
-                  className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy"
                 >
                   {formConfig.courses.map((course) => <option key={course} value={course}>{course}</option>)}
                 </select>
               </div>
 
               <fieldset>
-                <legend className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">
-                  {formConfig.formatLabel} *
-                </legend>
-                <div className="grid gap-2 sm:grid-cols-2">
-                {formatOptions.map((format, index) => (
-                    <label key={format} className={`flex cursor-pointer items-start gap-2.5 rounded-xl border p-3 text-sm transition ${sessionPreference === format ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:bg-secondary/60"}`}>
+                <legend className="mb-1.5 block text-sm font-medium text-navy">{formConfig.formatLabel} *</legend>
+                <div className="mt-1 space-y-2">
+                  {formatOptions.map((format, index) => (
+                    <label key={format} className="flex cursor-pointer items-start gap-2.5 text-sm text-foreground">
                       <input
                         type="radio"
                         name="sessionPreferenceChoice"
@@ -187,7 +171,7 @@ function TrainingRegistrationPage() {
                         checked={sessionPreference === format}
                         onChange={() => setSessionPreference(format)}
                         required={index === 0}
-                        className="mt-0.5 accent-accent"
+                        className="mt-0.5 shrink-0 accent-navy"
                       />
                       <span>{format}</span>
                     </label>
@@ -199,17 +183,11 @@ function TrainingRegistrationPage() {
                 {formConfig.fields.filter((field) => field.enabled).map((field) => <FormField key={field.id} id={`registration-${field.id}`} name={`field_${field.id}`} label={field.label} placeholder={field.placeholder} type={field.type} required={field.required} optionalLabel={formConfig.optionalLabel} />)}
               </div>
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="btn btn-primary flex w-full cursor-pointer items-center justify-center gap-2 !py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {submitting ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{formConfig.submittingLabel}</> : <>{formConfig.submitLabel}<Send className="h-4 w-4" /></>}
+              <button type="submit" disabled={submitting} className="btn btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-60">
+                {submitting ? formConfig.submittingLabel : formConfig.submitLabel}
               </button>
 
-              <p className="flex items-center justify-center gap-1.5 pb-1 text-center text-xs text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0" /> {formConfig.privacyText}
-              </p>
+              <p className="text-xs leading-relaxed text-muted-foreground">{formConfig.privacyText}</p>
             </form>
           </section>
         )}
@@ -236,14 +214,14 @@ function FormField({
   optionalLabel?: string;
 }) {
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground">
+    <div className={type === "textarea" ? "sm:col-span-2" : ""}>
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-navy">
         {label}{required ? " *" : optionalLabel ? ` (${optionalLabel})` : ""}
       </label>
       {type === "textarea" ? (
-        <textarea id={id} name={name} placeholder={placeholder} required={required} rows={3} className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20" />
+        <textarea id={id} name={name} placeholder={placeholder} required={required} rows={3} className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy" />
       ) : (
-        <input id={id} name={name} type={type} placeholder={placeholder} required={required} className="w-full rounded-xl border border-input bg-card px-3.5 py-3 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20" />
+        <input id={id} name={name} type={type} placeholder={placeholder} required={required} className="w-full rounded-md border border-input bg-white px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-navy focus:ring-1 focus:ring-navy" />
       )}
     </div>
   );

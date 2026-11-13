@@ -23,13 +23,13 @@ import { useT } from "@/i18n/LanguageProvider";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Blog & News — DIGIT & TALENT" },
+      { title: "Blog & News | DIGIT & TALENT" },
       {
         name: "description",
         content:
           "Articles, analysis and guides on project management (PMP/CAPM), digital transformation and talent management in Africa.",
       },
-      { property: "og:title", content: "Blog & News — DIGIT & TALENT" },
+      { property: "og:title", content: "Blog & News | DIGIT & TALENT" },
       {
         property: "og:description",
         content: "Insights, guides and field experience from DIGIT & TALENT experts.",
@@ -83,7 +83,6 @@ function BlogIndex() {
       <PageHero
         image={imagery.technicianServer}
         imageAlt={t("blog.hero.eyebrow")}
-        eyebrow={t("blog.hero.eyebrow")}
         title={t("blog.hero.title")}
         description={t("blog.hero.desc")}
         crumbs={[{ label: t("blog.hero.title") }]}

@@ -10,7 +10,7 @@ import { Calculator, FileSpreadsheet, CheckCircle, TrendingUp } from "lucide-rea
 export const Route = createFileRoute("/talent/gestion-paie")({
   head: () => ({
     meta: [
-      { title: "Payroll Management — DIGIT & TALENT" },
+      { title: "Payroll Management | DIGIT & TALENT" },
       { name: "description", content: "Reliable, compliant and secure payroll processing for your employees, including social security filings." },
     ],
   }),
@@ -32,21 +32,18 @@ function GestionPaie() {
       <PageHero
         image={imagery.futuristicBusiness}
         imageAlt="Environnement professionnel moderne"
-        eyebrow={t("talent.paie.eyebrow")}
         title={t("talent.paie.title")}
         description={t("talent.paie.desc")}
         crumbs={[{ label: t("nav.talent") }, { label: t("talent.paie.title") }]}
       />
 
       <Reveal as="section" className="container-site section-y">
-        <p className="eyebrow">{t("talent.paie.section.eyebrow")}</p>
-        <h2 className="mt-4 max-w-2xl text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("talent.paie.section.title")}</h2>
+        <h2 className="max-w-2xl text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("talent.paie.section.title")}</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{t("talent.paie.section.desc")}</p>
-        <Reveal variant="stagger" className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((f, i) => (
             <div key={f.title} className="card-surface card-interactive p-7">
-              <p className="font-display text-sm font-semibold text-accent">0{i + 1}</p>
-              <h3 className="mt-4 text-lg font-semibold text-navy">{f.title}</h3>
+              <h3 className="text-lg font-semibold text-navy">{f.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
             </div>
           ))}

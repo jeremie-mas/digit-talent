@@ -62,7 +62,7 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
     const brevoSenderName = process.env.BREVO_SENDER_NAME || "DIGIT & TALENT";
     const recipient = process.env.CONTACT_RECIPIENT_EMAIL || "contact@digit-talent.com";
 
-    const subjectLine = `[Nouvelle Inscription Formation] ${data.trainingCourse} — ${data.fullName}`;
+    const subjectLine = `[Nouvelle Inscription Formation] ${data.trainingCourse} | ${data.fullName}`;
     const textBody = [
       `Nouvelle demande d'inscription à une formation :`,
       `----------------------------------------------------`,
@@ -130,7 +130,7 @@ export const submitTrainingRegistration = createServerFn({ method: "POST" })
           }
         </div>
         <div style="background-color: #f1f5f9; padding: 12px 24px; text-align: center; font-size: 12px; color: #94a3b8;">
-          Inscription enregistrée sur digit-talent.com — Réponse directe disponible via votre messagerie ou WhatsApp.
+          Inscription enregistrée sur digit-talent.com. Réponse directe disponible via votre messagerie ou WhatsApp.
         </div>
       </div>
     `;

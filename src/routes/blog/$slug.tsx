@@ -183,10 +183,7 @@ function BlogPostPage() {
         {/* CTA Card Footer */}
         <div className="mt-16 rounded-xl bg-navy-deep text-white p-8 sm:p-10 shadow-elevated relative overflow-hidden">
           <div className="max-w-xl">
-            <span className="eyebrow" style={{ color: "var(--orange)" }}>
-              Passez à l'action
-            </span>
-            <h3 className="mt-2 text-2xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
               Besoin d'un accompagnement sur mesure ?
             </h3>
             <p className="mt-2 text-sm text-white/80 leading-relaxed">

@@ -14,9 +14,9 @@ import { getPublicProjects, type PublicProject } from "@/lib/api/public.data.fun
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — DIGIT & TALENT" },
+      { title: "Services | DIGIT & TALENT" },
       { name: "description", content: "Digitalization, PROSCI ADKAR change management, CAPM/PMP training, organizational transformation and cybersecurity for African organizations." },
-      { property: "og:title", content: "Our services — DIGIT & TALENT" },
+      { property: "og:title", content: "Our services | DIGIT & TALENT" },
       { property: "og:description", content: "A full range of services for your digital and organizational transformation." },
     ],
   }),
@@ -60,7 +60,6 @@ function Services() {
       <PageHero
         image={imagery.aiNeural}
         imageAlt="Consultant analyzing AI systems"
-        eyebrow={t("services.hero.eyebrow")}
         title={t("services.hero.title")}
         description={t("services.hero.desc")}
         crumbs={[{ label: t("nav.services") }]}
@@ -75,7 +74,6 @@ function Services() {
               href={`#${s.key}`}
               className="inline-flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-2 text-sm font-medium text-navy/75 transition hover:border-accent hover:text-navy"
             >
-              <span className="font-display text-xs font-semibold text-accent">0{i + 1}</span>
               {t(`svc.${s.key}.title`)}
             </a>
           ))}
@@ -89,14 +87,13 @@ function Services() {
           return (
             <article key={s.key} id={s.key} className="grid scroll-mt-40 items-center gap-10 lg:grid-cols-2 lg:gap-16">
                 <div className={`relative ${reverse ? "lg:order-2" : ""}`}>
-                  <Reveal variant="image" className="img-zoom relative rounded-2xl">
+                  <Reveal className="img-zoom relative rounded-2xl">
                     <img src={s.image} alt={title} className="aspect-[4/3] w-full object-cover" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/50 to-transparent" />
                   </Reveal>
                 </div>
-                <Reveal variant={reverse ? "left" : "right"} delay={150}>
-                  <p className="eyebrow">{t("services.hero.eyebrow")} · 0{i + 1}</p>
-                  <h2 className="mt-4 text-3xl font-bold leading-tight text-navy">{title}</h2>
+                <Reveal delay={150}>
+                  <h2 className="text-3xl font-bold leading-tight text-navy">{title}</h2>
                   <p className="mt-2 text-sm font-semibold text-muted-foreground">{t(`svc.${s.key}.subtitle`)}</p>
                   <p className="mt-5 leading-relaxed text-muted-foreground">{t(`svc.${s.key}.intro`)}</p>
                   <ul className="mt-7 grid list-disc gap-x-8 gap-y-2.5 pl-5 text-sm text-foreground/85 marker:text-accent sm:grid-cols-2">
@@ -130,7 +127,7 @@ function Services() {
       {/* Témoignages et références (Supabase) */}
       {testimonials.length > 0 && (
         <section className="container-site section-y">
-          <SectionHeading align="center" eyebrow={t("services.testimonials.eyebrow")} title={t("services.testimonials.title")} />
+          <SectionHeading align="center" title={t("services.testimonials.title")} />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((testi) => (
               <Reveal key={testi.id}>

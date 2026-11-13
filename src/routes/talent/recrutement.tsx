@@ -10,7 +10,7 @@ import { Search, UserCheck, Users, ClipboardCheck } from "lucide-react";
 export const Route = createFileRoute("/talent/recrutement")({
   head: () => ({
     meta: [
-      { title: "Recruitment — DIGIT & TALENT" },
+      { title: "Recruitment | DIGIT & TALENT" },
       { name: "description", content: "Identifying, sourcing and selecting qualified profiles that fit your culture and strategic goals." },
     ],
   }),
@@ -32,21 +32,18 @@ function Recrutement() {
       <PageHero
         image={imagery.professionalMan}
         imageAlt="Consultant en recrutement de talents"
-        eyebrow={t("talent.recrutement.eyebrow")}
         title={t("talent.recrutement.title")}
         description={t("talent.recrutement.desc")}
         crumbs={[{ label: t("nav.talent") }, { label: t("talent.recrutement.title") }]}
       />
 
       <Reveal as="section" className="container-site section-y">
-        <p className="eyebrow">{t("talent.recrutement.section.eyebrow")}</p>
-        <h2 className="mt-4 max-w-2xl text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("talent.recrutement.section.title")}</h2>
+        <h2 className="max-w-2xl text-3xl font-bold leading-tight text-navy sm:text-4xl">{t("talent.recrutement.section.title")}</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{t("talent.recrutement.section.desc")}</p>
-        <Reveal variant="stagger" className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((f, i) => (
             <div key={f.title} className="card-surface card-interactive p-7">
-              <p className="font-display text-sm font-semibold text-accent">0{i + 1}</p>
-              <h3 className="mt-4 text-lg font-semibold text-navy">{f.title}</h3>
+              <h3 className="text-lg font-semibold text-navy">{f.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
             </div>
           ))}

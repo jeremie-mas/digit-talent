@@ -32,7 +32,7 @@ import {
 export const Route = createFileRoute("/admin/promotions")({
   head: () => ({
     meta: [
-      { title: "Promotions & Sessions — Admin DIGIT & TALENT" },
+      { title: "Promotions & Sessions | Admin DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -317,7 +317,7 @@ function BannersTab() {
                 <label className={labelCls} style={{ color: "var(--admin-text-subtle)" }}>Titre *</label>
                 <input required type="text" value={editing.title || ""} onChange={(e) => setEditing((p) => ({ ...p, title: e.target.value }))}
                   className={inputCls} style={{ backgroundColor: "var(--admin-input)", borderColor: "var(--admin-border)", color: "var(--admin-text)" }}
-                  placeholder="Ex : PMP® — Inscriptions ouvertes" />
+                  placeholder="Ex : PMP®, inscriptions ouvertes" />
               </div>
 
               <div>

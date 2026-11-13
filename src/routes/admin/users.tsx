@@ -4,7 +4,7 @@ import { AdminLayout } from "@/components/AdminLayout";
 import { changeAdminPassword, createAdminUser, deleteAdminUser, listAdminUsers } from "@/lib/api/admin.users.functions";
 
 export const Route = createFileRoute("/admin/users")({
-  head: () => ({ meta: [{ title: "Utilisateurs & sécurité — DIGIT & TALENT" }, { name: "robots", content: "noindex, nofollow" }] }),
+  head: () => ({ meta: [{ title: "Utilisateurs & sécurité | DIGIT & TALENT" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: AdminUsers,
 });
 

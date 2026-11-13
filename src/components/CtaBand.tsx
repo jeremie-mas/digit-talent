@@ -14,9 +14,9 @@ export function CtaBand({
 }) {
   const { t } = useT();
   return (
-    <Reveal as="section" variant="scale" className="container-site pb-24">
+    <Reveal as="section" className="container-site pb-24">
       <div className="relative overflow-hidden rounded-2xl bg-deep px-8 py-14 text-white sm:px-14 lg:py-20">
-        <NetworkPattern animated className="absolute -right-16 top-1/2 hidden h-[130%] -translate-y-1/2 text-white/15 lg:block" />
+        <NetworkPattern className="absolute -right-16 top-1/2 hidden h-[130%] -translate-y-1/2 text-white/15 lg:block" />
         <div className="relative grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
           <div>
             <h2 className="text-3xl font-bold leading-tight sm:text-4xl">{title ?? t("home.cta.title")}</h2>

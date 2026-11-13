@@ -168,7 +168,7 @@ export const DEFAULT_SERVICES = [
 
 export const DEFAULT_PROJECTS = [
   {
-    client_name: "The World Bank – Projet FSRP",
+    client_name: "The World Bank (Projet FSRP)",
     title: "Transformation digitale des processus et gestion de projet",
     testimonial: "Dans le cadre du Projet FSRP, DIGIT & TALENT nous a accompagnés avec professionnalisme dans la transformation digitale de nos processus. Leur expertise locale fait toute la différence.",
     logo_url: "",
@@ -204,7 +204,7 @@ export const DEFAULT_PROJECTS = [
     published: true,
   },
   {
-    client_name: "UE-WB – Projet PAGE",
+    client_name: "UE-WB (Projet PAGE)",
     title: "Assistance technique et pilotage de la gouvernance de projet",
     testimonial: "Expertise de haut niveau dans la mise en place des standards de management de projet internationaux.",
     logo_url: "",
@@ -266,7 +266,7 @@ export const DEFAULT_BANNERS = [
     active: true,
   },
   {
-    title: "Conduite du Changement — Prosci® ADKAR",
+    title: "Conduite du Changement : Prosci® ADKAR",
     subtitle: "Accompagnez vos équipes dans chaque transformation avec la méthode reconnue mondialement.",
     image_url: "",
     cta_label: "Découvrir",

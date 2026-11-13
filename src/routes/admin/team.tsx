@@ -12,7 +12,7 @@ import {
 export const Route = createFileRoute("/admin/team")({
   head: () => ({
     meta: [
-      { title: "Gestion de l'Équipe — Admin DIGIT & TALENT" },
+      { title: "Gestion de l'Équipe | Admin DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -229,7 +229,7 @@ function AdminTeam() {
                           <Linkedin className="h-3 w-3" /> Profil
                         </a>
                       ) : (
-                        <span style={{ color: "var(--admin-text-subtle)" }}>—</span>
+                        <span style={{ color: "var(--admin-text-subtle)" }}>-</span>
                       )}
                     </td>
                     <td className="px-6 py-4 text-xs font-mono" style={{ color: "var(--admin-text-muted)" }}>

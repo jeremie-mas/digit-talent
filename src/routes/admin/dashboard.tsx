@@ -27,7 +27,7 @@ import {
 export const Route = createFileRoute("/admin/dashboard")({
   head: () => ({
     meta: [
-      { title: "Tableau de bord — Admin DIGIT & TALENT" },
+      { title: "Tableau de bord | Admin DIGIT & TALENT" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -293,7 +293,7 @@ function AdminDashboard() {
                     <Icon className="h-5 w-5" style={{ color: c.icon }} />
                   </div>
                   <span className="text-3xl font-bold tracking-tight" style={{ color: "var(--admin-text)" }}>
-                    {loading ? "—" : kpi.count}
+                    {loading ? "…" : kpi.count}
                   </span>
                 </div>
                 <div className="mt-4 flex items-center justify-between">

@@ -103,7 +103,7 @@ export const submitContact = createServerFn({ method: "POST" })
           </div>
         </div>
         <div style="background-color: #f1f5f9; padding: 12px 24px; text-align: center; font-size: 12px; color: #94a3b8;">
-          Message envoyé depuis digit-talent.com — Réponse directe disponible via votre messagerie.
+          Message envoyé depuis digit-talent.com. Réponse directe disponible via votre messagerie.
         </div>
       </div>
     `;

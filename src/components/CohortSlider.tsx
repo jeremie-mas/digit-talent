@@ -38,7 +38,7 @@ export function CohortSlider({ cohorts }: { cohorts: Cohort[] }) {
               <figure className="group relative overflow-hidden rounded-2xl">
                 <img
                   src={c.image}
-                  alt={c.period ? `${c.title} — ${c.period}` : c.title}
+                  alt={c.period ? `${c.title}, ${c.period}` : c.title}
                   loading="lazy"
                   className="aspect-[4/3] w-full object-cover transition duration-[1.2s] ease-out group-hover:scale-105 md:aspect-[16/9]"
                 />

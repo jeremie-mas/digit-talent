@@ -28,7 +28,7 @@ import {
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
-      { title: "About us — DIGIT & TALENT" },
+      { title: "About us | DIGIT & TALENT" },
       {
         name: "description",
         content:
@@ -79,7 +79,6 @@ function About() {
       <PageHero
         image={imagery.technicianServer}
         imageAlt="Supervision de serveurs et d'infrastructures informatiques"
-        eyebrow={t("about.hero.eyebrow")}
         title={t("about.hero.title")}
         description={t("about.hero.desc1")}
         crumbs={[{ label: t("nav.about") }]}
@@ -89,7 +88,7 @@ function About() {
       <section className="container-site section-y">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <SectionHeading eyebrow={t("home.value.eyebrow")} title={t("home.value.title")} description={t("about.hero.desc2")} />
+            <SectionHeading title={t("home.value.title")} description={t("about.hero.desc2")} />
             <div className="mt-10 grid grid-cols-3 gap-3">
               {keyFigures.map((k) => (
                 <div key={k.value} className="card-surface px-5 py-6">
@@ -99,7 +98,7 @@ function About() {
               ))}
             </div>
           </Reveal>
-          <Reveal variant="stagger" className="relative grid grid-cols-2 gap-4">
+          <Reveal className="relative grid grid-cols-2 gap-4">
             <img src={imagery.teamLaughing} alt="Collaboration d'équipe" loading="lazy" className="col-span-2 aspect-[16/9] w-full rounded-2xl object-cover" />
             <img src={imagery.coworkersAi} alt="Consultants travaillant sur des projets d'innovation" loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />
             <img src={imagery.leaderPitch} alt="Présentation de performance" loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />
@@ -128,7 +127,7 @@ function About() {
       <section className="container-site section-y grid gap-12 lg:grid-cols-12">
         <Reveal className="lg:col-span-4">
           <div className="lg:sticky lg:top-32">
-            <SectionHeading eyebrow={t("about.values.eyebrow")} title={t("about.values.title")} />
+            <SectionHeading title={t("about.values.title")} />
           </div>
         </Reveal>
         <ol className="grid border-t border-navy/15 sm:grid-cols-2 lg:col-span-8">
@@ -144,7 +143,7 @@ function About() {
       {/* Direction */}
       <Reveal as="section" className="container-site pb-24">
         <div className="relative grid gap-10 overflow-hidden rounded-2xl bg-deep p-10 text-white lg:grid-cols-[auto_1fr] lg:items-center lg:gap-16 lg:p-16">
-          <NetworkPattern animated className="absolute -right-10 -top-10 h-[120%] text-white/10" />
+          <NetworkPattern className="absolute -right-10 -top-10 h-[120%] text-white/10" />
           <div className="relative w-fit shrink-0">
             <div className="flex h-40 w-40 items-center justify-center rounded-full bg-accent text-5xl font-bold text-white">
               CY
@@ -154,8 +153,7 @@ function About() {
             </span>
           </div>
           <div className="relative">
-            <p className="eyebrow">{t("about.founder.eyebrow")}</p>
-            <h2 className="mt-4 text-3xl font-bold">{t("about.founder.title")}</h2>
+            <h2 className="text-3xl font-bold">{t("about.founder.title")}</h2>
             <p className="mt-5 max-w-3xl leading-relaxed text-white/70">{t("about.founder.desc")}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["PMP", "PMI-PMOCP"].map((cert) => (
@@ -172,7 +170,7 @@ function About() {
       {team.length > 0 && (
         <section className="container-site pb-24">
           <Reveal>
-            <SectionHeading eyebrow={t("about.team.eyebrow")} title={t("about.team.title")} description={t("about.team.desc")} />
+            <SectionHeading title={t("about.team.title")} description={t("about.team.desc")} />
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((member, idx) => (
@@ -213,8 +211,7 @@ function About() {
           <div className="flex items-center gap-6">
             <img src={imagery.authorizedTrainingPartner} alt="PMI Authorized Training Partner" className="h-20 w-20 shrink-0 object-contain" loading="lazy" />
             <div>
-              <p className="eyebrow">{t("about.certs.eyebrow")}</p>
-              <h2 className="mt-3 text-2xl font-bold text-navy">{t("about.certs.title")}</h2>
+              <h2 className="text-2xl font-bold text-navy">{t("about.certs.title")}</h2>
             </div>
           </div>
           <div className="flex flex-wrap gap-2.5">

@@ -46,7 +46,7 @@ const FALLBACK_BANNERS_FR: (PublicBanner & { gradient?: string })[] = [
   },
   {
     id: "fb3",
-    title: "Conduite du Changement — Prosci® ADKAR",
+    title: "Conduite du Changement : Prosci® ADKAR",
     subtitle:
       "Accompagnez vos équipes dans chaque transformation avec la méthode reconnue mondialement.",
     image_url: "",
@@ -84,7 +84,7 @@ const FALLBACK_BANNERS_EN: (PublicBanner & { gradient?: string })[] = [
   },
   {
     id: "fb3",
-    title: "Change Management — Prosci® ADKAR",
+    title: "Change Management: Prosci® ADKAR",
     subtitle:
       "Guide your teams through every organizational shift with a globally proven methodology.",
     cta_label: "Discover",
