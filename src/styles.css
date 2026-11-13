@@ -360,7 +360,22 @@
   to   { transform: scale(1); }
 }
 .hero-zoom { animation: hero-zoom 2.6s var(--ease-out-expo) both; }
-@media (prefers-reduced-motion: reduce) { .hero-zoom { animation: none !important; } }
+
+/* Diaporama du hero : zoom lent (Ken Burns) sur l'image active et barre de progression */
+@keyframes hero-kenburns {
+  from { transform: scale(1.12) translateX(1.5%); }
+  to   { transform: scale(1) translateX(0); }
+}
+@keyframes hero-progress {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+.hero-slide-active { animation: hero-kenburns 7s ease-out both; }
+.hero-progress { animation-name: hero-progress; animation-timing-function: linear; animation-fill-mode: both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom, .hero-slide-active { animation: none !important; }
+  .hero-progress { animation: none !important; width: 100%; }
+}
 
 /* ---------- Micro-interactions ---------- */
 .btn > svg:last-child { transition: transform 0.25s var(--ease-out-expo); }

@@ -12,6 +12,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { NetworkPattern } from "@/components/NetworkPattern";
 import { AnimatedWords } from "@/components/AnimatedWords";
 import { CERTIFIED } from "@/data/certified";
+import { HeroSlideImages, HeroSlideIndicators, useAutoSlide, type HeroSlide } from "@/components/HeroSlideshow";
 
 // Les 3 certifiés les plus récents qui ont un visuel de félicitations
 const featuredCertified = CERTIFIED.filter((p) => p.poster).slice(0, 3);
@@ -52,6 +53,14 @@ function Home() {
   ];
   const pillars = [t("home.img.ai"), t("home.img.data"), t("home.img.perf"), t("home.img.talents")];
   const reasons = [t("home.why.r1"), t("home.why.r2"), t("home.why.r3"), t("home.why.r4")];
+  const heroSlides: HeroSlide[] = [
+    { image: imagery.professionalMan, alt: "DIGIT & TALENT consultant", label: t("home.img.perf") },
+    { image: imagery.leaderPitch, alt: "Trainer leading a professional certification session", label: t("home.img.ai") },
+    { image: imagery.management, alt: "Team managing a complex project", label: t("home.img.data") },
+    { image: imagery.teamLaughing, alt: "Talent development and collaboration", label: t("home.img.talents") },
+  ];
+  const slide = useAutoSlide(heroSlides.length);
+
   const testimonials = [
     { quote: t("home.testimonials.q1"), name: "Kofi Mensah", role: t("home.testimonials.r1"), org: "Plan International Togo" },
     { quote: t("home.testimonials.q2"), name: "Aminata Diallo", role: t("home.testimonials.r2"), org: "Banque Mondiale – Projet FSRP" },
@@ -59,42 +68,44 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* Hero : photo pleine largeur sous un voile gris anthracite (teinte du logo), plus léger côté photo */}
-      <section className="relative overflow-hidden bg-[#1C232B] text-white">
-        <div className="absolute inset-x-0 top-0 h-[460px] lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[64%]">
+      {/* Hero : diaporama de photos en pleine largeur sous un voile translucide
+          de la couleur du hero du site en production (bleu nuit #061829) */}
+      <section className="relative overflow-hidden bg-navy-deep text-white">
+        <div className="absolute inset-0">
+          <HeroSlideImages slides={heroSlides} index={slide.index} />
+          {/* Voile uniforme, un peu plus dense côté texte */}
+          <div className="absolute inset-0 bg-navy-deep/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/60 via-navy-deep/20 to-transparent" />
+        </div>
+        <NetworkPattern animated className="absolute -bottom-20 -left-20 h-[460px] text-white/[0.12]" />
+        {/* Badge partenaire PMI : même emplacement que sur la version en ligne */}
+        <div className="animate-float-slow absolute bottom-8 right-5 z-10 hidden sm:block lg:bottom-24 lg:right-10 xl:bottom-50 xl:right-80">
           <img
-            src={imagery.professionalMan}
-            alt="DIGIT & TALENT consultant"
-            fetchPriority="high"
-            decoding="async"
-            className="hero-zoom h-full w-full object-cover object-center"
+            src={imagery.authorizedTrainingPartner}
+            alt="PMI Authorized Training Partner"
+            className="animate-fade-up h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.45)] lg:h-52 xl:h-72"
+            style={{ animationDelay: "900ms" }}
           />
-          <div className="absolute inset-0 -bottom-px bg-gradient-to-t from-[#1C232B] via-[#1C232B]/40 to-[#1C232B]/20 lg:-left-1 lg:bottom-0 lg:bg-gradient-to-r lg:from-[#1C232B] lg:from-2% lg:via-[#1C232B]/45 lg:via-30% lg:to-[#1C232B]/10" />
-          {/* Badge partenaire PMI : même emplacement que sur la version en ligne */}
-          <div className="animate-float-slow absolute bottom-8 right-5 z-10 lg:bottom-24 lg:right-10 xl:bottom-50 xl:right-80">
+        </div>
+
+        <div className="container-site relative pb-16 pt-[150px] lg:pb-16 lg:pt-[160px]">
+          <div className="max-w-xl">
             <img
               src={imagery.authorizedTrainingPartner}
               alt="PMI Authorized Training Partner"
-              className="animate-fade-up h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.45)] lg:h-52 xl:h-72"
-              style={{ animationDelay: "900ms" }}
+              className="animate-fade-up mb-6 h-20 w-auto sm:hidden"
             />
-          </div>
-        </div>
-        <NetworkPattern animated className="absolute -bottom-20 -left-20 h-[460px] text-white/[0.12]" />
-
-        <div className="container-site relative pb-24 pt-[330px] lg:pb-32 lg:pt-[210px]">
-          <div className="max-w-xl">
             <p className="eyebrow animate-fade-in-soft">{t("home.hero.badge")}</p>
-            <h1 className="mt-6 text-4xl font-bold leading-[1.06] tracking-tight [overflow-wrap:anywhere] min-[400px]:text-5xl sm:text-6xl lg:text-[4.25rem]">
+            <h1 className="mt-6 text-4xl font-bold leading-[1.06] tracking-tight [overflow-wrap:anywhere] min-[400px]:text-5xl sm:text-6xl lg:text-[3.75rem]">
               <AnimatedWords text={t("home.hero.titleA")} delay={150} />{" "}
               <AnimatedWords text={t("home.hero.titleB")} delay={150 + t("home.hero.titleA").split(" ").length * 70} className="text-accent" />
               {t("home.hero.titleC") && <>{" "}<AnimatedWords text={t("home.hero.titleC")} delay={500} /></>}
               {t("home.hero.titleD") && <>{" "}<AnimatedWords text={t("home.hero.titleD")} delay={600} className="text-accent" /></>}
             </h1>
-            <p className="animate-fade-up mt-7 text-lg leading-relaxed text-white/80" style={{ animationDelay: "500ms" }}>
+            <p className="animate-fade-up mt-6 text-lg leading-relaxed text-white/80 lg:text-[17px]" style={{ animationDelay: "500ms" }}>
               {t("home.hero.desc")}
             </p>
-            <div className="animate-fade-up mt-10 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
+            <div className="animate-fade-up mt-8 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
               <Link to="/services" className="btn btn-primary">
                 {t("home.hero.ctaServices")} <ArrowRight className="h-4 w-4" />
               </Link>
@@ -102,6 +113,10 @@ function Home() {
                 {t("home.hero.ctaContact")}
               </Link>
             </div>
+          </div>
+          {/* Indicateurs du diaporama */}
+          <div className="animate-fade-up mt-12 max-w-2xl lg:mt-10" style={{ animationDelay: "800ms" }}>
+            <HeroSlideIndicators slides={heroSlides} index={slide.index} cycle={slide.cycle} onSelect={slide.goTo} />
           </div>
         </div>
       </section>
