@@ -112,7 +112,7 @@ export function SiteLayout({ children, lightHero = false }: { children: ReactNod
             scrolled ? "max-h-0 border-transparent opacity-0" : "max-h-10 opacity-100"
           }`}
         >
-          <div className="container-site flex h-9 items-center justify-between text-xs text-navy/70">
+          <div className="container-site flex h-9 items-center justify-between text-xs font-semibold text-navy/80">
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-accent" />{t("footer.address")}</span>
               <a href="mailto:contact@digit-talent.com" className="flex items-center gap-1.5 transition hover:text-accent"><Mail className="h-3.5 w-3.5 text-accent" />contact@digit-talent.com</a>
